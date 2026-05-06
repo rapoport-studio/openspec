@@ -1,0 +1,116 @@
+name: _universal
+version: 1
+
+# The base 7-step domain wizard. Every concrete template extends this.
+# Step ids are stable identifiers: templates may patch other fields via
+# wizard.step_overrides[id], but renaming an id silently breaks any project
+# referencing it. Phase A enforces this convention by documentation; Phase B
+# may add a runtime collision check at load time.
+wizard:
+  steps:
+    - id: actors
+      title: Actors
+      prompt: >-
+        Who are the people, roles, and external systems that interact with
+        this product? Distinguish active users from passive recipients.
+      suggested_questions:
+        - Who initiates the most common workflow?
+        - Which roles can see which other roles' work?
+        - Are there any non-human actors (cron jobs, integrations, agents)?
+
+    - id: resources
+      title: Resources
+      prompt: >-
+        What are the durable nouns the product manages — the things actors
+        create, edit, share, or consume?
+      suggested_questions:
+        - What gets created first in a typical engagement?
+        - What persists across sessions vs is ephemeral?
+        - What references what? (foreign keys in plain English)
+
+    - id: states
+      title: States
+      prompt: >-
+        For each resource, what are the meaningful states it moves through?
+        Where does work pause and wait for someone?
+      suggested_questions:
+        - What's the difference between "draft" and "ready"?
+        - When does a resource become immutable?
+        - What state requires a human decision before progressing?
+
+    - id: transactions
+      title: Transactions
+      prompt: >-
+        What are the actions that move resources between states? Who can
+        invoke each, and what guarantees does the action need?
+      suggested_questions:
+        - Which actions are reversible? Which are not?
+        - Which actions need confirmation before execution?
+        - Do any actions need to be atomic across multiple resources?
+
+    - id: integrations
+      title: Integrations
+      prompt: >-
+        What external systems does this product talk to, and what depends on
+        the boundary remaining stable?
+      suggested_questions:
+        - Which integrations are read-only vs read-write?
+        - What happens if an integration is down?
+        - Are there compliance constraints around any integration?
+
+    - id: communications
+      title: Communications
+      prompt: >-
+        How do actors talk to each other through the system — notifications,
+        comments, attachments, real-time presence?
+      suggested_questions:
+        - Which communications are synchronous vs asynchronous?
+        - Where does email or messaging fit?
+        - What's the read/unread model?
+
+    - id: metrics
+      title: Metrics
+      prompt: >-
+        What does success look like, in measurable terms? What would the team
+        check on a Monday-morning dashboard?
+      suggested_questions:
+        - What's the leading indicator vs lagging indicator?
+        - Which metrics are owner-facing vs client-facing?
+        - What's the smallest thing that, if broken, alerts someone?
+
+# Persona hints anchor each persona's engagement style with the universal
+# wizard. Templates may override per-persona via `personas: { <persona>: "..." }`.
+personas:
+  architect: >-
+    Holistic system view. Push for coherence across all 7 steps before
+    drilling deep on any single one. Surface tradeoffs explicitly.
+  domain: >-
+    Industry depth. Anchor every step in the client's vocabulary and
+    real-world scenarios; resist abstracting away domain specifics.
+  tech: >-
+    Architecture and risk. Probe at integrations, state machines, and
+    transactional guarantees; flag where naive choices create technical debt.
+  business: >-
+    Market and unit economics. Emphasize metrics + monetization; treat
+    actors as market segments and transactions as conversion events.
+  ops: >-
+    Process efficiency. Center the operational workflow; surface where
+    integrations or communications are bottlenecks.
+
+tool_hints:
+  foundation: >-
+    Prefer `read_openspec` and `read_archive` for internal context before
+    reaching for external research.
+  external: >-
+    `domain_research` is the right escalation when a step requires industry
+    framing the existing OpenSpec corpus doesn't cover.
+
+output:
+  capability_specs:
+    - domain
+    - ux
+    - ops
+
+# Universal vocabulary is intentionally empty — concrete templates and
+# projects populate domain terms.
+vocabulary: {}

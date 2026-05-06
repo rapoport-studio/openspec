@@ -1,0 +1,113 @@
+name: legal-platform
+version: 1
+extends: _universal
+
+# Concrete domain template for legal-services platforms (case management,
+# document workflows, hearing tracking). i-avocat is the first project to
+# bind to this template.
+
+domain_seed:
+  actors:
+    - lawyer (advocate, primary author)
+    - client (case principal)
+    - court (instanță)
+    - opposing counsel
+    - paralegal (support staff)
+  resources:
+    - case file (dosar)
+    - hearing (audiență)
+    - petition (cerere)
+    - document (act)
+    - jurisprudence reference
+  states:
+    - intake
+    - drafting
+    - filed
+    - in-litigation
+    - resolved
+
+# Romanian-first vocabulary mapping. The client says `dosar` and `audiență`;
+# canonical English mappings preserve interoperability with English-only
+# specs (e.g. OpenSpec).
+vocabulary:
+  dosar:
+    canonical: case_file
+    client_term: dosar
+    use_in_renders: client
+  audienta:
+    canonical: hearing
+    client_term: audiență
+    use_in_renders: client
+  cerere:
+    canonical: petition
+    client_term: cerere
+    use_in_renders: client
+  instanta:
+    canonical: court
+    client_term: instanță
+    use_in_renders: client
+
+wizard:
+  step_overrides:
+    actors:
+      prompt: >-
+        Who are the actors in a legal-services engagement? Cover lawyers,
+        clients, courts (instanțe), opposing counsel, and the support staff
+        (paralegals, secretariat) that move documents day-to-day.
+      suggested_questions:
+        - How does the firm divide work between lawyer and paralegal?
+        - When does the client interact directly vs through the lawyer?
+        - Are there roles in the firm that never see client-confidential data?
+    resources:
+      prompt: >-
+        What are the durable resources of a legal practice — case files
+        (dosar), hearings (audiențe), petitions (cereri), and the documents
+        that hang off each?
+      suggested_questions:
+        - Does each dosar live in exactly one jurisdiction, or many?
+        - How are documents versioned across the case lifecycle?
+        - Is jurisprudence referenced inline or stored as separate resources?
+    communications:
+      prompt: >-
+        How do actors communicate? Pay specific attention to attorney-client
+        privilege — which channels are privileged, which are discoverable,
+        which create paper trails for regulators.
+      suggested_questions:
+        - Which communications must be retained for X years for compliance?
+        - Where does court filing fit (formal vs informal communications)?
+        - What's the model for client-visible vs internal-only notes?
+
+  step_extensions:
+    - id: confidentiality
+      title: Confidentiality
+      prompt: >-
+        Beyond standard data protection, what attorney-client privilege,
+        retention, and disclosure rules apply? Which actions need an audit
+        trail, and how long must records persist?
+      suggested_questions:
+        - What's the retention rule for closed cases (years, jurisdiction)?
+        - Who can override default access — and is the override logged?
+        - Do any documents require dual-authorization to access?
+
+# Few-shot pairs anchor the template in legal-domain phrasing. Phase B will
+# prepend these to the conversation history when a canvas binds to a
+# legal-platform project.
+few_shot:
+  - role: user
+    content: >-
+      I want to build a workspace for managing dosare. We have around 200
+      active cases and three lawyers. The biggest pain is that hearings get
+      missed because the calendar lives in someone's head.
+  - role: assistant
+    content: >-
+      Helpful starting point. Before I draft a proposal, let me anchor on
+      the actors. You mentioned three lawyers — is there a paralegal or
+      secretary moving documents between them, or do the lawyers handle
+      filing themselves? And on the hearing-miss problem: is the calendar
+      issue about discovery (knowing the date exists) or about reminders
+      (knowing it's coming up)?
+
+output:
+  capability_specs_extras:
+    - confidentiality
+    - audit-trail
