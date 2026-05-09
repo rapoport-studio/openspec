@@ -353,33 +353,44 @@ A new sub-product gets its own Supabase project and its own service-role key. Gi
 
 ## 11. Client communication architecture
 
-Every active project gets a Telegram group:
+> Section rewritten 2026-05-09 from change `add-tg-canvas-surface` (RAP-121). The pre-2026-05-09 version described a single per-client TG group with `@rapoport_studio_bot` running slash-commands; that model is retired in favour of a two-bot taxonomy.
 
-```
-"Rapoport Studio · {Client Name}"
-  ├── Pavel (admin)
-  ├── Client (1-3 stakeholders)
-  ├── Curated team members
-  └── @rapoport_studio_bot
-```
+Telegram surfaces operate at two scopes — a personal-journal scope (Pavel) and a per-canvas team scope (owner + collaborators). A new sub-product inherits both shapes verbatim.
 
-The bot listens for explicit commands and triggers; nothing implicit. Trigger surface (canonical):
+### 11.1 Pavel-bot — `@rapoport_studio_bot` (Digital Pavel)
+
+Endpoint: `/api/studio/command`. Standalone Claude agent — **not Muse**. Routes to Pavel's personal Linear journal. Trigger surface (canonical):
 
 | Trigger | Action |
 |---|---|
-| `/note <text>` | Creates Linear issue in client's project, status = backlog, no assignee |
+| `/note <text>` | Creates Linear issue in Pavel's personal project, status = backlog |
 | `/task @user <text>` | Creates Linear issue with assignee |
 | `/done <ID>` | Closes the referenced issue |
 | `/status` | Bot replies with project summary (open issues, in-progress, due) |
-| `/search <query>` | Searches Linear project, replies with top matches |
+| `/search <query>` | Searches Linear, replies with top matches |
 | 📝 reaction on a message | Same as `/note` (uses the message text) |
 | ✅ reaction on a message linked to an issue | Marks issue as done |
 | `@rapoport_studio_bot <free text>` | Claude interprets intent, decides action |
-| `/link <Linear-team-key>` (admin only) | Binds this Telegram chat to a Linear project |
 
-A new sub-product **inherits this exact trigger surface**. Re-defining `/note` semantics per product is a footgun; bots become unpredictable across rooms.
+This bot is **scoped to Pavel** (single user, single Linear team). It is not the canvas-team work surface. New sub-products inherit this trigger surface for their own founder-as-PM journaling — re-defining `/note` semantics per product is a footgun.
 
-WhatsApp setup remains for clients who prefer it; n8n normalizes payloads to a single shape so route handlers don't care about source.
+### 11.2 Canvas-bot — `@rs_canvas_bot` (Muse, headless)
+
+Endpoint: `/api/studio/telegram/webhook`. Each canvas with engagement opt-in (`projects.tg_surface_enabled = true`) gets its own TG group. Members: canvas owner + collaborators (clients out of scope in v1, see `add-client-role`). Voice + text input parity. The bot runs **Muse headlessly** (`runMuseHeadless` — server-loaded contexts, no browser) and gates all mutations through propose-mode approvals from the canvas owner (`/yes` confirm).
+
+Read tools (Linear queries, GitHub reads, web research, OpenSpec readers) execute directly. Mutator tools (Mirror writes, GitHub writes, Architect emit) write to `canvas_proposals` and require owner `/yes`.
+
+Engagement-level opt-in is recorded under [`rapoport-studio-engagement.md § 8 Appendix B → D11`](rapoport-studio-engagement.md). Default off; explicit acknowledgement of GDPR special-category ban (Art. 9), voice retention (R2 30-day lifecycle), and propose-only mutation semantics required before opt-in.
+
+Capability spec: [`openspec/current/telegram.md`](../current/telegram.md).
+
+### 11.3 Identity binding
+
+Owner generates a 24h one-shot JWT invite token in canvas UI; TG user pastes it in DM with `@rs_canvas_bot` to bind their Telegram identity to their studio account (`tg_user_bindings`, `tg_invite_tokens`).
+
+### 11.4 Other surfaces
+
+WhatsApp setup remains for clients who prefer it; n8n normalizes payloads to a single shape so route handlers don't care about source. Public TG channel + discussion group are planned future surfaces, not in this change.
 
 ---
 
@@ -409,3 +420,49 @@ After reading this document and the project's discovery material, the agent shou
 6. **Open one Linear issue** for "Phase 0: bootstrap OpenSpec corpus" and attach the agent's output as a single PR. Subsequent work proceeds via the standard Forge loop (§ 6).
 
 If anything in this charter is unclear, ambiguous, or doesn't fit the new product's reality — **say so in the bootstrap PR description**. Specs evolve; this charter is the current snapshot, not the final word.
+
+---
+
+## Agents and philosophy (applied 2026-05-08 from change `add-philosophy-foundation`)
+
+Studio operates as an orchestra of six agents — Maestro, Muse, Atlas, Echo, Pulse, Forge — coordinated by Maestro and composed by Pavel. The roster, roles, and storage ownership are defined in [`openspec/current/agents-overview.md`](../current/agents-overview.md), which is the single source of truth.
+
+Studio philosophy rests on four commitments — to craft, to awakening, to choice, to lineage. The full statement lives in [`openspec/_methodology/manifesto.md`](manifesto.md) (internal-first; public excerpts curated by Pavel from the same source). An internal Cast Club 27 layer pairs each agent with a second name; that layer is team-only and never appears in public branding, client deliverables, or marketing copy.
+
+Layer 0 of the foundation (this amendment + `agents-overview.md`) ships ahead of the manifesto file itself — `manifesto.md` lands in Phase B of the same change, blocked on Pavel-voice authorship. Until then, the link above resolves to a missing file by design; it is the marker of incomplete foundation.
+
+---
+
+## TG canvas surface added to platform charter (applied 2026-05-09 from change add-tg-canvas-surface)
+
+This charter previously described a single per-client TG group hosted by `@rapoport_studio_bot` running slash-commands. That model is retired. § 11 (Client communication architecture) was rewritten in place to describe the two-bot taxonomy:
+
+- **Pavel-bot** (`@rapoport_studio_bot`) — Digital Pavel's personal Linear journal at `/api/studio/command`. Slash-command surface unchanged. Scoped to Pavel as a single user. **Not Muse.**
+- **Canvas-bot** (`@rs_canvas_bot`) — per-canvas headless Muse at `/api/studio/telegram/webhook`. Voice + text parity. Owner + collaborators only (clients out-of-scope v1). Propose-only mutations gated on owner `/yes`. Default off; engagement opt-in via `projects.tg_surface_enabled`.
+
+### What's gone (vs pre-2026-05-09 charter)
+
+- Per-CLIENT TG group narrative ("one group per client, hosted by `@rapoport_studio_bot`").
+- Slash-commands `/note`, `/task`, `/done` characterised as the canvas-team workflow — they remain only on Pavel-bot.
+- Implicit single-bot framing.
+
+### What's new
+
+- Two-bot taxonomy with disjoint endpoints, secret tokens, and Infisical secrets.
+- `runMuseHeadless` runtime contract (browser-independent Muse).
+- Propose-only mutation semantics (`MUTATOR_TOOLS` allowlist; `canvas_proposals` table).
+- JWT-based TG identity binding (24h one-shot, `tg_invite_tokens` + `tg_user_bindings`).
+- Engagement opt-in flag (D-TCS-11) recorded under `rapoport-studio-engagement.md § 8 Appendix B → D11`.
+- GDPR Art. 9 special-category ban on the canvas-bot surface (worker classification rejects + does not store).
+- Daily + lifetime cost caps (`canvas_daily_costs`, `canvas_sessions.daily_cap_cents`); fail-closed.
+
+### Cross-references
+
+- Capability spec: [`openspec/current/telegram.md`](../current/telegram.md) — inaugural file.
+- Engagement methodology: [`openspec/_methodology/rapoport-studio-engagement.md § 8 Appendix B → D11`](rapoport-studio-engagement.md).
+- Studio API surface: `openspec/current/studio.md § /api/studio/telegram/* surface`.
+- Database surface: `openspec/current/db.md § TG canvas surface schema`.
+- Muse runtime: `openspec/current/muse.md § TG canvas surface as Muse — Headless mode`.
+- Platform-level integration: `openspec/current/platform.md § Client communication architecture` (rewritten in same change).
+
+A new sub-product inherits both bot shapes — Pavel-bot for founder journaling, canvas-bot for per-canvas team workflow — but provisioning canvas-bot per-product is **not** required for v0 of a sub-product. Add it once that product has its own Linear team + Supabase project + a canvas with non-trivial team activity.

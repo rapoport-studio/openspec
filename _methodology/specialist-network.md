@@ -4,7 +4,7 @@
 >
 > Status: **draft v1, behind the engagement charter.** As of this writing the studio has zero specialists fully onboarded under this spec; Pavel is the only active participant, and his role is `openspec_author_lead`. Treat this document as the design contract under which the network will be built — not as a description of an already-running system.
 >
-> Once the network has its first three certified specialists this document graduates from `_methodology/` into a proper capability spec at `openspec/current/network.md` (via a normal change — `openspec/changes/promote-network-spec/`). Until then it lives as methodology, free to evolve without archive ceremony.
+> Once the network has its first three certified specialists this document graduates from `_methodology/` into a proper capability spec at `openspec/current/network.md` (via a normal change — `openspec/changes/promote-network-spec/`). Until then it lives as methodology, free to evolve without archive ceremony. <!-- openspec-refs: skip-line — `promote-network-spec` is a forward-ref to a future change-folder that opens when the third specialist onboards. -->
 
 ---
 
@@ -256,6 +256,8 @@ Compensation model is **outside the scope of this document** because it touches 
 
 When the first three specialists are compensated end-to-end, the model graduates from this paragraph to a proper section in `network.md` (see § 0 — promotion path).
 
+Upstream of this paragraph: [`research/value-attribution.md`](./research/value-attribution.md) is an open research thread on how the studio measures human contribution beyond hourly rate, how new professions get their first defensible price, and how value distribution avoids concentration. Conclusions from that thread feed the compensation model when it graduates.
+
 ---
 
 ## 9. Boundaries
@@ -267,6 +269,7 @@ What this network deliberately does **not** do, in any engagement:
 - It does not guarantee specialists will be available for any specific engagement window. Matching is best-effort against the live availability layer.
 - It does not promise that every certified specialist sees every engagement opportunity. The matching layer is a filter; specialists see invites for engagements they fit.
 - It does not run outside Muse. A specialist who wants to talk through Slack/Telegram/email instead of canvas is not operating under this network's contract; they are a private freelancer of their client.
+- It does not address founders as buyers in this network spec. A founder who hires the studio is a Client (per `openspec/current/platform.md § Personas`); a founder who develops their own product is the buyer-counterparty for the studio's Founder Track (`openspec/archive/2026-05-08-add-founder-track/`). Specialists may be routed onto Founder Track engagements when the founder hires the studio, but the contractual shape — base NDA, certification level, training cycle — is identical to any other studio engagement. The Founder Track does not introduce a new specialist contract.
 
 ---
 

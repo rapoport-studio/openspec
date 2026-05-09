@@ -1,6 +1,17 @@
 # Roadmap — Studio platform v1 → v2
 
-This roadmap is the master sequencing document for upcoming changes after the May 4 2026 design conversation. It consolidates the per-change roadmaps that previously sat in `add-projects-table/roadmap.md` and replaces ad-hoc deferral lists in individual change folders. New changes that come up in design conversations should update this document first, then spawn their own change folder.
+This roadmap is the master sequencing document. It is organised around **MVP milestones**, not feature areas: the top sections are what blocks the next reviewable cut of the platform; the bottom sections are durable history and deferred work.
+
+**Last full sync:** 2026-05-09 (post-engagement-dashboard-archive — `add-control-engagement-dashboard` Phase 1 shipped via #389 + archived as `archive/2026-05-09-add-control-engagement-dashboard/`; two of five `/control` cards (Roadmap + Engagements) now `ready`. Earlier same day: RAP-92 drift item closed via retroactive `archive/2026-05-06-add-entity-card-primitive/` reconstruction; `add-project-migration-prompt` Phase 1 shipped via #381 + archived (template precondition for Vivod / Dentour Phase 5 cleared); `add-studio-control-room` Phase 1 archived. Track B Phase 6 archived 2026-05-08; `sync-forge-builder-spec` Phase 2 shipped via #351; **RAP-48 closed 2026-05-09** — Forge Builder shipped end-to-end; first real-issue dogfood = this change `sync-roadmap-post-rap48-close`).
+
+**How to read this file:**
+
+- **Section 1** is the working plan. The MVP v1 critical path lives here. Everything that is not in Section 1 is parallel, deferred, or shipped.
+- **Section 2** is the immediate next milestone after MVP v1 (Unbind dogfood).
+- **Section 3** is parallel work — active changes that do not block MVP v1 and can ship alongside or after.
+- **Section 4** is deferred / future work — explicitly out of scope for MVP v1.x.
+- **Section 5** is shipped foundation — kept brief because it is durable history, not a plan.
+- **Section 6** is drift / cleanup items — small fixes that don't fit into any change folder.
 
 ---
 
@@ -8,365 +19,332 @@ This roadmap is the master sequencing document for upcoming changes after the Ma
 
 The studio operates around three nested levels:
 
-1. **Studio** — the workshop itself. Methodology, spec library, two GitHub identities (`paveliko` for personal work, `rapoport-studio-bot` for programmatic operations once `add-github-bot-and-creds` lands).
+1. **Studio** — the workshop itself. Methodology, spec library, two GitHub identities (`paveliko` for personal work, `rapoport-studio-bot` for programmatic operations).
 2. **Project** — one body of work (client engagement, internal platform deliverable, external collaboration). Contains one or more Canvases. Optionally bound to a GitHub repository, a Linear team or project, and a Mirror perception layer. **Bindings are optional throughout the lifecycle**, never required.
 3. **Canvas** — a design board for an idea. Persistent, multi-view workspace. Inside a Canvas, work moves through four phases: **Capture → Research → Spec → Build**.
 
-Today the studio runs primarily on the Spec phase (Architect mode is mature, multi-tool Muse capable of authoring proposal/design/tasks triplets). Capture and Research are partial. Build is manual.
+The Spec phase is mature (Architect mode, multi-tool Muse, full convention adapter). Capture is complete (sticky-note idea board shipped via RAP-58; structured discovery wizard shipped end-to-end via `add-canvas-discovery-wizard`, archived 2026-05-08). Research is partial (competitor research not yet scaffolded). Build phase has the runtime substrate (Forge UI surface RAP-130 + `add-forge-discovery-surface` Track-C close-out, multi-project config RAP-85, convention adapter RAP-86); the executor (RAP-48 Builder) shipped end-to-end (Waves 1–3 + Wave 4 Phases A/B/D, RAP-48 closed 2026-05-09); first real-issue dogfood is *this change* `sync-roadmap-post-rap48-close` (Track D / Phase C of `sync-forge-builder-spec`).
 
-The roadmap closes these gaps without inflating any single change.
-
----
-
-## Sequencing principle
-
-Each change must be reviewable in one session by one reviewer. That keeps the discipline for narrow scope and forces correct dependency ordering. Where two changes are independent, they can ship in parallel.
+**Sequencing principle:** each change must be reviewable in one session by one reviewer. Where two changes are independent, they ship in parallel.
 
 ---
 
-## Active and immediate (May 2026)
+## 1. MVP v1 — Studio Self-Drive (CRITICAL PATH)
 
-These three changes are the top of the queue. The first two are in proposal-ready state with this conversation; the third is independent and can ship anytime.
+**Goal of MVP v1:** Pavel can complete the full design → spec → build → ship loop on the studio's own work **entirely through the studio UI**, not the bare CLI. When a small RAP-* issue closes via that loop end-to-end, MVP v1 is done.
 
-### `add-projects-table` *(shipped 2026-05-04 — RAP-43)*
-
-First-class `projects` table, FK from `canvas_sessions`, RLS mirroring sibling tables, two-row backfill of existing distinct slugs (`i-avocat`, `test`). No application code changes. Schema permits all integration columns nullable forever. Archived at `openspec/archive/2026-05-05-add-projects-table/`.
-
-### `add-canvas-file-lifecycle` *(shipped 2026-05-04 — RAP-44)*
-
-Replaced `canvas_artifacts` (versioned, three-name-only) with `canvas_files` (path-keyed, UPSERT). Added `mode='draft'|'project'|'legacy_promoted'` to `canvas_sessions`. Server actions `convertToProjectAction`, `saveFileAction`, `saveAllPendingAction`, `openPullRequestAction`, `copyFileAction` shipped. Workers fs gap for `write_mirror_field` closed. Archived at `openspec/archive/2026-05-05-add-canvas-file-lifecycle/`.
-
-**Drift to track separately:** the design called for a `GitHubClient` in `packages/forge/src/core/`. Shipped reality has only a narrow `checkRepoExists` helper at `apps/studio/src/lib/github-client.ts` (introduced later by `add-project-bindings`). A full Octokit wrapper for branch/commit/PR operations does **not** exist anywhere — `RAP-48` Wave 3 (`add-forge-builder-mode`) remains GitHubClient-blocked despite RAP-44 closure. Resolution path TBD (move helper into `packages/forge` and expand, or build a separate forge-side client, or change RAP-48 design to use Octokit directly).
-
-### `add-mirror-runtime-fix` *(shipped)*
-
-Closed the `node:fs/promises` gap on Cloudflare Workers for `read_openspec` and `read_archive` by bundling `openspec/{current,archive}/**/*.md` into a generated TypeScript module embedded in the Worker at build time (Option B). Muse tools now select fs → bundle → `not_available_in_runtime`. `write_mirror_field` is handled separately inside `add-canvas-file-lifecycle`.
-
-**Status:** Shipped via PR #171 (RAP-49). Archived at `openspec/archive/2026-05-05-add-mirror-runtime-fix/`.
-
----
-
-## External project enablement (May 2026)
-
-Studio-side engineering track that turns Forge from a single-monorepo executor into a cross-repo platform serving external engagements. Unbind (`rapoport-studio/unbind.life`) is the first dogfood; Vivod and Dentour follow.
-
-This track must complete before any external Forge run. It does **not** block parallel internal work (homepage RAP-82 *(shipped 2026-05-06)*, canvas vertical RAP-78/79/80, conversation discipline RAP-52, community signup `add-studio-self-serve-signup` scaffold). Those tracks ship independently.
-
-Trigger: Pavel + Olya kickoff resolves D-SE1 (per `openspec/_methodology/projects/unbind.yaml § engagement` and `unbind.life/openspec/changes/add-studio-engagement/`). The studio's preliminary `unbind.yaml` declares `mode: full`; the founders-agreement may downgrade to `deliverables-only`.
-
-### Epic — `enable-unbind-as-first-forge-external-project` *(RAP-83, in flight)*
-
-Six children, ordered as a critical path:
-
-#### `add-project-connect-onebutton` *(RAP-84, scaffold open)*
-
-GitHub App + install flow + bind UI in `apps/studio`. Replaces today's "Pavel pastes the repo identifier into a server action" with a one-click install path. Olya installs the App on `rapoport-studio/unbind.life`; install webhook fires; project record + bindings + credentials land automatically. Reusable for Vivod / Dentour.
-
-Open questions on the scaffold ack: GitHub App vs OAuth App, App ownership (org vs user), credential storage (Supabase vs Infisical), token-mode handoff to Forge (per-installation JWT vs long-lived PAT), interaction with existing `add-project-bindings` (RAP-55/56).
-
-#### `add-forge-multi-project` *(RAP-85, scaffold open)*
-
-Config schema upgrade. `forge.config.mjs` gains `projects: Record<slug, ProjectConfig>` with per-target `issuePrefix`, `repo`, `botAccount`, `worktreeRoot`, `conventionAdapter`. CLI flag `--project <slug>` plumbed through `inbox / inspect / plan / build / status / cancel`. Default-project resolution by `cwd` match. Backwards-compatible: today's studio-only config keeps working.
-
-Open questions: config shape (flat vs hierarchical), worktree root location, bot identity per project, Linear team override, App tokens vs PAT.
-
-#### `add-forge-convention-adapter` *(RAP-86, scaffold open)*
-
-Per-project OpenSpec shape adapter. The studio uses prose-style minimal (3 files, no frontmatter, no registries). Unbind extends this with YAML frontmatter on capabilities, four cross-cutting registries (`decisions/dependencies/maturity/open-questions`), capability-prefixed decision IDs (`D-SE1`, `D-RP-1`), maturity scoring 0–5, and the diff-at-archive pattern (build agent describes diffs in `tasks.md`, never applies them to `current/`). Without this adapter, Forge's build agent breaks Unbind's contract.
-
-Adapter interface ships built-in for `studio` + `unbind`. Generic enough to add future engagement adapters via `forge.config.mjs § projects.<slug>.conventionAdapter`. Implementation Wave 1 depends on `add-forge-multi-project` Wave 1.
-
-#### `extend-rap63-backfill-unbind` *(RAP-87, direct impl)*
-
-Adds `unbind` row to `apps/studio` `projects` table (UPSERT on slug), GitHub repo binding `rapoport-studio/unbind.life`, Linear team UUID for the **Unbind** team. Mirror placeholder at `openspec/mirror/unbind/perception.md`. Same idempotent-migration pattern as RAP-63's earlier backfill of `pavelrapoport-com`, `vivod`, `dentour`. Soft-depends on RAP-85 Wave 1.
-
-#### `engagement-onboarding-runbook-unbind` *(RAP-88, ops/docs)*
-
-Authors `openspec/_methodology/projects/unbind-kickoff-runbook.md` covering pre-kickoff, kickoff agenda, bot identity provisioning, repo collaboration grant, credentials handoff (all keys flow through Olya's email; Pavel is admin not owner), studio-side registration, Forge-config registration, first dogfood run, post-kickoff archive, off-ramp checklist. Generic `_template-kickoff-runbook.md` so Vivod / Dentour fork in <30 min.
-
-#### `dogfood-forge-cross-repo-unb2` *(RAP-89, blocked on RAP-84/85/86/87 + RAP-88 executed)*
-
-End-to-end validation. Picks **UNB-2** (`add-studio-engagement`) as the first cross-repo Forge run because it's documentation-only, the proposal+design+tasks are already authored on the Unbind side, it materializes the studio-engagement contract (unblocking every following Unbind change), and it exercises the convention adapter end-to-end. Post-mortem published at `openspec/_research/forge-cross-repo-first-run.md`.
-
-#### `add-github-presence` *(RAP-90, in flight)*
-
-Public trust surface that supports the rest of this epic. Two new public repos under the org: `rapoport-studio/.github` (org-profile `profile/README.md` rendering at [github.com/rapoport-studio](https://github.com/rapoport-studio)) and `rapoport-studio/openspec` (read-only mirror of `_methodology/` + `AGENTS.md` + `ROADMAP.md`, kept in sync via `.github/workflows/sync-openspec-mirror.yml`). The mirror is the public destination for the homepage trust pillar A link (RAP-82), the GitHub App description (RAP-84), and the engagement charter URL referenced from the kickoff runbook (RAP-88). Locked decision: `_methodology/projects/` is **not** mirrored — client identifiers stay private; the mirror carries the three core charters + universal templates only.
-
-### Operational dependencies (not Linear issues)
-
-Captured in the RAP-88 runbook, not as separate tickets:
-
-- Pavel + Olya kickoff call → resolve D-SE1 + Q-SE-1..5
-- Olya invites `rapoport-studio-bot` to `rapoport-studio/unbind.life` with `Contents: write` / `Pull requests: write` / `Issues: write`
-- Provision Infisical workspace `unbind` under Olya's email (Pavel admin, Olya owner)
-- Open Telegram group `Rapoport Studio · Unbind` (if D-SE5 confirmed)
-
-### Subsequent engagements
-
-Vivod and Dentour are pre-registered in the projects table (RAP-63) but have no engagement charter signed. Adding either is a copy-of-RAP-83 epic with a fresh kickoff runbook and (potentially) a different convention adapter. The infra built for Unbind is reused.
-
----
-
-## Identities & credentials
-
-### `add-github-bot-and-creds` *(shipped 2026-05-04 — RAP-47)*
-
-Registered `rapoport-studio-bot` GitHub user under `hello@rapoport.studio`, invited to `rapoport-studio` org as Member, generated fine-grained PAT scoped to all org repos with Contents/PRs/Issues read-write but no Administration, stored in Infisical as `GITHUB_BOT_TOKEN`. Linear bot identity and Supabase service role setup ship together. Archived at `openspec/archive/2026-05-05-add-github-bot-and-creds/`.
-
-This change separated bot identity from Pavel's PAT. Save and Convert actions can optionally execute under bot identity for attribution clarity. Identity rollout on existing canvases remains a separate concern (no change opened yet).
-
-### `add-linear-bot-and-creds`
-
-Rolled into `add-github-bot-and-creds` (RAP-47) per its consolidated scope. Linear bot member registration, `LINEAR_BOT_API_KEY` Infisical secret, and the verification probe all ship together with the GitHub bot work. No separate change folder.
-
----
-
-## Muse capabilities — read-only first
-
-### `add-muse-github-read-tools` *(shipped 2026-05-05 — RAP-53)*
-
-Five read-only tools in `packages/muse`: `github_read_file`, `github_list_prs`, `github_get_pr`, `github_list_commits`, `github_list_branches`. Authenticated via the studio bot PAT (RAP-47), thin REST wrapper at `packages/muse/src/shared/github-client.ts` rather than `@octokit/rest` (~700 KB delta avoided). Archived at `openspec/archive/2026-05-05-add-muse-github-read-tools/`. Note: the prior ROADMAP draft mentioned `github_list_repos` / `github_get_repo` — replaced by the file-and-PR-centric surface that actually shipped.
-
-### `add-muse-linear-read-tools` *(shipped 2026-05-05 — RAP-54)*
-
-Four read-only tools in `packages/muse`: `linear_list_issues`, `linear_get_issue`, `linear_search`, `linear_list_cycles`. Thin GraphQL wrapper at `packages/muse/src/shared/linear-client.ts` (parallels the GitHub-side decision). Permission gate `['owner', 'collaborator']` — client role hard-denied. Archived at `openspec/archive/2026-05-05-add-muse-linear-read-tools/`.
-
----
-
-## Project bindings
-
-### `add-project-bindings` *(shipped 2026-05-05 — combines RAP-55 + RAP-56)*
-
-Server-side verification + write surface for `projects.github_repo`, `projects.github_repo_url`, and `projects.linear_team_id`. Four `'use server'` actions in `apps/studio/src/app/actions/project-bindings.ts` — bind/unbind × GitHub/Linear — verifying via raw `fetch` against the GitHub and Linear APIs (using `GITHUB_BOT_TOKEN` / `LINEAR_BOT_API_KEY` from RAP-47) before writing. Linear UUID is always persisted (never the team key) so re-keying in Linear's UI does not break the binding. UI surface deferred to `add-project-home` (RAP-57). `linear_project_id` writer deferred to a follow-up — `add-project-bind-linear-project`. The "create new repo" path is deferred until `add-muse-github-write-tools` lands; same for "create new Linear project".
-
----
-
-## Project home (UI)
-
-### `add-project-home` *(shipped 2026-05-05 — RAP-57)*
-
-Routes `/projects` (list) and `/projects/[slug]` (detail). Detail view shows recent canvases, bindings card (wraps the four `add-project-bindings` actions), and a knowledge-stats card aggregating `canvas_project_instructions` over `canvas_sessions`. Computed-only, no new tables.
-
-**Follow-ups shipped same day:**
-
-- `add-project-home-mirror-methodology` *(shipped 2026-05-05 — RAP-65, PRs #192 + #193)* — Mirror coverage scoreboard card + methodology card on `/projects/[slug]`, plus the build-snapshot infra (`tools/with-deploy-info.mjs`) that injects `DEPLOY_SHA` / `DEPLOY_AT` constants so both cards display "as of which deploy" honestly. Archived at `openspec/archive/2026-05-05-add-project-home-mirror-methodology/`.
-- `fix-projects-rail-entry` *(shipped 2026-05-05 — RAP-68, PR #197)* — drift fix: rail navigation was missing the **P** entry; routes were reachable only via direct URL until this lightweight fix landed. Rail order is now D / C / P / I / T / S.
-
----
-
-## Canvas as design board
-
-### `add-canvas-multi-view` *(shipped 2026-05-05, Wave 1 only — registry primitive landed; switcher + Mirror view deferred to follow-up changes below)*
-
-Surface the existing chat alongside additional views inside the canvas-view: Mirror viewer (perception fields rendered from canvas_files), file browser (`openspec/` subset), spec graph stub. Tabs or panels in the existing layout. No DB schema changes — these are renderings of existing state.
-
-Wave 1 shipped a view registry primitive (`packages/canvas/src/views`) and extracted today's three-column body into `ChatView` — zero user-visible diff. Follow-up work split out:
-
-- `add-canvas-view-switcher` — segmented control + localStorage persistence. Ships once a second view exists.
-- `add-canvas-mirror-view` — Mirror viewer placeholder; ships once Mirror has enough perception field density to be worth a dedicated surface.
-
-### `add-canvas-idea-capture`
-
-First phase of canvas lifecycle. Structured input panel for problem statement, proposed solution, target audience, metadata (industry, deal size, timeline). Persisted in `canvas_sessions.wizard_state` JSONB column (already exists, currently underused). Muse references this state in subsequent phases.
-
-### `add-muse-competitor-research`
-
-Tool composition: `find_competitors(domain, audience)`, `analyze_competitor(url)`, `competitive_landscape(competitors[])`. Built from existing `web_search` + `fetch_url` + LLM extraction primitives. Renders comparison matrix as a canvas_files row under path `research/competitors.md`.
-
-### `add-business-model-templates`
-
-Knowledge base of business model patterns the studio reuses across engagements (SaaS, marketplace, freemium, transactional, agency). Storage TBD (markdown files in `openspec/templates/`, DB table, or skill-style files). Muse references during research and spec phases.
-
----
-
-## Build phase automation
-
-### `add-muse-github-write-tools` *(shipped 2026-05-05 — RAP-60)*
-
-Five write tools: `github_create_branch`, `github_commit_file`, `github_open_pr`, `github_comment`, `github_request_review`. Each gates on explicit `approved: true` in input schema (`github_write_guard.ts` exporting `ensureWriteApproved`); without it, tools short-circuit with `approval_required`. v1 ships without DB-backed audit log (deferred). Archived at `openspec/archive/2026-05-05-add-muse-github-write-tools/`.
-
-### `add-muse-linear-write-tools` *(RAP-61, scaffold drafted)*
-
-Linear-side mirror of the GitHub-write surface. Four tools: `linear_create_issue`, `linear_update_issue`, `linear_add_comment`, `linear_archive_issue`. Same approval gate. Implementation gated on RAP-54 merge; scaffold proposes renaming `github_write_guard.ts` → `write_guard.ts` so the helper drops its service-specific naming.
-
-### `add-forge-builder-mode` *(RAP-48, proposal ready)*
-
-Forge as the platform architect: gains its own GitHub/Linear/Supabase identities and six new commands (`inbox`, `inspect`, `plan`, `build`, `status`, `cancel`). Reads a Linear issue + corresponding OpenSpec change, generates code via a Claude Agent SDK subprocess in a working tree, opens a PR, comments on the Linear issue with the PR link. Six explicit checkpoints; pre-merge checkpoint never auto-passes. v1.2 milestone in the studio roadmap. Hard prerequisite: RAP-47 must merge before Wave 3.
-
----
-
-## Adoption
-
-### `add-adopt-existing-projects` *(shipped 2026-05-05 — RAP-63)*
-
-Three real projects backfilled into `projects` table: `pavelrapoport-com` → studio self-project (GitHub bound, Linear team `RAP`); `vivod` → Vivod client project (bindings deferred, NULL); `dentour` → Dentour collaboration (bindings deferred, NULL). Mirror placeholders created at `openspec/mirror/{pavelrapoport-com,vivod,dentour}/perception.md`. Migration is idempotent (UPSERT on slug); no hardcoded UUIDs (resolves owner from existing seeded `i-avocat` row, fails fast if seed missing). Slug uses `pavelrapoport-com` (not `pavelrapoport.com`) because the projects slug CHECK regex disallows dots; canonical name preserved. Archived at `openspec/archive/2026-05-05-add-adopt-existing-projects/`.
-
-### `add-muse-scout-mode` *(scaffold shipped 2026-05-05 — RAP-64; v1.3 design lock)*
-
-Forward-looking design lock for the Scout mode in v1.3 — codebase scanning produces an OpenSpec migration report. Scaffold captures six open architecture questions (Q-SC-1…6) with defaults: single-agent scan, sampling/async cost envelope, intermediate capability map output, read-only API access, no Mirror integration, persona model deferred. Hard prerequisites for v1.3 kickoff: v1 Architect dogfood mature (≥ 5 changes shipped), RAP-48 Wave 4 archived, ≥ 1 adopted project manually spec-authored, RAP-61 implementation on main. Scaffold archived at `openspec/archive/2026-05-05-add-muse-scout-mode/`; implementation chains open when v1.3 loop kicks off.
-
----
-
-## Design system
-
-### `add-entity-system` *(shipped 2026-05-06 — RAP-91)*
-
-Catalogs ~38 primary domain entities across 7 tiers (platform-structural / domain / concept / network / content / spec / external). Locks Lucide as the canonical icon library with comparative analysis (Lucide / Phosphor / Heroicons / Tabler / Radix Icons) and recorded re-evaluation triggers. Defines the `EntityCard` primitive contract — four variants (`inline` / `row` / `card` / `detail`), fixed slot layout, responsive collapse, accessibility, i18n key shape. Five fixes to first-draft icon picks landed during init (`Seedling` → `GraduationCap` since `Seedling` is not in `lucide-react`; plus `Compass` / `GitPullRequestArrow` / `KanbanSquare` collisions or wrong Lucide names). Three icons remain held open for future ratification (`muse` `Wand2` vs `Atom`; `forge` `Hammer` vs `Anvil`; `community-member` `Sprout` vs `Leaf` — defaults shipped). Specs only — no application code. Archived at `openspec/archive/2026-05-06-add-entity-system/`. New capability spec at `openspec/current/entities.md`. Amendments applied to `design-system.md`, `platform.md`, `ui.md`.
-
-**Follow-ups:**
-
-- `add-entity-card-primitive` *(RAP-92, branch scaffolded)* — TypeScript registry mirroring the catalog + `<EntityCard>` primitive in `packages/ui/src/components/entity-card.tsx` + i18n placeholder JSON in `packages/i18n/messages/{en,ru,ro}/entities.json` + extension of the `i18n` smoke parity test to cover `entities.json`. No consumer migrations.
-- `migrate-surfaces-to-entity-card` *(RAP-105)* — consumer migration sweep, one PR per consumer family: inbox rows, canvas list rows, project home Bindings card, file tree rows, work cards, network cards. Blocked by RAP-92.
-
----
-
-## Independent behavioural changes
-
-### `add-muse-conversation-discipline`
-
-System prompt change covering three behaviours that emerged in May 4 2026 design conversations:
-
-1. *Closing pulse* — at the end of meaningful turns, Muse outputs a "captured this turn" block (1-3 bullets of what landed) and a "suggested next moves" block (2-3 options with rough cost). Skipped on trivial turns.
-
-2. *Continuous documentation reflex* — within each turn, Muse attempts to extract structure from speech: new concepts → potential spec sections, new constraints → potential Mirror fields, new commitments → potential proposal updates. Surfaces these as part of closing pulse.
-
-3. *Role-aware questioning* — different question playbooks for different audiences. To `platform_owner`: strategic, risk-focused, what's-out-of-scope. To `collaborator`: technical, edge-cases, dependencies. To `client`: domain, current process, pain points. Muse picks the playbook based on the current message author's role.
-
-This is one big system-prompt change, ~150-200 lines of buildSystemPrompt updates plus tests. Independent of project layer — ships whenever ready.
-
-### `add-canvas-voice-input` *(scaffold shipped 2026-05-05 — RAP-51)*
-
-Browser Web Speech API mic button next to the chat composer's send button — opt-in, append-not-replace transcript semantics, mobile-first ergonomics, no audio storage. Scaffold locks Web Speech only for v1; Whisper / Deepgram deferred until quality becomes the bottleneck. Archived at `openspec/archive/2026-05-05-add-canvas-voice-input/`; implementation ships separately.
-
-### `add-canvas-and-session-split` *(deferred terminology)*
-
-Today's `canvas_sessions` table mixes two concepts that the design conversation of May 4 2026 separated:
-
-- **Canvas** — the persistent design board for an idea / topic / change. Multi-view workspace. Owns name, slug, status, files, artifacts, bindings.
-- **Session** — a time-bounded sitting in a Canvas. Owns participants for that sitting, cost, message stream, started/ended timestamps.
-
-Today, one `canvas_sessions` row plays both roles. The split is deferred until the multi-view Canvas is built and the right shape for Sessions is clear from real usage. At that point the rename touches DB tables, ~30 TypeScript files, routes, and Linear references — it's expensive, so it ships when value is concrete.
-
----
-
-## Sequencing diagram
+### The seven-step end-to-end flow
 
 ```
-┌──────────────────────────────────────────────────────────────────────┐
-│  Active / immediate                                                  │
-├──────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│   add-projects-table          (shipped — RAP-43)                    │
-│   add-canvas-file-lifecycle   (shipped — RAP-44)                    │
-│   add-mirror-runtime-fix      (shipped — RAP-49)                    │
-│                                                                      │
-└──────────────────────────────────────────────────────────────────────┘
-
-┌──────────────────────────────────────────────────────────────────────┐
-│  External project enablement (epic RAP-83 — in flight)               │
-├──────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│   kickoff (Pavel + Olya)  ──►  D-SE1 = full / deliverables-only     │
-│                                       │                              │
-│                                       ▼                              │
-│   add-project-connect-onebutton (RAP-84, scaffold)                  │
-│   add-forge-multi-project       (RAP-85, scaffold)                  │
-│   add-forge-convention-adapter  (RAP-86, scaffold)                  │
-│   extend-rap63-backfill-unbind  (RAP-87, direct impl)               │
-│   engagement-runbook-unbind     (RAP-88, ops/docs)                  │
-│                       │                                              │
-│                       ▼                                              │
-│   dogfood-forge-cross-repo-unb2 (RAP-89, blocked)                   │
-│                       │                                              │
-│                       ▼                                              │
-│   first PR in unbind.life from rapoport-studio-bot                  │
-│                                                                      │
-│   add-github-presence           (RAP-90, in flight, parallel)       │
-│       └── github.com/rapoport-studio + /openspec mirror             │
-│                                                                      │
-└──────────────────────────────────────────────────────────────────────┘
-
-┌──────────────────────────────────────────────────────────────────────┐
-│  Identities & credentials                                            │
-├──────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│   add-github-bot-and-creds       add-linear-bot-and-creds            │
-│           │                             │                            │
-│           ▼                             ▼                            │
-│   add-muse-github-read-tools  ✓  add-muse-linear-read-tools  ✓       │
-│           │                             │                            │
-│           └──────────────┬──────────────┘                            │
-│                          ▼                                           │
-└──────────────────────────────────────────────────────────────────────┘
-
-┌──────────────────────────────────────────────────────────────────────┐
-│  Project bindings & home                                             │
-├──────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│   add-project-bindings  ✓                                            │
-│           │                                                          │
-│           ▼                                                          │
-│                    add-project-home  ✓                               │
-│                                                                      │
-└──────────────────────────────────────────────────────────────────────┘
-
-┌──────────────────────────────────────────────────────────────────────┐
-│  Canvas as design board                                              │
-├──────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│   add-canvas-multi-view                                              │
-│   add-canvas-idea-capture                                            │
-│   add-muse-competitor-research                                       │
-│   add-business-model-templates                                       │
-│   add-canvas-voice-input  (scaffold ✓)                               │
-│                                                                      │
-└──────────────────────────────────────────────────────────────────────┘
-
-┌──────────────────────────────────────────────────────────────────────┐
-│  Build phase automation                                              │
-├──────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│   add-muse-github-write-tools  ✓  add-muse-linear-write-tools  (scaffold ✓) │
-│           │                             │                            │
-│           └──────────────┬──────────────┘                            │
-│                          ▼                                           │
-│                  add-forge-builder-mode                              │
-│                                                                      │
-└──────────────────────────────────────────────────────────────────────┘
-
-┌──────────────────────────────────────────────────────────────────────┐
-│  Adoption                                                            │
-├──────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│   add-adopt-existing-projects  ✓                                     │
-│           │                                                          │
-│           ▼                                                          │
-│   add-muse-scout-mode  (scaffold ✓ — v1.3 design lock)               │
-│                                                                      │
-└──────────────────────────────────────────────────────────────────────┘
-
-┌──────────────────────────────────────────────────────────────────────┐
-│  Independent behavioural / deferred terminology                      │
-├──────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│   add-muse-conversation-discipline   (independent)                   │
-│   add-canvas-and-session-split       (deferred until multi-view)     │
-│                                                                      │
-└──────────────────────────────────────────────────────────────────────┘
+1. Canvas → Capture idea          (structured design doc input)
+2. Architect mode → OpenSpec      (proposal + design + tasks)
+3. Linear issue ↔ change folder   (linkage)
+4. /tasks/[key] → Plan            (Forge plans, Pavel approves)
+5. /tasks/[key] → Implement       (Forge builds, opens PR)
+6. /tasks/[key] → Review          (Forge reviews, Pavel merges)
+7. Loop continues                 (drift documented, retro logged)
 ```
+
+### Status per step
+
+| # | Step | State | Today | Gap to MVP |
+|---|---|---|---|---|
+| 1 | Canvas Capture | ✅ 100% | sticky-board (RAP-58) ✓ + wizard schema/actions/UI/Muse/spec-amend/archive (`add-canvas-discovery-wizard` ✓ via #359/#363/#365/#366/#369/#371 + this PR) | — |
+| 2 | OpenSpec workflow | ✅ 95% | Architect mature, Muse multi-tool, convention adapter | Polish (Mirror view) |
+| 3 | Linear ↔ OpenSpec linking | ✅ 90% | Linear bot, Muse write tools | Auto-create issue from change folder (manual today) |
+| 4 | Forge UI — Plan / Review / PR | ✅ 90% | `/tasks/[key]`, DB, 15 actions, SSE, Phases 1/3/4 + Track-C discovery surface (F rail + `/tasks` index + project Forge card, all archived 2026-05-08) | Implement body lit by Wave 4 |
+| 5 | Forge UI — Implement (Phase 2) | 🔴 20% | Stub "visible-but-disabled" | Builder runtime (RAP-48) lights up the body |
+| 6 | Forge Builder Mode (CLI) | ✅ 100% | Waves 1–3 ✓ (PRs #161/#166/#186) + Wave 4 Phase A ✓ (#351) + Phase B ✓ (RAP-151 sandbox seed 2026-05-08) + Phase 3.A drift fixes via #378/#379/#382/#385/#387/#391/#394 — RAP-48 closed 2026-05-09 | — |
+| 7 | Studio dogfood | 🟡 in-flight | `sync-roadmap-post-rap48-close` (this change) is Cycle 1 of the 3-cycle dogfood campaign | Cycles 2 + 3 + retro |
+
+### Critical-path tracks
+
+```
+Track A — RAP-48 close-out via      All waves merged; RAP-48 closed         [████████████████████] ✅ shipped
+          sync-forge-builder-spec   2026-05-09 (Phases A/B/D done; C =
+                                    Track D below)
+Track B — add-canvas-discovery-     All phases shipped + archived          [████████████████████] ✅ shipped
+          wizard                                                              (archived 2026-05-08)
+Track C — add-forge-discovery-      F-rail + /tasks index + project card   [████████████████████] ✅ shipped
+          surface                                                             (archived 2026-05-08)
+Track D — Studio dogfood E2E        Cycle 1 = sync-roadmap-post-rap48-      [████░░░░░░░░░░░░░░░░] in-flight
+          (= sync-forge-builder-    close (this change). Cycles 2 + 3
+          spec Phase 3)             follow.
+```
+
+#### Track A — `add-forge-builder-mode` (RAP-48, ✅ closed 2026-05-09)
+
+Forge as platform architect: own GitHub/Linear/Supabase identities, six commands (`inbox` / `inspect` / `plan` / `build` shipped Waves 1–3; `status` / `cancel` pending Wave 4), Anthropic Agent SDK in working tree.
+
+**Hard prerequisites — all met as of 2026-05-08:**
+
+- ✅ RAP-47 — bot identities
+- ✅ Canonical `GitHubClient` consolidated in `packages/forge/src/core/github-client.ts` (RAP-136 / RAP-140)
+- ✅ `add-project-connections` shipped end-to-end (archived 2026-05-08 as `archive/2026-05-08-add-project-connections`; operational tail — production deploy, manual smoke, follow-up `drop-deprecated-projects-binding-columns`, RAP-111 close — tracked separately)
+
+**Already shipped (PRs #161 / #166 / #186, 2026-05-04 → 2026-05-05):**
+
+- Wave 1 — identity foundation (`loadForgeIdentity` → `core/auth.ts`), `forge inbox`, `forge inspect`, programmatic API on `Forge` handle.
+- Wave 2 — `forge plan` + lessons-learned mechanism (`~/.forge/lessons-learned.md`) + state model (`~/.forge/state/*.json`) + Builder prompt template (`packages/muse/src/builder-prompt.ts`).
+- Wave 3 Phase 8 — build orchestrator + Anthropic Agent SDK call shape (per spike `archive/2026-05-05-add-forge-builder-mode/spikes/2026-05-05-claude-agent-sdk.md`) + six-checkpoint gating.
+
+**Wave 4 — fully shipped, tracked under `openspec/changes/sync-forge-builder-spec/`:**
+
+- ✅ Phase A — `forge status` + `forge cancel` orchestrators + in-process `build-registry.ts` + `GitHubClient.deleteBranch` (merged via #351 on 2026-05-08).
+- ✅ Phase B — sandbox lessons-seed dogfood completed via RAP-151 (2026-05-08); seed entry written to `~/.forge/lessons-learned.md`.
+- 🟡 Phase C — first real-issue e2e in flight via Track D Cycle 1 (`sync-roadmap-post-rap48-close` — this change).
+- ✅ Phase D — Phase 3.A drift fixes shipped via #378/#379/#382/#385/#387/#391/#394 between 2026-05-08 and 2026-05-09; RAP-48 closed 2026-05-09.
+
+Note: a separate `openspec/changes/sync-forge-builder-spec/` change owns the documentation truthing (forge.md / muse.md / platform.md / ROADMAP) plus Wave 4 execution. RAP-48 was prematurely closed 2026-05-05 after Wave 3 Phase 8 merged; reopened to "In Progress" 2026-05-08 to absorb Wave 4 + truthing.
+
+Estimated remaining effort: **complete** for RAP-48 itself. First real-issue e2e (Track D Cycle 1) is in flight via this change.
+
+#### Track B — `add-canvas-discovery-wizard` ✅ shipped (archived 2026-05-08 as `archive/2026-05-08-add-canvas-discovery-wizard`)
+
+Structured input panel for problem statement, proposed solution, target audience, metadata (industry, timeline, budget). Persisted in `canvas_sessions.wizard_state` (JSONB column already existed). Muse references this state via shared system-prompt preamble across Architect / Builder / Research modes.
+
+> **Naming note:** the slug `add-canvas-idea-capture` is already taken by the shipped sticky-note board (RAP-58, archived 2026-05-05). The two changes are complementary: sticky-notes are spatial free capture; the wizard is sequential structured intake at canvas creation.
+
+**Per-phase ship log:**
+
+- Phase 0 — scaffold (#356)
+- Phase 1 — Zod schema in `packages/canvas/src/wizard/` + 32 tests (#359)
+- Phase 2 — server actions (`saveWizardField` / `clearWizardField` / `loadWizardState`) + 18 tests (#363)
+- Phase 3 — UI panel `<DiscoveryWizard>` with six fields, autosave on blur, collapsibility per-canvas, read-only branch at `tasks` stage + 17 tests (#365 + #366)
+- Phase 4 — Muse integration via `renderWizardBlock` in shared `buildSystemPrompt` (mode-agnostic) + 16 tests (#369)
+- Phase 5 — spec amendments (`studio.md` + `muse.md` + `db.md` + `lifecycle.yaml` `wizard_field_min_chars` check kind) + 5 evaluator tests (#371)
+- Phase 6 — archive (this PR)
+
+**v1 deviations documented in archive:** tests for `packages/canvas/src/wizard/` schema live in `apps/studio/__tests__/canvas-wizard/` rather than the canvas package (no vitest infra in canvas yet); Phase 2 used read-then-merge-then-write for JSONB merge instead of raw `||` (PostgREST limitation); Phase 4 collapsed T4.1 + T4.2 into one wiring task (single shared `buildSystemPrompt`, not per-mode builders).
+
+#### Track C — `add-forge-discovery-surface` ✅ shipped (archived 2026-05-08 as `archive/2026-05-08-add-forge-discovery-surface`)
+
+Closed three gaps from RAP-130 explicitly out of scope at the time:
+
+1. **F rail icon** — fixed via #343 (Phase 1); `studio-rail.tsx` now links to `/tasks`.
+2. **`/tasks` index** — shipped via #345 (Phase 2); 50 most-recent `forge_runs` across all projects, server-rendered with empty-state, status pills, and per-row links to `/tasks/[key]`.
+3. **Project-detail Forge card** — shipped via #347 (Phase 3); `<ForgeRunsCard>` on `/projects/[slug]` with two empty-state branches keyed on whether the project has a known Linear-issue prefix.
+
+Spec amendments to `studio.md § Task discovery` + `forge.md § Out of scope` shipped via #348 (Phase 4). Track D (studio dogfood E2E) precondition is now unblocked.
+
+**v1 deviation (documented in archived design.md § 3):** project columns deferred until a follow-up migration adds `forge_runs.project_id` (or `projects.linear_prefix`). Today the project card scopes by `linear_issue_key LIKE 'PREFIX-%'` against a static slug→prefix map mirroring `forge.config.mjs § projects`.
+
+#### Track D — Studio dogfood E2E (no change folder, runbook only)
+
+Once Tracks A and C land, take a small RAP issue (e.g., the F-rail fix from Track C if not yet merged, or a tiny UI polish) and run the full cycle:
+
+```
+forge inbox --project=studio
+forge inspect RAP-XXX
+forge plan RAP-XXX
+forge build RAP-XXX
+→ verify Linear comment + PR created
+→ merge → archive change folder
+→ post-mortem at openspec/_research/forge-studio-first-run.md
+```
+
+Estimated effort: **4–6 hours** + drift fixes for whatever breaks. **Definition of done for MVP v1.**
+
+### Dependency graph
+
+```
+Track C (forge-discovery-surface)        ✅ done & archived 2026-05-08
+Track B (canvas-discovery-wizard)        ✅ done & archived 2026-05-08
+                                                      │
+                                                      ▼ (D unblocked from B + C sides)
+
+Track A (sync-forge-builder-spec)        🟡 Phase A ✓ — Phases B–C remain
+   │                                         (Phase C ≡ Track D)
+   ▼
+Track D (Studio dogfood E2E)             baked into sync-forge-builder-spec Phase 3
+                                                      │
+                                                      ▼
+                                              🎉 MVP v1 done — ETA 1–2 days
+```
+
+### Items deprioritised to keep MVP v1 fast
+
+These are explicitly **not** required for MVP v1 and live in Section 3 or 4:
+
+- `add-tg-canvas-surface` — Telegram is nice but not required for self-drive
+- `add-network-public-surface` / `add-network-studio-surface` — Network is its own product
+- `add-linear-oauth-connection` — bot identity works, OAuth is nice-to-have
+- `add-canvas-view-switcher`, `add-canvas-mirror-view` — deferred until second view exists / Mirror density grows
+- `add-project-connect-onebutton` Phase 2+ — gated on Olya kickoff (separate human dependency)
 
 ---
 
-## Documentation drift items (not changes, just doc fixes)
+## 2. MVP v1.1 — Unbind dogfood (immediate next, after v1)
 
-These were spotted during pre-flight verification of `add-projects-table` v2 and `add-canvas-file-lifecycle` v2. Each is a small `docs/rap-NN/...` PR scoped to one file. None are in scope for either active change.
+The Unbind external-engagement enablement (epic [RAP-83](https://linear.app/rapoport-studio-slr/issue/RAP-83)) is the milestone right after MVP v1. Its substrate is shipped; what remains is the executable tail and human-coordinated kickoff.
 
-1. `db.md` lists 4 public tables; live database has 5 (`inbox` exists from `add-client-onboarding`).
-2. `db.md` does not document `canvas_sessions.wizard_state jsonb NOT NULL DEFAULT '{}'::jsonb`.
-3. `db.md` describes `canvas_artifacts` with pending/committed columns that **do not exist** in the live schema. The live schema is the versioned model `(canvas_id, file, version)`. This is the most critical drift — the v1 of `add-canvas-file-lifecycle` was written against the documented (incorrect) state. v2 corrects this.
-4. `db.md` does not document the fourth `canvas_sessions.status` enum value `'archived'`.
-5. `canvas_sessions_tool_cost_cents_check` constraint name still uses pre-rename `tool_cost_cents` term; column was renamed to `cost_cents`. Cosmetic.
-6. Memory snapshot Supabase project ID `mtavnbjdgldttqdpwouo` is stale; live ID is `nifagnmgwoqkplegsicy`.
-7. Linear team ID in memory `ffb2de5f-f0b7-476f-ad46-979be7844800` is stale; live ID is `c48bbbb1-9eba-477d-87d2-d082c506d885` (verified via Linear MCP).
+**Substrate shipped:**
 
-Items 6 and 7 will be corrected via `memory_user_edits` post-merge.
+- ✅ RAP-85 multi-project config
+- ✅ RAP-86 convention adapter (full — Phase 6 archived)
+- ✅ RAP-87 backfill `unbind` row + bindings + Mirror placeholder
+- ✅ RAP-89 preflight (PR #300 — `unbind` in `forge.config.mjs`)
+- ✅ RAP-130 Forge UI surface (Plan/Review/PR)
+
+**Open (gated on MVP v1 Track A or human dependencies):**
+
+- `migrate-unbind-into-studio` *(scaffold via PR #326, 0/43 done)* — formalises operating Unbind from inside the studio app once MVP v1 substrate is ready.
+- `engagement-onboarding-runbook-unbind` *(RAP-88, in flight)* — `_methodology/projects/unbind-kickoff-runbook.md` + generic `_template-kickoff-runbook.md`.
+- `add-github-presence` *(RAP-90, in flight)* — `rapoport-studio/.github` org-profile + `rapoport-studio/openspec` public mirror.
+- `add-project-connect-onebutton` Phase 2+ *(RAP-84 / RAP-126, gated)* — GitHub App install flow, blocked on Olya kickoff.
+- `dogfood-forge-cross-repo-unb2` *(RAP-89 full, blocked)* — first cross-repo Forge run against UNB-2. Blocks on RAP-84 + RAP-88 + RAP-90 + MVP v1 Track A.
+
+**Subsequent engagements (deferred to late May / June):**
+
+- `onboard-vivod` *(scaffold via PR #329)* — durable engagement record for Vivod.
+- `onboard-dentour` *(scaffold via PR #324)* — Dentour kickoff plan.
+- `add-project-migration-prompt` *(✅ shipped via #381, archived 2026-05-09 as `archive/2026-05-09-add-project-migration-prompt/`)* — generic Branch-B migration template authored at `_methodology/projects/_template-migration-prompt.md`. Template-precondition for Vivod + Dentour Phase 5 has cleared; per-engagement forks (`vivod-migration-prompt.md`, `dentour-migration-prompt.md`) can be authored when each engagement's remaining gates (charter / mode / `dialect_change_approved`) hold.
+
+---
+
+## 3. Parallel tracks (active, do not block MVP v1)
+
+These are active change folders that **can ship in parallel** with MVP v1 work or right after. They are not on the critical path.
+
+### Canvas vertical (Wave 2 leftovers)
+
+- `add-xstate-state-orchestration` *(RAP-128 Wave 1 ✓ + RAP-133 Wave 2A ✓; Wave 2B in flight)* — broader XState orchestration beyond chat. ~88% checkbox completion.
+
+### Engagement track (specific to Radion onboarding pilot)
+
+- ~~`add-team-onboarding-canvas`~~ — *cancelled 2026-05-08, archived as [`archive/2026-05-08-add-team-onboarding-canvas/`](archive/2026-05-08-add-team-onboarding-canvas/). Engagement deprioritised against MVP v1 critical path; Phase 1 never started. Reusable artefacts harvested to [`_methodology/research/loop-protocol.md`](_methodology/research/loop-protocol.md) and [`_methodology/research/multi-author-canvas-instructions-template.md`](_methodology/research/multi-author-canvas-instructions-template.md).*
+
+### Connections — credentials & UI
+
+- `add-linear-oauth-connection` *(RAP-112, 2/6 phases done)* — per-user "Connect with Linear" on `/settings`. Bot path works; OAuth is the actor-bound layer for Telegram bridge.
+
+### Network platform
+
+- `add-network-public-surface` *(RAP-96, scaffold deferred)* — public-facing network presentation.
+- `add-network-studio-surface` *(RAP-97, scaffold deferred)* — internal studio network views.
+
+### Telegram canvas
+
+- `add-tg-canvas-surface` *(RAP-121, Phase 4/6 in flight)* — Telegram canvas surface (replaces Web Speech voice input as the primary low-friction capture path). Phases 1 (G4 close, #358), 2 (DB migrations, #361), 3 (headless Muse runtime, #367), 4 (Telegram webhook + Whisper + bot identity, #370) shipped 2026-05-08. Phase 5 Studio UI surface + Phase 6 engagement opt-in + archive remain.
+
+### Studio control room (admin)
+
+- `add-studio-control-room` Phase 1 *(✅ shipped via #376, archived 2026-05-09 as `archive/2026-05-09-add-studio-control-room/`)* — owner-only `/control` + `/control/roadmap` surface. The Roadmap dashboard renders six sections from the live `openspec/ROADMAP.md` via the bundle generator's three new exports (`ROADMAP_TEXT` / `CHANGES_INDEX` / `ARCHIVE_COUNT`). Phases 2–5 = engagement / throughput / finance / team dashboards, each its own change folder, lit up by editing the single `control/page.tsx` file:
+  - `add-control-engagement-dashboard` *(Phase 2, ✅ shipped via #389, archived 2026-05-09 as `archive/2026-05-09-add-control-engagement-dashboard/`)* — `/control/engagements` over `projects` + per-engagement methodology yaml + activity signals (canvas + forge). Two of five `<DashboardCard>` cards on `/control` are now `ready` (Roadmap + Engagements); three remain `planned`.
+  - `add-control-throughput-dashboard` *(Phase 3, deferred)* — `/control/throughput` over PR/Linear closed-per-week + change-folder velocity.
+  - `add-control-finance-dashboard` *(Phase 4, deferred)* — `/control/finance` over token spend per project + lead conversion.
+  - `add-control-team-dashboard` *(Phase 5, deferred)* — `/control/team` over pending invitations + specialist network.
+
+### Foundation (philosophy)
+
+- `add-philosophy-foundation` *(RAP-148, Phase A scaffolded via #350)* — agents-overview + charter prose foundation. Phase B (manifesto) blocked on Pavel content.
+
+---
+
+## 4. Deferred / Future
+
+Explicitly out of scope for MVP v1.x. Tracked here so they don't get lost.
+
+### v1.2 / v1.3 milestones
+
+- `add-muse-scout-mode` *(scaffold shipped 2026-05-05 — RAP-64; v1.3 design lock)* — codebase scanning → OpenSpec migration report. Implementation gated on RAP-48 final archive + ≥ 5 dogfood changes.
+
+### Capture & Research enrichment (Canvas)
+
+- `add-muse-competitor-research` *(not scaffolded)* — `find_competitors`, `analyze_competitor`, `competitive_landscape`. Renders comparison matrix as `canvas_files` row under `research/competitors.md`.
+- `add-business-model-templates` *(not scaffolded)* — knowledge base of business model patterns (SaaS, marketplace, freemium, transactional, agency). Storage TBD.
+- `add-canvas-multi-view` Wave 2+ *(deferred)* — Mirror viewer, file browser, spec graph stub.
+
+### Canvas polish (deferred until preconditions clear)
+
+- `add-canvas-view-switcher` *(deferred until second view exists)* — segmented control + localStorage persistence.
+- `add-canvas-mirror-view` *(deferred until Mirror density grows)* — Mirror viewer placeholder.
+- `add-canvas-voice-input` *(scaffold archived 2026-05-05 — RAP-51, superseded direction)* — Web Speech path; superseded by `add-tg-canvas-surface` for primary capture, may revive as desktop secondary.
+
+---
+
+## 5. Foundation — shipped (durable history)
+
+Compact list. Each item is archived under `openspec/archive/<date>-<slug>/`.
+
+- ✅ **RAP-48 — `add-forge-builder-mode`** — Forge as autonomous platform architect (10 commands; identity model; 5-checkpoint Builder execution; lessons-learned). All waves shipped; closed 2026-05-09. Archive: `openspec/archive/2026-05-05-add-forge-builder-mode/` + follow-up sync change `openspec/changes/sync-forge-builder-spec/`.
+
+**DB foundation:**
+
+- `add-projects-table` (RAP-43), `add-canvas-file-lifecycle` (RAP-44), `add-mirror-runtime-fix` (RAP-49), `reset-and-squash-database`, `add-canvas-and-session-split`.
+
+**Bot identities:**
+
+- `add-github-bot-and-creds` (RAP-47) — `rapoport-studio-bot` GitHub user, fine-grained PAT in Infisical, Linear bot member, `LINEAR_BOT_API_KEY`.
+
+**Muse multi-tool:**
+
+- `add-muse-conversation-discipline` (RAP-52), `add-muse-github-read-tools` (RAP-53), `add-muse-linear-read-tools` (RAP-54), `add-muse-github-write-tools` (RAP-60), `add-muse-linear-write-tools` (RAP-61), `add-muse-scout-mode` scaffold (RAP-64), `add-muse-mirror-authoring-tool`, `add-muse-research-tools-with-personas`, `add-muse-knowledge-system`, `wire-muse-runtime-in-studio`.
+
+**Project bindings, home & adoption:**
+
+- `add-project-bindings` (RAP-55+56), `add-project-home` (RAP-57), `add-project-home-mirror-methodology` (RAP-65), `fix-projects-rail-entry` (RAP-68), `add-adopt-existing-projects` (RAP-63), `add-project-connections` (RAP-134 — pluggable connection registry under `packages/connections`, GitHub + Linear kinds, ConnectionsList swap, creation-time GitHub on `<NewProjectForm>`; archived 2026-05-08).
+
+**Design system + entity layer:**
+
+- `add-entity-system` (RAP-91), `add-entity-card-primitive` (RAP-92 — `<EntityCard>` primitive + 38-entry registry + i18n placeholders; archive folder backfilled 2026-05-09), `migrate-surfaces-to-entity-card` (RAP-105 — 11 phases).
+
+**Forge plumbing:**
+
+- `add-forge-multi-project` (RAP-85), `add-forge-convention-adapter` (RAP-86), `add-forge-ui-task-detail` (RAP-130 Tracks A–D), `add-forge-discovery-surface` (Track C — F rail + `/tasks` index + project Forge runs card; archived 2026-05-08).
+- `extend-rap63-backfill-unbind` (RAP-87) — `unbind` row + bindings + Mirror placeholder for Section 2.
+
+**Canvas vertical:**
+
+- `add-canvas-multi-view` (Wave 1), `add-canvas-state-machine` (RAP-133 Wave 2A), `add-canvas-stage-primitive` (RAP-80 Wave 1), `add-canvas-progress-view` (RAP-80 Wave 2), `add-canvas-voice-whisper` (cancelled / superseded by RAP-121), `add-canvas-idea-capture` (RAP-58 — sticky-note board, free-capture surface), `add-canvas-discovery-wizard` (MVP v1 Track B — six-field structured intake panel + Muse system-prompt preamble + `wizard_field_min_chars` lifecycle check; archived 2026-05-08), `add-canvas-invitations`, `add-canvas-diff-and-save`, `add-canvas-file-panel-server-actions`, `add-tool-status-streaming-ui`, `complete-canvas-file-lifecycle`.
+
+**Network platform substrate:**
+
+- `add-network-data-schema`, `add-network-channel-ingestion`, `add-network-entities`.
+
+**Code display:**
+
+- `add-studio-code-display` (RAP-127 + RAP-129 Phases 1–2) — Shiki client-lazy in `<Markdown>`.
+
+**Founder & community surfaces:**
+
+- `add-studio-self-serve-signup`, `expand-home-with-services-and-community` (RAP-82), `add-founder-track` (RAP-98).
+
+**Operational dashboards:**
+
+- `add-studio-control-room` Phase 1 — owner-only `/control` + `/control/roadmap` surface, X rail entry, `tools/build-openspec-bundle.mjs` extended with `ROADMAP_TEXT` + `CHANGES_INDEX` + `ARCHIVE_COUNT`, hand-rolled `parseRoadmap` + typed `RoadmapDriftError`, six-section dashboard with three sub-primitives (StatusPill / ProgressBar / FlowStep). Archived 2026-05-09.
+- `add-control-engagement-dashboard` Phase 2 — `/control/engagements`, server-rendered. `loadEngagementOverview` joins `projects` + `METHODOLOGY_PROJECTS_BUNDLE` (per-engagement YAML, parsed with `js-yaml` + Date-coercion helper) + activity signals (`canvas_sessions` + `forge_runs`, in parallel). `<EngagementsDashboard>` + `<EngagementRow>` reuse Phase 1's locked status-token mapping (Decision D-7). 14 loader tests + 5 row-component tests. Two of five control-room cards now `ready`. Archived 2026-05-09.
+- Phases 3–5 (`add-control-throughput-dashboard` / `add-control-finance-dashboard` / `add-control-team-dashboard`) deferred; each ships its own change folder.
+
+**Methodology + miscellaneous:**
+
+- `add-mirror-render-pipeline`, `add-mirror-schema-and-loader`, `add-methodology-templates`, `add-client-onboarding`, `add-client-role`, `add-pending-invitations-surface`, `credit-token-cost-to-canvas-budget`, `add-user-settings`, `enrich-status-taxonomy`, `enrich-tactical-grammar`, `enrich-surface-density`, `reconcile-token-names`, `replace-listusers-with-rpc`, `sync-design-system-with-reality`, `sync-design-system-post-25-26`, `mvp-v1-architect-and-studio-narrow`, `mvp-v1-design-system-studio-variant`, `mvp-v1-home-blocks-completion`, `refactor-forge-consumer-registry`, `refactor-forge-persistence-adapter`, `spec-drift-cleanup-foundation`, `add-project-migration-prompt` (Branch-B template at `_methodology/projects/_template-migration-prompt.md` — generic foreign-dialect → studio-prose migration prompt; per-engagement forks for Vivod / Dentour fork from this; archived 2026-05-09).
+
+---
+
+## 6. Drift / cleanup items
+
+Surfaced during 2026-05-08 ROADMAP sync. Each is small enough to fold into the next-touching change rather than a dedicated PR.
+
+1. ~~**RAP-92 missing archive folder**~~ — *resolved 2026-05-09 via retroactive backfill: [`archive/2026-05-06-add-entity-card-primitive/`](archive/2026-05-06-add-entity-card-primitive/) reconstructs proposal/design/tasks from PR #234's body. RAP-105 cross-reference no longer dangles.*
+2. **GitHubClient consolidation drift (resolved)** — canonical `GitHubClient` now at `packages/forge/src/core/github-client.ts` after RAP-140 atomic swap; `apps/studio/src/lib/github-client.ts` and `apps/studio/src/lib/linear-client.ts` deleted (PR #336).
+3. **`db.md` historical drift items 1–5** — most resolved by `reset-and-squash-database` (2026-05-05). Re-verify on next pre-flight.
+4. **Memory snapshot Supabase project ID and Linear team ID** — corrected via `memory_user_edits` post-merge.
+
+---
+
+## Quick reference — current state at a glance
+
+```
+═════════════════════════════════════════════════════════════════════════════
+  MVP v1 (Section 1)         🟡 ~75%  Tracks B + C ✅; A 80%; D 0%
+                                       ETA 1–2 days
+  MVP v1.1 — Unbind dogfood  🟡 ~57%  4/7 children of RAP-83 done
+  Parallel tracks (§ 3)      🟡 mix   tg-canvas Phase 6, xstate Wave 2B
+  Foundation (§ 5)           ✅ 76    archived change folders
+  Active changes             🟡 11    in openspec/changes/ on this branch
+  Total scope ever opened    ~87      76 archived + 11 active (post-2026-05-09 engagement-dashboard archive on top of migration-prompt + control-room + RAP-92 backfill)
+═════════════════════════════════════════════════════════════════════════════
+```
+
+To see the live picture, run `ls openspec/archive/ | wc -l` and `ls openspec/changes/ | wc -l` against the repo. **For "what shipped today", run `gh pr list --state merged --search "merged:>=YYYY-MM-DD"` — `ROADMAP.md` is a planning artefact, not a status artefact, and lags behind the merge stream by hours.**

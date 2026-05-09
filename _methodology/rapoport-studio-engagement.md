@@ -196,6 +196,17 @@ The studio's own openspec corpus uses the same convention and is published at [g
 
 There is intentionally no `TEMPLATE/` reference. The newest archived change is the canonical example. If your team needs a copy of the studio's house style as a starting point, the studio will share its most recent representative archived change on request.
 
+### 5.6 Convention adapter — which OpenSpec dialect your engagement uses
+
+When the studio runs Forge against your repo, it routes every read and write through a **convention adapter** — a small TS module that captures the shape of your `openspec/` layout. Two adapters ship with Forge today:
+
+- **`studio`** — prose-style minimal, exactly as described in §§ 5.1–5.5. Three files per change (`proposal.md` / `design.md` / `tasks.md`), no YAML frontmatter, no cross-cutting registries, edits to `current/` applied alongside the change folder. This is the default and matches what your team practices unless agreed otherwise at kickoff.
+- **`unbind`** — prose plus four extensions: YAML frontmatter on every capability spec, four cross-cutting registries at the corpus root (`decisions.md` / `dependencies.md` / `maturity.md` / `open-questions.md`), capability-prefixed decision IDs (e.g. `D-SE-3`), and **diff-at-archive** — `current/` edits described inside `tasks.md` rather than applied inside the change folder, then mechanically applied at archive time. Used by the Unbind engagement; documented as a reference for engagements that want a richer corpus shape.
+
+If your engagement needs a third convention, the studio writes one new adapter (`packages/forge/src/conventions/<your-engagement>.ts`) at kickoff. The shape is documented in `openspec/_methodology/templates/convention-adapter-example.md` on the public mirror — you can read it before signing to understand exactly what plumbing the studio commits to maintaining.
+
+The adapter is invisible to your team in everyday operation: branch naming, PR shape, change-folder layout, archive ritual all stay as described in §§ 5.1–5.5 from your side. The adapter is the studio's machinery for serving multiple engagements without per-project conditionals leaking into the build agent.
+
 ---
 
 ## 6. Tracking — studio-side Linear
@@ -439,6 +450,37 @@ This section is filled in at kickoff and stays append-only for the duration of t
 | D7 | Specialist roster: *(list of network members + role + scope per § 2 capability #1)*. Names may be redacted in the public version of this charter copy if your engagement has confidentiality constraints. | *(rationale: which disciplines the brief calls for)* | *(kickoff)* |
 | D8 | Responsibility split per § 13: Pavel acts as *(personal cofounder of your company / studio administrator only / hybrid of both)*; studio entity acts as *(strategic partner with infrastructure license / vendor under fee / both)*. Methodology vs deliverable carve-out: *(default per § 13.2 rule 5 / engagement-specific list attached as Appendix C)*. | *(rationale: matches founders agreement model A/B/C)* | *(kickoff)* |
 | D9 | … | … | … |
+
+### D11 — TG canvas surface opt-in (added 2026-05-09 by `add-tg-canvas-surface` / RAP-121)
+
+**Question**: Does this engagement allow per-canvas Telegram groups via `@rs_canvas_bot`?
+
+**Default**: No.
+
+**If yes**:
+- Set `projects.tg_surface_enabled = true` on the engagement's project.
+- Record opt-in date and signing party in this Appendix entry.
+- Acknowledge in writing: TG conversations may include incidental personal data;
+  GDPR special-category data (health, religion, ethnicity, biometric, sexual
+  orientation per Art. 9) is BANNED on this surface; runtime classification
+  enforces the ban (matched messages NOT processed, NOT stored as transcript).
+- Acknowledge in writing: Voice notes are transcribed via Whisper; audio retained
+  in R2 for 30 days then deleted.
+- Acknowledge in writing: All canvas mutations from TG (Mirror writes, GitHub
+  PRs, Architect-emit) execute as proposals — owner approval required.
+
+**If no**: `projects.tg_surface_enabled` stays `false`. Worker rejects any TG
+chat_id whose canvas's project has the flag false. Bot remains accessible for
+public-channel/discussion-group flows (separate scope).
+
+**Reversibility**: Yes — flip flag to `false`; in-flight turns finish (D-TCS-13);
+next turn rejected. Audio in R2 retained per existing 30d lifecycle.
+
+**Source**: `add-tg-canvas-surface` (RAP-121), capability spec at
+`openspec/current/telegram.md`. Decisions D-TCS-1..13 in
+`openspec/changes/add-tg-canvas-surface/proposal.md` (currently active; will move
+to `openspec/archive/YYYY-MM-DD-add-tg-canvas-surface/` once shipped — the
+openspec refs guard catches drift and forces the retarget at archive time).
 
 ---
 

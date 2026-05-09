@@ -1,0 +1,259 @@
+# openspec/_methodology/lifecycle.yaml
+#
+# Authoritative definition of canvas lifecycle stages.
+#
+# Read by:
+#   - apps/studio/src/app/actions/stage-actions.ts (recomputeStageAction)
+#   - packages/muse/src/templates/lifecycle-schema.ts (Zod parser + type export)
+#
+# Per-project overrides live in openspec/_methodology/projects/<slug>.yaml
+# under an optional `stages:` section. See add-canvas-stage-primitive
+# design.md § Delta 3 for the override grammar.
+#
+# Invariants (enforced by Zod refinement in lifecycle-schema.ts):
+#   - Stage `order` is monotonically increasing 0..5.
+#   - Per-stage `range` covers the segment [start, end) — half-open intervals
+#     paving 0..100 with no gaps and no overlaps.
+#   - Per-stage `weight` (sum of check weights) equals (range.end - range.start).
+#   - Total of all check weights across all stages equals 100.
+#   - Every check `id` is unique across the whole file.
+#   - Every check `id` has a matching function in apps/studio/src/lib/
+#     stage-checks/<id>.ts (validated at lifecycle-yaml.test.ts load time).
+
+version: 1
+
+stages:
+  intake:
+    order: 0
+    range: { start: 0, end: 10 }
+    primary_owner: platform_owner
+    persona_hint: architect
+    checks:
+      - id: lead_accepted
+        weight: 4
+        kind: db_query
+        query: inbox_status_is_accepted
+      - id: canvas_created
+        weight: 3
+        kind: db_query
+        query: canvas_session_exists
+      - id: first_client_message
+        weight: 3
+        kind: db_query
+        query: first_message_from_client_role
+
+  discovery:
+    order: 1
+    range: { start: 10, end: 30 }
+    primary_owner: owner
+    persona_hint: domain
+    # Stage-1 weight allocation (total 20):
+    #   - Mirror perception checks: 12 (rebalanced from 20)
+    #   - Discovery wizard checks:    8 (added in Phase 5 of
+    #     `add-canvas-discovery-wizard`; mirrors the methodology contract
+    #     that names `wizard_state` as a stage-1 signal alongside Mirror)
+    # See `openspec/changes/add-canvas-discovery-wizard/design.md § 6`.
+    checks:
+      - id: mirror_file_scaffolded
+        weight: 1
+        kind: canvas_files_path_exists
+        path_pattern: 'mirror/.+/perception\.md'
+      - id: client_vocabulary_min_5
+        weight: 3
+        kind: mirror_field_min_count
+        field: client_vocabulary
+        min: 5
+      - id: key_screens_min_3
+        weight: 2
+        kind: mirror_field_min_count
+        field: key_screens
+        min: 3
+      - id: pain_points_min_3
+        weight: 2
+        kind: mirror_field_or_body_min
+        field: pain_points
+        body_section: mental_model
+        min: 3
+      - id: comparable_products_min_1
+        weight: 1
+        kind: mirror_field_min_count
+        field: comparable_products
+        min: 1
+      - id: out_of_scope_non_empty
+        weight: 1
+        kind: mirror_field_min_count
+        field: out_of_scope
+        min: 1
+      - id: success_phrase_non_empty
+        weight: 1
+        kind: mirror_body_non_empty
+        section: success_phrase
+      - id: aspirational_tone_non_empty
+        weight: 1
+        kind: mirror_body_non_empty
+        section: aspirational_tone
+      - id: wizard_problem_statement_min_40
+        weight: 4
+        kind: wizard_field_min_chars
+        field: problem_statement
+        min_chars: 40
+      - id: wizard_target_audience_min_5
+        weight: 4
+        kind: wizard_field_min_chars
+        field: target_audience
+        min_chars: 5
+
+  concept:
+    order: 2
+    range: { start: 30, end: 50 }
+    primary_owner: owner
+    persona_hint: business
+    checks:
+      - id: proposal_exists
+        weight: 2
+        kind: canvas_files_path_exists
+        path: proposal.md
+      - id: proposal_why_pressures_min_3
+        weight: 4
+        kind: regex_count_min
+        path: proposal.md
+        regex: '^\d+\.\s'
+        section_after: '## Why'
+        min: 3
+      - id: proposal_what_changes_table_or_list
+        weight: 3
+        kind: regex_present
+        path: proposal.md
+        regex: '## What changes[\s\S]*?(\|.*\||(^|\n)\s*-\s)'
+      - id: proposal_out_of_scope_min_2
+        weight: 3
+        kind: regex_count_min
+        path: proposal.md
+        regex: '^-\s'
+        section_after: '## (What does NOT|Out of scope)'
+        min: 2
+      - id: proposal_impact_non_empty
+        weight: 3
+        kind: regex_section_non_empty
+        path: proposal.md
+        section: '## Impact'
+      - id: proposal_acceptance_min_3
+        weight: 3
+        kind: regex_count_min
+        path: proposal.md
+        regex: '^-\s'
+        section_after: '## Acceptance criteria'
+        min: 3
+      - id: proposal_linear_link
+        weight: 2
+        kind: regex_present
+        path: proposal.md
+        regex: 'https://linear\.app/.+/(issue|project)/'
+
+  design:
+    order: 3
+    range: { start: 50, end: 70 }
+    primary_owner: owner
+    persona_hint: tech
+    checks:
+      - id: design_exists
+        weight: 2
+        kind: canvas_files_path_exists
+        path: design.md
+      - id: design_deltas_min_3
+        weight: 4
+        kind: regex_count_min
+        path: design.md
+        regex: '### Delta \d+'
+        min: 3
+      - id: design_footnotes_per_delta
+        weight: 4
+        kind: footnotes_per_section_min
+        path: design.md
+        section_pattern: '### Delta \d+'
+        min_footnotes: 1
+      - id: design_boundaries_section
+        weight: 3
+        kind: regex_section_non_empty
+        path: design.md
+        section: '## (Boundaries|Package boundaries)'
+      - id: design_failure_modes_min_3
+        weight: 3
+        kind: regex_count_min
+        path: design.md
+        regex: '^\|.*\|.*\|'
+        section_after: '## Failure modes'
+        min: 3
+      - id: design_out_of_scope_non_empty
+        weight: 2
+        kind: regex_section_non_empty
+        path: design.md
+        section: '## Out of scope'
+      - id: design_open_questions_min_1
+        weight: 2
+        kind: regex_count_min
+        path: design.md
+        regex: '^\d+\.\s'
+        section_after: '## Open questions'
+        min: 1
+
+  tasks:
+    order: 4
+    range: { start: 70, end: 90 }
+    primary_owner: owner
+    persona_hint: architect
+    checks:
+      - id: tasks_exists
+        weight: 2
+        kind: canvas_files_path_exists
+        path: tasks.md
+      - id: tasks_waves_min_1
+        weight: 4
+        kind: regex_count_min
+        path: tasks.md
+        regex: '## Wave \d+'
+        min: 1
+      - id: tasks_per_wave_min_3
+        weight: 4
+        kind: tasks_per_wave_min
+        path: tasks.md
+        min: 3
+      - id: tasks_verification_per_wave
+        weight: 3
+        kind: regex_per_wave
+        path: tasks.md
+        regex: '(typecheck|lint|test) (green|pass)'
+      - id: tasks_out_of_scope_section
+        weight: 2
+        kind: regex_section_non_empty
+        path: tasks.md
+        section: '## Out of scope'
+      - id: tasks_archive_section
+        weight: 2
+        kind: regex_section_non_empty
+        path: tasks.md
+        section: '## Archive'
+      - id: tasks_branch_names_declared
+        weight: 3
+        kind: regex_present
+        path: tasks.md
+        regex: '`(forge|feat|docs)/[a-z0-9-]+'
+
+  build_ready:
+    order: 5
+    range: { start: 90, end: 100 }
+    primary_owner: platform_owner
+    persona_hint: architect
+    checks:
+      - id: previous_stages_min_80_pct
+        weight: 4
+        kind: derived_previous_stages
+        threshold: 80
+      - id: signoff_recorded
+        weight: 3
+        kind: db_field_non_null
+        field: signoff_at
+      - id: convert_or_promote_action_available
+        weight: 3
+        kind: derived_action_available
+        action: convert_or_promote
