@@ -2,7 +2,7 @@
 
 This roadmap is the master sequencing document. It is organised around **MVP milestones**, not feature areas: the top sections are what blocks the next reviewable cut of the platform; the bottom sections are durable history and deferred work.
 
-**Last full sync:** 2026-05-09 (post-engagement-dashboard-archive — `add-control-engagement-dashboard` Phase 1 shipped via #389 + archived as `archive/2026-05-09-add-control-engagement-dashboard/`; two of five `/control` cards (Roadmap + Engagements) now `ready`. Earlier same day: RAP-92 drift item closed via retroactive `archive/2026-05-06-add-entity-card-primitive/` reconstruction; `add-project-migration-prompt` Phase 1 shipped via #381 + archived (template precondition for Vivod / Dentour Phase 5 cleared); `add-studio-control-room` Phase 1 archived. Track B Phase 6 archived 2026-05-08; `sync-forge-builder-spec` Phase 2 shipped via #351; **RAP-48 closed 2026-05-09** — Forge Builder shipped end-to-end; first real-issue dogfood = this change `sync-roadmap-post-rap48-close`).
+**Last full sync:** 2026-05-09 (post-RAP-172 — Forge Implement UI shipped via **#439**, archived `archive/2026-05-09-add-forge-builder-orchestrator-ui/`; §1 Step 5 now ✅ 100%. **RAP-167** closed — Track D Cycle 1 archived `archive/2026-05-09-sync-roadmap-post-rap48-close/`. Wave 4 / RAP-48 truthing archived `archive/2026-05-09-sync-forge-builder-spec/`. Earlier same day: engagement-dashboard, RAP-92 backfill, migration-prompt, control-room archives; Track B wizard archived 2026-05-08; **RAP-48 closed 2026-05-09**.)
 
 **How to read this file:**
 
@@ -23,7 +23,7 @@ The studio operates around three nested levels:
 2. **Project** — one body of work (client engagement, internal platform deliverable, external collaboration). Contains one or more Canvases. Optionally bound to a GitHub repository, a Linear team or project, and a Mirror perception layer. **Bindings are optional throughout the lifecycle**, never required.
 3. **Canvas** — a design board for an idea. Persistent, multi-view workspace. Inside a Canvas, work moves through four phases: **Capture → Research → Spec → Build**.
 
-The Spec phase is mature (Architect mode, multi-tool Muse, full convention adapter). Capture is complete (sticky-note idea board shipped via RAP-58; structured discovery wizard shipped end-to-end via `add-canvas-discovery-wizard`, archived 2026-05-08). Research is partial (competitor research not yet scaffolded). Build phase has the runtime substrate (Forge UI surface RAP-130 + `add-forge-discovery-surface` Track-C close-out, multi-project config RAP-85, convention adapter RAP-86); the executor (RAP-48 Builder) shipped end-to-end (Waves 1–3 + Wave 4 Phases A/B/D, RAP-48 closed 2026-05-09); first real-issue dogfood is *this change* `sync-roadmap-post-rap48-close` (Track D / Phase C of `sync-forge-builder-spec`).
+The Spec phase is mature (Architect mode, multi-tool Muse, full convention adapter). Capture is complete (sticky-note idea board shipped via RAP-58; structured discovery wizard shipped end-to-end via `add-canvas-discovery-wizard`, archived 2026-05-08). Research is partial (competitor research not yet scaffolded). Build phase has the runtime substrate (Forge UI surface RAP-130 + `add-forge-discovery-surface` Track-C close-out, multi-project config RAP-85, convention adapter RAP-86); the executor (RAP-48 Builder) shipped end-to-end (Waves 1–3 + Wave 4 Phases A/B/D, RAP-48 closed 2026-05-09). **Track D Cycle 1** (first real-issue dogfood, RAP-167) and **`sync-forge-builder-spec` Wave 4** are archived 2026-05-09; **RAP-172** lit the Implement body on `/tasks/[key]` (`archive/2026-05-09-add-forge-builder-orchestrator-ui/`).
 
 **Sequencing principle:** each change must be reviewable in one session by one reviewer. Where two changes are independent, they ship in parallel.
 
@@ -55,26 +55,26 @@ The Spec phase is mature (Architect mode, multi-tool Muse, full convention adapt
 | 4 | Forge UI — Plan / Review / PR | ✅ 90% | `/tasks/[key]`, DB, 15 actions, SSE, Phases 1/3/4 + Track-C discovery surface (F rail + `/tasks` index + project Forge card, all archived 2026-05-08) | Polish |
 | 5 | Forge UI — Implement (Phase 2) | ✅ 100% | `<LiveBuilderPanel>` + studio `PersistenceAdapter` + SSE snapshot extension (`archive/2026-05-09-add-forge-builder-orchestrator-ui/`, RAP-172) | In-UI start/cancel deferred |
 | 6 | Forge Builder Mode (CLI) | ✅ 100% | Waves 1–3 ✓ (PRs #161/#166/#186) + Wave 4 Phase A ✓ (#351) + Phase B ✓ (RAP-151 sandbox seed 2026-05-08) + Phase 3.A drift fixes via #378/#379/#382/#385/#387/#391/#394 — RAP-48 closed 2026-05-09 | — |
-| 7 | Studio dogfood | 🟡 in-flight | `sync-roadmap-post-rap48-close` (this change) is Cycle 1 of the 3-cycle dogfood campaign | Cycles 2 + 3 + retro |
+| 7 | Studio dogfood | 🟡 in-flight | Cycle 1 ✅ archived (`archive/2026-05-09-sync-roadmap-post-rap48-close/`, RAP-167); full **UI-first** close-the-loop dogfood still open | Cycles 2 + 3 + retro + one RAP closed entirely via studio UI |
 
 ### Critical-path tracks
 
 ```
 Track A — RAP-48 close-out via      All waves merged; RAP-48 closed         [████████████████████] ✅ shipped
-          sync-forge-builder-spec   2026-05-09 (Phases A/B/D done; C =
-                                    Track D below)
+          sync-forge-builder-spec   2026-05-09; Wave 4 archived (incl.
+                                    Phase C = RAP-167 dogfood)
 Track B — add-canvas-discovery-     All phases shipped + archived          [████████████████████] ✅ shipped
           wizard                                                              (archived 2026-05-08)
 Track C — add-forge-discovery-      F-rail + /tasks index + project card   [████████████████████] ✅ shipped
           surface                                                             (archived 2026-05-08)
-Track D — Studio dogfood E2E        Cycle 1 = sync-roadmap-post-rap48-      [████░░░░░░░░░░░░░░░░] in-flight
-          (= sync-forge-builder-    close (this change). Cycles 2 + 3
-          spec Phase 3)             follow.
+Track D — Studio dogfood E2E        Cycle 1 ✅ RAP-167 archived.           [██████░░░░░░░░░░░░░░] Cycles 2–3
+          (= sync-forge-builder-    Cycles 2–3 + UI-first MVP proof remain.
+          spec Phase 3)
 ```
 
 #### Track A — `add-forge-builder-mode` (RAP-48, ✅ closed 2026-05-09)
 
-Forge as platform architect: own GitHub/Linear/Supabase identities, six commands (`inbox` / `inspect` / `plan` / `build` shipped Waves 1–3; `status` / `cancel` pending Wave 4), Anthropic Agent SDK in working tree.
+Forge as platform architect: own GitHub/Linear/Supabase identities, six commands (`inbox` / `inspect` / `plan` / `build` shipped Waves 1–3; `status` / `cancel` shipped Wave 4 Phase A (#351); **RAP-48 closed 2026-05-09**), Anthropic Agent SDK in working tree.
 
 **Hard prerequisites — all met as of 2026-05-08:**
 
@@ -88,16 +88,16 @@ Forge as platform architect: own GitHub/Linear/Supabase identities, six commands
 - Wave 2 — `forge plan` + lessons-learned mechanism (`~/.forge/lessons-learned.md`) + state model (`~/.forge/state/*.json`) + Builder prompt template (`packages/muse/src/builder-prompt.ts`).
 - Wave 3 Phase 8 — build orchestrator + Anthropic Agent SDK call shape (per spike `archive/2026-05-05-add-forge-builder-mode/spikes/2026-05-05-claude-agent-sdk.md`) + six-checkpoint gating.
 
-**Wave 4 — fully shipped, tracked under `openspec/changes/sync-forge-builder-spec/`:**
+**Wave 4 — fully shipped, archived `archive/2026-05-09-sync-forge-builder-spec/`:**
 
 - ✅ Phase A — `forge status` + `forge cancel` orchestrators + in-process `build-registry.ts` + `GitHubClient.deleteBranch` (merged via #351 on 2026-05-08).
 - ✅ Phase B — sandbox lessons-seed dogfood completed via RAP-151 (2026-05-08); seed entry written to `~/.forge/lessons-learned.md`.
-- 🟡 Phase C — first real-issue e2e in flight via Track D Cycle 1 (`sync-roadmap-post-rap48-close` — this change).
+- ✅ Phase C — first real-issue e2e (Track D Cycle 1) completed via RAP-167; archived `archive/2026-05-09-sync-roadmap-post-rap48-close/` (manual fallback PR path documented there).
 - ✅ Phase D — Phase 3.A drift fixes shipped via #378/#379/#382/#385/#387/#391/#394 between 2026-05-08 and 2026-05-09; RAP-48 closed 2026-05-09.
 
-Note: a separate `openspec/changes/sync-forge-builder-spec/` change owns the documentation truthing (forge.md / muse.md / platform.md / ROADMAP) plus Wave 4 execution. RAP-48 was prematurely closed 2026-05-05 after Wave 3 Phase 8 merged; reopened to "In Progress" 2026-05-08 to absorb Wave 4 + truthing.
+Note: `sync-forge-builder-spec` lived under `openspec/changes/` while in flight; it is now archived. RAP-48 was prematurely closed 2026-05-05 after Wave 3 Phase 8 merged; reopened to "In Progress" 2026-05-08 to absorb Wave 4 + truthing.
 
-Estimated remaining effort: **complete** for RAP-48 itself. First real-issue e2e (Track D Cycle 1) is in flight via this change.
+Estimated remaining effort: **complete** for RAP-48 and Wave 4 Phases A–D. Remaining MVP v1 gap is **Step 7** — additional dogfood cycles + proven UI-first loop (see §1 table).
 
 #### Track B — `add-canvas-discovery-wizard` ✅ shipped (archived 2026-05-08 as `archive/2026-05-08-add-canvas-discovery-wizard`)
 
@@ -151,15 +151,15 @@ Estimated effort: **4–6 hours** + drift fixes for whatever breaks. **Definitio
 Track C (forge-discovery-surface)        ✅ done & archived 2026-05-08
 Track B (canvas-discovery-wizard)        ✅ done & archived 2026-05-08
                                                       │
-                                                      ▼ (D unblocked from B + C sides)
+                                                      ▼
 
-Track A (sync-forge-builder-spec)        🟡 Phase A ✓ — Phases B–C remain
-   │                                         (Phase C ≡ Track D)
+Track A (sync-forge-builder-spec)      ✅ Wave 4 + archive 2026-05-09
+   │
    ▼
-Track D (Studio dogfood E2E)             baked into sync-forge-builder-spec Phase 3
+Track D (Studio dogfood E2E)             Cycle 1 ✅ (RAP-167) — Cycles 2–3 open
                                                       │
                                                       ▼
-                                              🎉 MVP v1 done — ETA 1–2 days
+                                              🎯 MVP v1 — Step 7 + UI-first proof
 ```
 
 ### Items deprioritised to keep MVP v1 fast
@@ -337,13 +337,14 @@ Surfaced during 2026-05-08 ROADMAP sync. Each is small enough to fold into the n
 
 ```
 ═════════════════════════════════════════════════════════════════════════════
-  MVP v1 (Section 1)         🟡 ~75%  Tracks B + C ✅; A 80%; D 0%
-                                       ETA 1–2 days
+  MVP v1 (Section 1)         🟡 ~90%  Tracks A–C ✅; Wave 4 ✅; Implement UI ✅
+                                       Step 7: Cycle 1 ✅ — Cycles 2–3 + UI loop
   MVP v1.1 — Unbind dogfood  🟡 ~57%  4/7 children of RAP-83 done
   Parallel tracks (§ 3)      🟡 mix   tg-canvas Phase 6, xstate Wave 2B
-  Foundation (§ 5)           ✅ 76    archived change folders
-  Active changes             🟡 11    in openspec/changes/ on this branch
-  Total scope ever opened    ~87      76 archived + 11 active (post-2026-05-09 engagement-dashboard archive on top of migration-prompt + control-room + RAP-92 backfill)
+  Foundation (§ 5)           ✅ 84    archived buckets in bundle (approx.)
+  Active changes             🟡 12    tracked slugs in openspec/changes/
+  Total scope ever opened    ~96      84 archived + 12 active (bundle SKUs;
+                                       `ls archive/` may count 85 dirs)
 ═════════════════════════════════════════════════════════════════════════════
 ```
 
