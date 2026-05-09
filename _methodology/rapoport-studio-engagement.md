@@ -478,9 +478,7 @@ next turn rejected. Audio in R2 retained per existing 30d lifecycle.
 
 **Source**: `add-tg-canvas-surface` (RAP-121), capability spec at
 `openspec/current/telegram.md`. Decisions D-TCS-1..13 in
-`openspec/changes/add-tg-canvas-surface/proposal.md` (currently active; will move
-to `openspec/archive/YYYY-MM-DD-add-tg-canvas-surface/` once shipped — the
-openspec refs guard catches drift and forces the retarget at archive time).
+`openspec/archive/2026-05-09-add-tg-canvas-surface/proposal.md` (archived 2026-05-09).
 
 ---
 

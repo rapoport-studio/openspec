@@ -225,7 +225,7 @@ These are active change folders that **can ship in parallel** with MVP v1 work o
 
 ### Telegram canvas
 
-- `add-tg-canvas-surface` *(RAP-121, Phase 4/6 in flight)* — Telegram canvas surface (replaces Web Speech voice input as the primary low-friction capture path). Phases 1 (G4 close, #358), 2 (DB migrations, #361), 3 (headless Muse runtime, #367), 4 (Telegram webhook + Whisper + bot identity, #370) shipped 2026-05-08. Phase 5 Studio UI surface + Phase 6 engagement opt-in + archive remain.
+- `add-tg-canvas-surface` *(RAP-121 ✅ archived 2026-05-09 as `archive/2026-05-09-add-tg-canvas-surface/`)* — per-canvas TG Muse surface (`@rs_canvas_bot`), headless runtime, propose-only mutations, daily cap, engagement opt-in. Shipped via #358 / #361 / #367 / #370 / #373 + spec amendments.
 
 ### Studio control room (admin)
 
@@ -340,11 +340,11 @@ Surfaced during 2026-05-08 ROADMAP sync. Each is small enough to fold into the n
   MVP v1 (Section 1)         🟡 ~90%  Tracks A–C ✅; Wave 4 ✅; Implement UI ✅
                                        Step 7: Cycle 1 ✅ — Cycles 2–3 + UI loop
   MVP v1.1 — Unbind dogfood  🟡 ~57%  4/7 children of RAP-83 done
-  Parallel tracks (§ 3)      🟡 mix   tg-canvas Phase 6, xstate Wave 2B
-  Foundation (§ 5)           ✅ 84    archived buckets in bundle (approx.)
-  Active changes             🟡 12    tracked slugs in openspec/changes/
-  Total scope ever opened    ~96      84 archived + 12 active (bundle SKUs;
-                                       `ls archive/` may count 85 dirs)
+  Parallel tracks (§ 3)      🟡 mix   TG canvas ✅ archived; xstate Wave 2B
+  Foundation (§ 5)           ✅ 85    archived buckets in bundle (approx.)
+  Active changes             🟡 11    tracked slugs in openspec/changes/
+  Total scope ever opened    ~96      85 archived + 11 active (bundle SKUs;
+                                       `ls archive/` may count 86 dirs)
 ═════════════════════════════════════════════════════════════════════════════
 ```
 
