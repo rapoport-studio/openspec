@@ -73,7 +73,7 @@ Maps the row labels in [§ Per-agent default + fallback](#per-agent-default--fal
 | `gpt-5.5-pro` | OpenAI | TBD per OpenAI identifier registry | TBD when provider abstraction (`add-provider-abstraction` Layer 1.5) ships an OpenAI client |
 | Perplexity API | Perplexity | TBD (Perplexity Sonar or equivalent for continuous-research mode) | TBD when Atlas runtime ships and the Perplexity client is wired |
 
-The pricing column references existing constants where they exist (`MODEL_PRICING` for Anthropic) and declares "TBD" for providers that don't have runtime yet. Per [`add-tools-methodology` design.md § D-6](../../changes/add-tools-methodology/design.md), pricing details are operational state that lives with the runtime constant — this methodology doc cross-references, it does not duplicate.
+The pricing column references existing constants where they exist (`MODEL_PRICING` for Anthropic) and declares "TBD" for providers that don't have runtime yet. Per [`add-tools-methodology` design.md § D-6](../../archive/2026-05-09-add-tools-methodology/design.md), pricing details are operational state that lives with the runtime constant — this methodology doc cross-references, it does not duplicate.
 
 ---
 
