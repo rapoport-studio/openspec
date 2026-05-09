@@ -2,7 +2,7 @@
 
 This roadmap is the master sequencing document. It is organised around **MVP milestones**, not feature areas: the top sections are what blocks the next reviewable cut of the platform; the bottom sections are durable history and deferred work.
 
-**Last full sync:** 2026-05-09 (post-`migrate-studio-into-platform` — RAP-169 data substrate shipped + archived `archive/2026-05-09-migrate-studio-into-platform/`; `/projects/studio` now resolves with Connections card lit. Track D Cycle 2 dogfood (UI-first proof) carried over to its own session. Earlier same day: post-RAP-172 — Forge Implement UI shipped via **#439**, archived `archive/2026-05-09-add-forge-builder-orchestrator-ui/`; §1 Step 5 now ✅ 100%. **RAP-167** closed — Track D Cycle 1 archived `archive/2026-05-09-sync-roadmap-post-rap48-close/`. Wave 4 / RAP-48 truthing archived `archive/2026-05-09-sync-forge-builder-spec/`. Earlier same day: engagement-dashboard, RAP-92 backfill, migration-prompt, control-room archives; Track B wizard archived 2026-05-08; **RAP-48 closed 2026-05-09**. **Drift fix:** RAP-96/RAP-97 entries in §3 corrected — Phase 1+2 shipped, Phases 3+ still open; Linear issues closed prematurely.)
+**Last full sync:** 2026-05-09 · post-#456 (14 PRs since prior sync): **RAP-169 `migrate-studio-into-platform` archived** (#448, studio onboarded as `/projects/studio`, Wave 5 dogfood deferred to Track D Cycle 2); **Linear OAuth Phase 4** shipped (#452, RAP-115 — connect/callback/disconnect routes, 2/7 phases done); Maestro Phase 1.1 — `allowedToolNames` per mode (#445, RAP-150); forge hardening: Anthropic streaming (#451 RAP-162), auto-PR-body (#453 RAP-163), vitest coverage gate 60% (#454 RAP-159), worktree deps install (#455 RAP-168); RAP-140 revalidation fix (#446); RAP-176 aria-label (#456). Archive: **87 folders**. — Prior: post-RAP-172 — Implement UI (#439), TG canvas archived (#444), RAP-167 Cycle 1 archived, RAP-48 closed 2026-05-09; RAP-96/97 drift fix (#447).
 
 **How to read this file:**
 
@@ -55,7 +55,7 @@ The Spec phase is mature (Architect mode, multi-tool Muse, full convention adapt
 | 4 | Forge UI — Plan / Review / PR | ✅ 90% | `/tasks/[key]`, DB, 15 actions, SSE, Phases 1/3/4 + Track-C discovery surface (F rail + `/tasks` index + project Forge card, all archived 2026-05-08) | Polish |
 | 5 | Forge UI — Implement (Phase 2) | ✅ 100% | `<LiveBuilderPanel>` + studio `PersistenceAdapter` + SSE snapshot extension (`archive/2026-05-09-add-forge-builder-orchestrator-ui/`, RAP-172) | In-UI start/cancel deferred |
 | 6 | Forge Builder Mode (CLI) | ✅ 100% | Waves 1–3 ✓ (PRs #161/#166/#186) + Wave 4 Phase A ✓ (#351) + Phase B ✓ (RAP-151 sandbox seed 2026-05-08) + Phase 3.A drift fixes via #378/#379/#382/#385/#387/#391/#394 — RAP-48 closed 2026-05-09 | — |
-| 7 | Studio dogfood | 🟡 in-flight | Cycle 1 ✅ archived (`archive/2026-05-09-sync-roadmap-post-rap48-close/`, RAP-167); full **UI-first** close-the-loop dogfood still open | Cycles 2 + 3 + retro + one RAP closed entirely via studio UI |
+| 7 | Studio dogfood | 🟡 in-flight | Cycle 1 ✅ archived (`archive/2026-05-09-sync-roadmap-post-rap48-close/`, RAP-167); `/projects/studio` substrate ✅ archived (`archive/2026-05-09-migrate-studio-into-platform/`, RAP-169 Wave 6); full **UI-first** close-the-loop dogfood still open | Cycles 2 + 3 + retro + one RAP closed entirely via studio UI |
 
 ### Critical-path tracks
 
@@ -223,7 +223,7 @@ These are active change folders that **can ship in parallel** with MVP v1 work o
 
 ### Connections — credentials & UI
 
-- `add-linear-oauth-connection` *(RAP-112, 2/6 phases done)* — per-user "Connect with Linear" on `/settings`. Bot path works; OAuth is the actor-bound layer for Telegram bridge.
+- `add-linear-oauth-connection` *(RAP-112, 2/7 phases done — Phase 1 decisions ✅ + Phase 4 OAuth routes ✅ via #452/RAP-115; Phases 2/3/5/6/7 open)* — per-user "Connect with Linear" on `/settings`. Bot path works; OAuth is the actor-bound layer for Telegram bridge.
 
 ### Network platform
 
@@ -300,6 +300,11 @@ Compact list. Each item is archived under `openspec/archive/<date>-<slug>/`.
 
 - `add-forge-multi-project` (RAP-85), `add-forge-convention-adapter` (RAP-86), `add-forge-ui-task-detail` (RAP-130 Tracks A–D), `add-forge-discovery-surface` (Track C — F rail + `/tasks` index + project Forge runs card; archived 2026-05-08).
 - `extend-rap63-backfill-unbind` (RAP-87) — `unbind` row + bindings + Mirror placeholder for Section 2.
+- Forge builder hardening (all 2026-05-09): RAP-162 Anthropic streaming + delta (#451), RAP-163 auto-PR-body generation (#453), RAP-159 vitest coverage gate 60% (#454), RAP-168 worktree deps install before Builder launch (#455), RAP-150 Maestro Phase 1.1 `allowedToolNames` per mode (#445).
+
+**Studio as project:**
+
+- `migrate-studio-into-platform` (RAP-169) — studio onboarded as `/projects/studio` (Wave 6 close-out: `projects` row + `project_connections` + Mirror placeholder + engagement profile); archived 2026-05-09 as `archive/2026-05-09-migrate-studio-into-platform/`. Wave 5 UI-first dogfood proof deferred to Track D Cycle 2.
 
 **Canvas vertical:**
 
@@ -344,14 +349,14 @@ Surfaced during 2026-05-08 ROADMAP sync. Each is small enough to fold into the n
 
 ```
 ═════════════════════════════════════════════════════════════════════════════
-  MVP v1 (Section 1)         🟡 ~90%  Tracks A–C ✅; Wave 4 ✅; Implement UI ✅
+  MVP v1 (Section 1)         🟡 ~92%  Tracks A–C ✅; Wave 4 ✅; Implement UI ✅
+                                       /projects/studio substrate ✅ (RAP-169)
                                        Step 7: Cycle 1 ✅ — Cycles 2–3 + UI loop
   MVP v1.1 — Unbind dogfood  🟡 ~57%  4/7 children of RAP-83 done
-  Parallel tracks (§ 3)      🟡 mix   TG canvas ✅ archived; xstate Wave 2B
-  Foundation (§ 5)           ✅ 85    archived buckets in bundle (approx.)
+  Parallel tracks (§ 3)      🟡 mix   TG canvas ✅; xstate Wave 2B; Linear OAuth 2/7 phases
+  Foundation (§ 5)           ✅ 87    archived folders (`ls openspec/archive/ | wc -l`)
   Active changes             🟡 11    tracked slugs in openspec/changes/
-  Total scope ever opened    ~96      85 archived + 11 active (bundle SKUs;
-                                       `ls archive/` may count 86 dirs)
+  Total scope ever opened    ~98      87 archived + 11 active
 ═════════════════════════════════════════════════════════════════════════════
 ```
 
