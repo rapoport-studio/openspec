@@ -2,7 +2,7 @@
 
 This roadmap is the master sequencing document. It is organised around **MVP milestones**, not feature areas: the top sections are what blocks the next reviewable cut of the platform; the bottom sections are durable history and deferred work.
 
-**Last full sync:** 2026-05-09 (post-RAP-172 — Forge Implement UI shipped via **#439**, archived `archive/2026-05-09-add-forge-builder-orchestrator-ui/`; §1 Step 5 now ✅ 100%. **RAP-167** closed — Track D Cycle 1 archived `archive/2026-05-09-sync-roadmap-post-rap48-close/`. Wave 4 / RAP-48 truthing archived `archive/2026-05-09-sync-forge-builder-spec/`. Earlier same day: engagement-dashboard, RAP-92 backfill, migration-prompt, control-room archives; Track B wizard archived 2026-05-08; **RAP-48 closed 2026-05-09**.)
+**Last full sync:** 2026-05-09 (post-RAP-172 — Forge Implement UI shipped via **#439**, archived `archive/2026-05-09-add-forge-builder-orchestrator-ui/`; §1 Step 5 now ✅ 100%. **RAP-167** closed — Track D Cycle 1 archived `archive/2026-05-09-sync-roadmap-post-rap48-close/`. Wave 4 / RAP-48 truthing archived `archive/2026-05-09-sync-forge-builder-spec/`. Earlier same day: engagement-dashboard, RAP-92 backfill, migration-prompt, control-room archives; Track B wizard archived 2026-05-08; **RAP-48 closed 2026-05-09**. **Drift fix:** RAP-96/RAP-97 entries in §3 corrected — Phase 1+2 shipped, Phases 3+ still open; Linear issues closed prematurely.)
 
 **How to read this file:**
 
@@ -220,8 +220,8 @@ These are active change folders that **can ship in parallel** with MVP v1 work o
 
 ### Network platform
 
-- `add-network-public-surface` *(RAP-96, scaffold deferred)* — public-facing network presentation.
-- `add-network-studio-surface` *(RAP-97, scaffold deferred)* — internal studio network views.
+- `add-network-public-surface` *(RAP-96, Phase 1+2 shipped via #397/#402; Phases 3–5 open — section render with real Supabase queries, mind map interactivity, locale + e2e)* — public-facing network presentation. Linear closed prematurely 2026-05-08; change folder remains active until Phase 3+ ships.
+- `add-network-studio-surface` *(RAP-97, Phase 1+2 shipped via #399/#405; Phases 3–4 open — server-action bodies, write UI dialogs, materialized view, e2e)* — internal studio network views. Linear closed prematurely 2026-05-09; change folder remains active until Phase 3+ ships.
 
 ### Telegram canvas
 
