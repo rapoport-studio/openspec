@@ -2,7 +2,7 @@
 
 This roadmap is the master sequencing document. It is organised around **MVP milestones**, not feature areas: the top sections are what blocks the next reviewable cut of the platform; the bottom sections are durable history and deferred work.
 
-**Last full sync:** 2026-05-09 (post-RAP-172 — Forge Implement UI shipped via **#439**, archived `archive/2026-05-09-add-forge-builder-orchestrator-ui/`; §1 Step 5 now ✅ 100%. **RAP-167** closed — Track D Cycle 1 archived `archive/2026-05-09-sync-roadmap-post-rap48-close/`. Wave 4 / RAP-48 truthing archived `archive/2026-05-09-sync-forge-builder-spec/`. Earlier same day: engagement-dashboard, RAP-92 backfill, migration-prompt, control-room archives; Track B wizard archived 2026-05-08; **RAP-48 closed 2026-05-09**. **Drift fix:** RAP-96/RAP-97 entries in §3 corrected — Phase 1+2 shipped, Phases 3+ still open; Linear issues closed prematurely.)
+**Last full sync:** 2026-05-09 (post-`migrate-studio-into-platform` — RAP-169 data substrate shipped + archived `archive/2026-05-09-migrate-studio-into-platform/`; `/projects/studio` now resolves with Connections card lit. Track D Cycle 2 dogfood (UI-first proof) carried over to its own session. Earlier same day: post-RAP-172 — Forge Implement UI shipped via **#439**, archived `archive/2026-05-09-add-forge-builder-orchestrator-ui/`; §1 Step 5 now ✅ 100%. **RAP-167** closed — Track D Cycle 1 archived `archive/2026-05-09-sync-roadmap-post-rap48-close/`. Wave 4 / RAP-48 truthing archived `archive/2026-05-09-sync-forge-builder-spec/`. Earlier same day: engagement-dashboard, RAP-92 backfill, migration-prompt, control-room archives; Track B wizard archived 2026-05-08; **RAP-48 closed 2026-05-09**. **Drift fix:** RAP-96/RAP-97 entries in §3 corrected — Phase 1+2 shipped, Phases 3+ still open; Linear issues closed prematurely.)
 
 **How to read this file:**
 
@@ -67,9 +67,10 @@ Track B — add-canvas-discovery-     All phases shipped + archived          [�
           wizard                                                              (archived 2026-05-08)
 Track C — add-forge-discovery-      F-rail + /tasks index + project card   [████████████████████] ✅ shipped
           surface                                                             (archived 2026-05-08)
-Track D — Studio dogfood E2E        Cycle 1 ✅ RAP-167 archived.           [██████░░░░░░░░░░░░░░] Cycles 2–3
-          (= sync-forge-builder-    Cycles 2–3 + UI-first MVP proof remain.
-          spec Phase 3)
+Track D — Studio dogfood E2E        Cycle 1 ✅ RAP-167 archived.           [█████████░░░░░░░░░░░] Cycles 2–3
+          (= sync-forge-builder-    Cycle 2 substrate ✅ (RAP-169 data
+          spec Phase 3)             registration). Cycle 2 UI-first proof
+                                    + Cycle 3 + MVP proof remain.
 ```
 
 #### Track A — `add-forge-builder-mode` (RAP-48, ✅ closed 2026-05-09)
@@ -129,21 +130,27 @@ Spec amendments to `studio.md § Task discovery` + `forge.md § Out of scope` sh
 
 **v1 deviation (documented in archived design.md § 3):** project columns deferred until a follow-up migration adds `forge_runs.project_id` (or `projects.linear_prefix`). Today the project card scopes by `linear_issue_key LIKE 'PREFIX-%'` against a static slug→prefix map mirroring `forge.config.mjs § projects`.
 
-#### Track D — Studio dogfood E2E (no change folder, runbook only)
+#### Track D — Studio dogfood E2E
 
-Once Tracks A and C land, take a small RAP issue (e.g., the F-rail fix from Track C if not yet merged, or a tiny UI polish) and run the full cycle:
+**Cycle 1** ✅ archived 2026-05-09 (`archive/2026-05-09-sync-roadmap-post-rap48-close/`, RAP-167) — first real-issue end-to-end run via the CLI loop, manual fallback PR path documented in the archive.
 
-```
-forge inbox --project=studio
-forge inspect RAP-XXX
-forge plan RAP-XXX
-forge build RAP-XXX
-→ verify Linear comment + PR created
-→ merge → archive change folder
-→ post-mortem at openspec/_research/forge-studio-first-run.md
-```
+**Cycle 2** — split into two halves:
 
-Estimated effort: **4–6 hours** + drift fixes for whatever breaks. **Definition of done for MVP v1.**
+- **Cycle 2 substrate** ✅ archived 2026-05-09 (`archive/2026-05-09-migrate-studio-into-platform/`, RAP-169). Studio is now a registered `projects` row with `project_connections` (GitHub + Linear), engagement profile (`_methodology/projects/studio.yaml`), and Mirror placeholder (`mirror/studio/perception.md`). `/projects/studio` resolves with the Connections card lit. Wave 5 (UI-first dogfood) deferred to its own session and tracked below.
+- **Cycle 2 UI-first dogfood** — open. Pick any small RAP-* issue (a doc fix, a one-file polish, a typo). Drive the full loop **inside `app.rapoport.studio`** rather than `pnpm forge`:
+
+  ```
+  /canvases → create canvas → assign project=studio
+  Architect mode → emit proposal/design/tasks
+  [Convert to project] → branch on rapoport-studio/rapoport.studio
+  /tasks/<RAP-XXX> → Plan / Implement / Review
+  → merge PR → archive change folder
+  → append observations to openspec/_research/studio-self-hosting-first-run.md
+  ```
+
+  Verifiable surfaces: `<ForgeRunsCard>` on `/projects/studio` shows the run; the canvas appears in "Recent canvases"; PR opened against `main`. Estimated effort: **2–4 hours** + drift fixes for whatever surfaces flicker. **Definition of done for MVP v1.**
+
+**Cycle 3** — second UI-first dogfood pass, ideally on a slightly larger RAP-* issue (multi-file change). Surfaces drift the first dogfood didn't trigger; closes the loop on "the studio runs itself through the studio UI" as a stable claim.
 
 ### Dependency graph
 
@@ -156,7 +163,7 @@ Track B (canvas-discovery-wizard)        ✅ done & archived 2026-05-08
 Track A (sync-forge-builder-spec)      ✅ Wave 4 + archive 2026-05-09
    │
    ▼
-Track D (Studio dogfood E2E)             Cycle 1 ✅ (RAP-167) — Cycles 2–3 open
+Track D (Studio dogfood E2E)             Cycle 1 ✅ (RAP-167) — Cycle 2 substrate ✅ (RAP-169) — Cycle 2 UI-first + Cycle 3 open
                                                       │
                                                       ▼
                                               🎯 MVP v1 — Step 7 + UI-first proof
