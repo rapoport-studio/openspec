@@ -52,8 +52,8 @@ The Spec phase is mature (Architect mode, multi-tool Muse, full convention adapt
 | 1 | Canvas Capture | ✅ 100% | sticky-board (RAP-58) ✓ + wizard schema/actions/UI/Muse/spec-amend/archive (`add-canvas-discovery-wizard` ✓ via #359/#363/#365/#366/#369/#371 + this PR) | — |
 | 2 | OpenSpec workflow | ✅ 95% | Architect mature, Muse multi-tool, convention adapter | Polish (Mirror view) |
 | 3 | Linear ↔ OpenSpec linking | ✅ 90% | Linear bot, Muse write tools | Auto-create issue from change folder (manual today) |
-| 4 | Forge UI — Plan / Review / PR | ✅ 90% | `/tasks/[key]`, DB, 15 actions, SSE, Phases 1/3/4 + Track-C discovery surface (F rail + `/tasks` index + project Forge card, all archived 2026-05-08) | Implement body lit by Wave 4 |
-| 5 | Forge UI — Implement (Phase 2) | 🔴 20% | Stub "visible-but-disabled" | Builder runtime (RAP-48) lights up the body |
+| 4 | Forge UI — Plan / Review / PR | ✅ 90% | `/tasks/[key]`, DB, 15 actions, SSE, Phases 1/3/4 + Track-C discovery surface (F rail + `/tasks` index + project Forge card, all archived 2026-05-08) | Polish |
+| 5 | Forge UI — Implement (Phase 2) | ✅ 100% | `<LiveBuilderPanel>` + studio `PersistenceAdapter` + SSE snapshot extension (`archive/2026-05-09-add-forge-builder-orchestrator-ui/`, RAP-172) | In-UI start/cancel deferred |
 | 6 | Forge Builder Mode (CLI) | ✅ 100% | Waves 1–3 ✓ (PRs #161/#166/#186) + Wave 4 Phase A ✓ (#351) + Phase B ✓ (RAP-151 sandbox seed 2026-05-08) + Phase 3.A drift fixes via #378/#379/#382/#385/#387/#391/#394 — RAP-48 closed 2026-05-09 | — |
 | 7 | Studio dogfood | 🟡 in-flight | `sync-roadmap-post-rap48-close` (this change) is Cycle 1 of the 3-cycle dogfood campaign | Cycles 2 + 3 + retro |
 
