@@ -2,7 +2,7 @@
 
 This roadmap is the master sequencing document. It is organised around **MVP milestones**, not feature areas: the top sections are what blocks the next reviewable cut of the platform; the bottom sections are durable history and deferred work.
 
-**Last full sync:** 2026-05-09 · post-#456 (14 PRs since prior sync): **RAP-169 `migrate-studio-into-platform` archived** (#448, studio onboarded as `/projects/studio`, Wave 5 dogfood deferred to Track D Cycle 2); **Linear OAuth Phase 4** shipped (#452, RAP-115 — connect/callback/disconnect routes, 2/7 phases done); Maestro Phase 1.1 — `allowedToolNames` per mode (#445, RAP-150); forge hardening: Anthropic streaming (#451 RAP-162), auto-PR-body (#453 RAP-163), vitest coverage gate 60% (#454 RAP-159), worktree deps install (#455 RAP-168); RAP-140 revalidation fix (#446); RAP-176 aria-label (#456). Archive: **87 folders**. — Prior: post-RAP-172 — Implement UI (#439), TG canvas archived (#444), RAP-167 Cycle 1 archived, RAP-48 closed 2026-05-09; RAP-96/97 drift fix (#447).
+**Last full sync:** 2026-05-11 · post-#546 (~61 PRs since 2026-05-09 sync). **Forge engine RAP-213 closed end-to-end** — Phase 2 model registry (#519/RAP-214), Phase 3 per-role budgets (#524/RAP-215), Phase 4 retry-on-gate-failure (#530/RAP-216), Phase 5 AI reviewer + drift metrics (#533/RAP-217), Phase 6 archive (#534). **Linear OAuth RAP-112 closed end-to-end** — Phase 6 helper consumer (#486/RAP-117), Phase 7 archive + spec amendments (#545). **Network public/studio surfaces archived** (#544 RAP-97 Phase 4 + #546 RAP-96 Wave 3, e2e carved out). **Maestro substrate landed** — DB-backed routing journal (#536/RAP-187), agent status table (#489/RAP-186), orchestra journal (#491/RAP-185), canvas mode (#495/RAP-189), routing plan card (#539/RAP-190), route-postprocessor (#540/RAP-188 + archive #542), audit populator (#502/RAP-202), journal replay (#501/RAP-201), routing fixtures (#503/RAP-200). **Design-system token coherence umbrella** (#508/RAP-209) — radius/grid/accent G1 (#507/RAP-206), package-coverage tokens G2 (#504+#505/RAP-207), ink-muted alignment G3 (#514/RAP-208), motion tokens (#500/RAP-204), layout primitives (#506/RAP-211), shadcn primitives (#513/RAP-205), components.json (#510/RAP-212), legacy-brand split (#512/RAP-210), Chip primitive (#523/RAP-223), PostCard→EntityCard (#520/RAP-221), track-aware home blocks (#516/RAP-219). **Studio chrome consolidation** — sidebar (#482/#484/RAP-194), brand+sidebar merge (#488/#492/RAP-197), promote-sectionhead (#485/#487/RAP-203). **Forge dispatch tooling** — `/forge` slash command (#531), global build lock (#522/RAP-224), cancel terminal-state guard (#515+#517/RAP-218), gate-eval rejects compound shell (#494/RAP-199), bundle auto-regen (#493/RAP-198). **Drift cleanup batch** — fix-magic-link-cross-device archive (#535), drop-deprecated-projects-binding-columns archive (#528), forge-worktree-pnpm-install archive (#527), philosophy-foundation Phase A archive (#543), maestro-route-postprocessor archive (#542), forge-model-tiering archive (#534), network-studio archive (#544), linear-oauth archive (#545), network-public archive (#546). Archive: **108 folders**. Active: **4** (all gated/deferred — `add-project-connect-onebutton`, `migrate-unbind-into-studio`, `onboard-vivod`, `onboard-dentour`).
 
 **How to read this file:**
 
@@ -52,10 +52,10 @@ The Spec phase is mature (Architect mode, multi-tool Muse, full convention adapt
 | 1 | Canvas Capture | ✅ 100% | sticky-board (RAP-58) ✓ + wizard schema/actions/UI/Muse/spec-amend/archive (`add-canvas-discovery-wizard` ✓ via #359/#363/#365/#366/#369/#371 + this PR) | — |
 | 2 | OpenSpec workflow | ✅ 95% | Architect mature, Muse multi-tool, convention adapter | Polish (Mirror view) |
 | 3 | Linear ↔ OpenSpec linking | ✅ 90% | Linear bot, Muse write tools | Auto-create issue from change folder (manual today) |
-| 4 | Forge UI — Plan / Review / PR | ✅ 90% | `/tasks/[key]`, DB, 15 actions, SSE, Phases 1/3/4 + Track-C discovery surface (F rail + `/tasks` index + project Forge card, all archived 2026-05-08) | Polish |
+| 4 | Forge UI — Plan / Review / PR | ✅ 90% | `/tasks/[key]`, DB, 15 actions, SSE, Phases 1/3/4 + Track-C discovery surface (F rail + `/tasks` index + project Forge card, all archived 2026-05-08); Forge engine arc closed via RAP-213 Phases 2-6 (model registry / per-role budgets / retry-on-gate / AI reviewer / archive) 2026-05-10 | Polish |
 | 5 | Forge UI — Implement (Phase 2) | ✅ 100% | `<LiveBuilderPanel>` + studio `PersistenceAdapter` + SSE snapshot extension (`archive/2026-05-09-add-forge-builder-orchestrator-ui/`, RAP-172) | In-UI start/cancel deferred |
-| 6 | Forge Builder Mode (CLI) | ✅ 100% | Waves 1–3 ✓ (PRs #161/#166/#186) + Wave 4 Phase A ✓ (#351) + Phase B ✓ (RAP-151 sandbox seed 2026-05-08) + Phase 3.A drift fixes via #378/#379/#382/#385/#387/#391/#394 — RAP-48 closed 2026-05-09 | — |
-| 7 | Studio dogfood | 🟡 in-flight | Cycle 1 ✅ archived (`archive/2026-05-09-sync-roadmap-post-rap48-close/`, RAP-167); `/projects/studio` substrate ✅ archived (`archive/2026-05-09-migrate-studio-into-platform/`, RAP-169 Wave 6); full **UI-first** close-the-loop dogfood still open | Cycles 2 + 3 + retro + one RAP closed entirely via studio UI |
+| 6 | Forge Builder Mode (CLI) | ✅ 100% | Waves 1–3 ✓ (PRs #161/#166/#186) + Wave 4 Phase A ✓ (#351) + Phase B ✓ (RAP-151 sandbox seed 2026-05-08) + Phase 3.A drift fixes via #378/#379/#382/#385/#387/#391/#394 — RAP-48 closed 2026-05-09. **`/forge` slash command shipped 2026-05-10 (#531)** — parallel build dispatch with `~/.forge/state/<KEY>.json` fleet dashboard. | — |
+| 7 | Studio dogfood | 🟡 in-flight | Cycle 1 ✅ archived (`archive/2026-05-09-sync-roadmap-post-rap48-close/`, RAP-167); `/projects/studio` substrate ✅ archived (`archive/2026-05-09-migrate-studio-into-platform/`, RAP-169 Wave 6); **2026-05-10 Forge dispatched 7+ RAP issues end-to-end via `/forge`** (RAP-96/97/188/190/216/217/etc. — most as Builder runs in detached background, several as no-op confirmations on already-shipped work). Full **UI-first** close-the-loop dogfood still open. | Cycles 2 + 3 + retro + one RAP closed entirely via studio UI |
 
 ### Critical-path tracks
 
@@ -223,12 +223,12 @@ These are active change folders that **can ship in parallel** with MVP v1 work o
 
 ### Connections — credentials & UI
 
-- `add-linear-oauth-connection` *(RAP-112, 2/7 phases done — Phase 1 decisions ✅ + Phase 4 OAuth routes ✅ via #452/RAP-115; Phases 2/3/5/6/7 open)* — per-user "Connect with Linear" on `/settings`. Bot path works; OAuth is the actor-bound layer for Telegram bridge.
+- ~~`add-linear-oauth-connection`~~ *(RAP-112 ✅ closed 2026-05-10, archived as `archive/2026-05-10-add-linear-oauth-connection/`)* — all seven phases shipped end-to-end. Schema + AES-256-GCM crypto helper (#353), OAuth routes (#452), `<IntegrationsCard>` UI on `/settings`, actor-bound `loadLinearForUser()` helper + Telegram-bridge precedence (#486), spec amendments + archive (#545).
 
 ### Network platform
 
-- `add-network-public-surface` *(RAP-96, Phase 1+2 shipped via #397/#402; Phases 3–5 open — section render with real Supabase queries, mind map interactivity, locale + e2e)* — public-facing network presentation. Linear closed prematurely 2026-05-08; change folder remains active until Phase 3+ ships.
-- `add-network-studio-surface` *(RAP-97, Phase 1+2 shipped via #399/#405; Phases 3–4 open — server-action bodies, write UI dialogs, materialized view, e2e)* — internal studio network views. Linear closed prematurely 2026-05-09; change folder remains active until Phase 3+ ships.
+- ~~`add-network-public-surface`~~ *(RAP-96 ✅ closed 2026-05-10, archived as `archive/2026-05-10-add-network-public-surface/`)* — Wave 3 close-out: live Supabase fetchers, dagre LR mind-map, click-to-detail Sheet + URL deep-link, mobile tier-grouped fallback, locales en+ru parity, all sections rendering EntityCard variants. Sections shipped via #529 (PR A) + #538 (Wave 3 close-out); archive #546. Playwright e2e carved out to follow-up.
+- ~~`add-network-studio-surface`~~ *(RAP-97 ✅ closed 2026-05-10, archived as `archive/2026-05-10-add-network-studio-surface/`)* — Phase 4 close-out: `skill_specialist_counts` materialized view + daily `pg_cron` refresh, four server-action bodies, 17 unit + 5 RTL tests, `studio.md § Network surface` amendment. Shipped via #537; archive #544. Playwright e2e carved out to follow-up.
 
 ### Telegram canvas
 
@@ -244,7 +244,7 @@ These are active change folders that **can ship in parallel** with MVP v1 work o
 
 ### Foundation (philosophy)
 
-- `add-philosophy-foundation` *(RAP-148, Phase A scaffolded via #350)* — agents-overview + charter prose foundation. Phase B (manifesto) blocked on Pavel content.
+- ~~`add-philosophy-foundation`~~ *(RAP-148 Phase A ✅ closed 2026-05-10, archived as `archive/2026-05-10-add-philosophy-foundation/`)* — agents-overview + charter prose foundation shipped via #350 (2026-05-08); archive #543. Phase B (Pavel-voice manifesto) carved out — when content is ready, author a new change folder (e.g., `add-philosophy-manifesto`) rather than re-opening the archive.
 
 ---
 
@@ -301,10 +301,50 @@ Compact list. Each item is archived under `openspec/archive/<date>-<slug>/`.
 - `add-forge-multi-project` (RAP-85), `add-forge-convention-adapter` (RAP-86), `add-forge-ui-task-detail` (RAP-130 Tracks A–D), `add-forge-discovery-surface` (Track C — F rail + `/tasks` index + project Forge runs card; archived 2026-05-08).
 - `extend-rap63-backfill-unbind` (RAP-87) — `unbind` row + bindings + Mirror placeholder for Section 2.
 - Forge builder hardening (all 2026-05-09): RAP-162 Anthropic streaming + delta (#451), RAP-163 auto-PR-body generation (#453), RAP-159 vitest coverage gate 60% (#454), RAP-168 worktree deps install before Builder launch (#455), RAP-150 Maestro Phase 1.1 `allowedToolNames` per mode (#445).
+- **Forge engine RAP-213 (`improve-forge-model-tiering-and-verifier`)** — closed end-to-end 2026-05-10, archive `2026-05-10-improve-forge-model-tiering-and-verifier/`. Phase 2 model registry refresh + per-role config (#519, RAP-214). Phase 3 per-role cost guards + `costByRole` tracking (#524, RAP-215). Phase 4 retry-on-gate-failure with exponential backoff (#530, RAP-216). Phase 5 AI reviewer (Haiku→Sonnet escalation) + spec-drift metrics (#533, RAP-217). Phase 6 archive (#534).
+- `add-forge-worktree-pnpm-install` (RAP-168 Phase B) — `installWorktreeDeps()` between `setupWorktree()` and Builder launch + lockfile-hash skip optimisation; archived 2026-05-10 (#527).
+- **Forge dispatch tooling (2026-05-10)** — `/forge` slash command for parallel build orchestration (#531), global build lock at `~/.forge/locks/build.lock` (#522, RAP-224), cancel terminal-state guard (#515 + #517, RAP-218), gate-eval rejects compound shell commands (#494, RAP-199), bundle auto-regen in build post-step (#493, RAP-198).
+
+**Maestro substrate (2026-05-10):**
+
+- DB-backed routing journal (#536, RAP-187, archive `2026-05-10-add-maestro-db-journal-fixme-renamed/`); agent status table (#489 + archive #491-area, RAP-186, archive `2026-05-10-add-agent-status-table/`); orchestra journal table (#491, RAP-185, archive `2026-05-10-add-orchestra-journal-table/`); orchestra storage scaffolds (#483, RAP-184, archive `2026-05-10-add-orchestra-storage-scaffolds/`); Maestro canvas mode (#495, RAP-189, archive `2026-05-10-add-maestro-canvas-mode/`); routing plan card (#539, RAP-190); pure `route()` post-processor (#540, RAP-188, archive `2026-05-10-add-maestro-route-postprocessor/` via #542); audit populator (#502, RAP-202); journal replay CLI (#501, RAP-201); routing-plan parser fixtures (#503, RAP-200). Maestro substrate archives consolidated via #497 + #496 (`define-design-system-spec-convention` archive 2026-05-10).
+
+**Design system token coherence umbrella (2026-05-10):**
+
+- `improve-design-system-token-coherence` — umbrella draft (#498), archive 2026-05-10 (#508, RAP-209). G1 radius + grid + accent rename (#507, RAP-206 — D1+D2+D4). G2 package-coverage tokens (ink-light / blueprint-light / code-bg) split across #504 + #505 (RAP-207 — D6+D7+D8). G3 ink-muted alignment + apps/web hex→oklch (#514, RAP-208 — D3+D5).
+- Motion tokens registry (#500, RAP-204 — D3) added to `design-tokens.md`.
+- Layout primitives — `Container` / `Stack` / `Grid` / `Spacer` (#506, RAP-211 — F6).
+- Shadcn primitives restored — `Checkbox` / `Switch` / `Spinner` / `Alert` (#513, RAP-205 — F8) + `components.json` for `npx shadcn add` (#510, RAP-212 — F1).
+- Legacy brand split — moved to `@rapoport-studio/legacy-brand` (#512, RAP-210).
+- Chip family unified — single `<Chip>` primitive with kind taxonomy (#523, RAP-223 — F1).
+- PostCard migrated to `<EntityCard variant="card">` (#520, RAP-221 — F2.2).
+- Track-aware home blocks — `track` prop on Hero / HowWeWork / ClosingCTA / ServicesSection (#516, RAP-219 — F4).
+- Component-reuse audit closed 8/8 (#525).
+
+**Studio chrome consolidation (2026-05-10):**
+
+- Labelled sidebar (#482, RAP-194) + archive #484. Sidebar + shared brand mark merged (#488, RAP-197) + archive #492. `<SectionHead>` promoted to `@rapoport-studio/ui` (#485, RAP-203) + archive #487.
+- Hotfixes — Tailwind 4 max-w-* scale (canvas chat + Invite dialog sliver, #532, RAP-225) + canvas chat + modal width regression (#526) + how-we-work + closing-cta typecheck (#521).
 
 **Studio as project:**
 
 - `migrate-studio-into-platform` (RAP-169) — studio onboarded as `/projects/studio` (Wave 6 close-out: `projects` row + `project_connections` + Mirror placeholder + engagement profile); archived 2026-05-09 as `archive/2026-05-09-migrate-studio-into-platform/`. Wave 5 UI-first dogfood proof deferred to Track D Cycle 2.
+
+**Linear OAuth (RAP-112, closed 2026-05-10):**
+
+- All seven phases shipped end-to-end. Phase 3 schema + AES-256-GCM crypto helper (#353, RAP-114). Phase 4 OAuth flow routes — connect / callback / disconnect (#452, RAP-115). Phase 5 `<IntegrationsCard>` UI on `/settings`. Phase 6 actor-bound helper `loadLinearForUser()` + Telegram-bridge precedence — user OAuth preferred over bot when row exists (#486, RAP-117). Phase 7 archive + spec amendments to `db.md` / `studio.md` / `platform.md` / `auth.md` (#545). Archive `2026-05-10-add-linear-oauth-connection/`.
+
+**Network surfaces (closed 2026-05-10):**
+
+- `add-network-public-surface` (RAP-96) — Wave 3 closed: live Supabase fetchers, dagre LR mind-map with click-to-detail Sheet + URL deep-link `?node=<kind>:<id>` + `< 768px` tier-grouped fallback, locales en+ru parity (ro placeholder), nine sections rendering EntityCard variants. Phase 3 PR A (#529 sections 2.1/2.5/2.6/2.7/2.9/2.10) + Phase 3 PR B (#538 Wave 3 close-out) + archive #546. Playwright e2e carved out to follow-up.
+- `add-network-studio-surface` (RAP-97) — Phase 4 close-out: `skill_specialist_counts` materialized view migration with daily `pg_cron` refresh, four server-action bodies + 17 Zod-locked tests + 5 RTL section-render tests, `studio.md` § Network surface amendment (#537). Archive #544.
+
+**Drift cleanup (closed 2026-05-10):**
+
+- `add-philosophy-foundation` Phase A archived (#543). Agents-overview + charter amendment shipped via #350 (2026-05-08). Phase B (Pavel-voice manifesto) carved out to its own future change folder when content is ready.
+- `fix-magic-link-cross-device` archived (#535) — work shipped via #425 + #440; spec amendments to `auth.md` for token-hash flow + OAuth (PKCE) flow split.
+- `drop-deprecated-projects-binding-columns` archived (#528) — RAP-175, work shipped via #478.
+- `add-maestro-route-postprocessor` archived (#542) — RAP-188 work shipped via #540.
 
 **Canvas vertical:**
 
@@ -336,12 +376,17 @@ Compact list. Each item is archived under `openspec/archive/<date>-<slug>/`.
 
 ## 6. Drift / cleanup items
 
-Surfaced during 2026-05-08 ROADMAP sync. Each is small enough to fold into the next-touching change rather than a dedicated PR.
+Surfaced during ROADMAP syncs. Each is small enough to fold into the next-touching change rather than a dedicated PR.
 
 1. ~~**RAP-92 missing archive folder**~~ — *resolved 2026-05-09 via retroactive backfill: [`archive/2026-05-06-add-entity-card-primitive/`](archive/2026-05-06-add-entity-card-primitive/) reconstructs proposal/design/tasks from PR #234's body. RAP-105 cross-reference no longer dangles.*
 2. **GitHubClient consolidation drift (resolved)** — canonical `GitHubClient` now at `packages/forge/src/core/github-client.ts` after RAP-140 atomic swap; `apps/studio/src/lib/github-client.ts` and `apps/studio/src/lib/linear-client.ts` deleted (PR #336).
 3. **`db.md` historical drift items 1–5** — most resolved by `reset-and-squash-database` (2026-05-05). Re-verify on next pre-flight.
 4. **Memory snapshot Supabase project ID and Linear team ID** — corrected via `memory_user_edits` post-merge.
+5. **Forge verifier — baseline-blind (RAP-227, surfaced 2026-05-10)** — `parseVerificationResults` treats any failing test as a regression introduced by the current PR. Observed false-positive on RAP-97 #537: 1/952 pre-existing test failure unrelated to RAP-97 caused `state.json: failed`. Fix queued as RAP-227: capture `~/.forge/builds/<KEY>/baseline.json` against `origin/main` HEAD, diff post-build, only fail on strict-superset.
+6. **Forge anthropic.ts temperature regression (memory `forge_temperature_opus_47_regression.md`, surfaced 2026-05-10)** — `temperature: 0` hardcoded in `packages/forge/src/core/anthropic.ts:214` rejected by `claude-opus-4-7`. Workaround: `pnpm forge plan --sonnet`. Real fix is per-role temperature dispatch (omit for Opus 4.7, keep `0` for Sonnet builder + Haiku reviewer determinism). Linear issue not filed (Linear free-tier limit 2026-05-10); fold into next `packages/forge` PR.
+7. **Forge re-dispatch on already-shipped commits** — observed 2026-05-10 on RAP-96 redispatch: original commit `9619d843f` was squash-merged to main as `64eaabb22` (different SHA), so the worktree branch still pointed at `9619d843f`, push opened duplicate PR #541 (closed). Forge's `--auto-push` should detect "branch HEAD content matches a recently-merged squash commit" and skip push. No Linear issue yet.
+8. **Phase B manifesto for `add-philosophy-foundation`** — Phase A folder archived 2026-05-10 (#543) with Phase B narrative carved out. When Pavel-voice manifesto content is ready, author a new change folder (e.g., `add-philosophy-manifesto`) — do not re-open the archived folder (per memory `feedback_archive_frozen.md`).
+9. **Network e2e carved out** — `add-network-public-surface` archive (#546) and `add-network-studio-surface` archive (#544) both deferred Playwright e2e to a wider `apps/web` / `apps/studio` e2e push. No separate change folder today.
 
 ---
 
@@ -349,14 +394,17 @@ Surfaced during 2026-05-08 ROADMAP sync. Each is small enough to fold into the n
 
 ```
 ═════════════════════════════════════════════════════════════════════════════
-  MVP v1 (Section 1)         🟡 ~92%  Tracks A–C ✅; Wave 4 ✅; Implement UI ✅
+  MVP v1 (Section 1)         🟡 ~93%  Tracks A–C ✅; Wave 4 ✅; Implement UI ✅
                                        /projects/studio substrate ✅ (RAP-169)
+                                       Forge engine RAP-213 closed end-to-end
                                        Step 7: Cycle 1 ✅ — Cycles 2–3 + UI loop
   MVP v1.1 — Unbind dogfood  🟡 ~57%  4/7 children of RAP-83 done
-  Parallel tracks (§ 3)      🟡 mix   TG canvas ✅; xstate Wave 2B; Linear OAuth 2/7 phases
-  Foundation (§ 5)           ✅ 87    archived folders (`ls openspec/archive/ | wc -l`)
-  Active changes             🟡 11    tracked slugs in openspec/changes/
-  Total scope ever opened    ~98      87 archived + 11 active
+  Parallel tracks (§ 3)      ✅ done  TG canvas ✅; Linear OAuth ✅; network public ✅;
+                                       network studio ✅; xstate Wave 2B remaining
+  Foundation (§ 5)           ✅ 108   archived folders (`ls openspec/archive/ | wc -l`)
+  Active changes             🟡 4     all gated/deferred (project-connect-onebutton,
+                                       migrate-unbind, onboard-vivod, onboard-dentour)
+  Total scope ever opened    ~112     108 archived + 4 active
 ═════════════════════════════════════════════════════════════════════════════
 ```
 
