@@ -8,7 +8,7 @@
 > **Opened:** 2026-05-10.
 > **Companion to:** [`./competitive-positioning-sdd-frameworks.md`](./competitive-positioning-sdd-frameworks.md) — that file is internal positioning (where the studio sits in the SDD landscape); this file is the public-facing data corpus.
 > **Feeds into:** Lab article at `apps/web/src/content/lab/openspec-vs-speckit.mdx` (pending), positioning copy at `rapoport.studio/methodology` (when methodology page lands).
-> **Path note:** placed under `_methodology/research/` per the corrected convention. First file written under the [research authorship convention](./README.md) introduced by `openspec/changes/add-research-authorship-convention/`.
+> **Path note:** placed under `_methodology/research/` per the corrected convention. First file written under the [research authorship convention](./README.md) introduced by `openspec/archive/2026-05-10-add-research-authorship-convention/` (archived 2026-05-11).
 
 ---
 

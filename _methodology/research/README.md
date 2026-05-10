@@ -2,7 +2,7 @@
 
 Research files live here. Each file is a self-contained corpus that backs one or more downstream artifacts (Lab articles, positioning copy, future research). The convention below ensures any specialist who reads a research file can understand its provenance, method, and reusability without asking the original author.
 
-> **Convention introduced:** `openspec/changes/add-research-authorship-convention/` (2026-05-10).
+> **Convention introduced:** `openspec/archive/2026-05-10-add-research-authorship-convention/` (2026-05-10, archived 2026-05-11).
 
 ---
 
@@ -100,7 +100,7 @@ Continuity with the 13 existing research files. Bold-prefix is greppable for too
 
 ## Reference
 
-- Convention introduced: [`openspec/changes/add-research-authorship-convention/`](../../changes/add-research-authorship-convention/)
+- Convention introduced: [`openspec/archive/2026-05-10-add-research-authorship-convention/`](../../archive/2026-05-10-add-research-authorship-convention/)
 - Block-level authorship research (open): [`openspec-block-authorship.md`](./openspec-block-authorship.md)
 - Studio AGENTS workflow: [`openspec/AGENTS.md`](../../AGENTS.md)
 - Project CLAUDE.md (hard rules): [`/CLAUDE.md`](../../../CLAUDE.md)
