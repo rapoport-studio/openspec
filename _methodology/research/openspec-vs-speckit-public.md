@@ -504,7 +504,7 @@ Reproduces: speckit project with a constitution defining a governed push operati
 ### 9.I — Archive / lifecycle bugs (OpenSpec-specific)
 
 **I1. Archive command writes to wrong path.** [#412](https://github.com/Fission-AI/OpenSpec/issues/412)
-Expected: `openspec/archive/<date>-<name>`; actual: `openspec/changes/archive/<date>-<name>`. Other CLI parts look in the first path → archived change "lost". Fix proposed, not merged.
+Expected: archive path under `openspec/archive/`; actual: archive path nested inside `openspec/changes/` (under a stray `archive/` subfolder). Other CLI parts look in the first path → archived change "lost". Fix proposed, not merged.
 
 **I2. `/opsx:archive` doesn't invoke `openspec archive` CLI.** [#863](https://github.com/Fission-AI/OpenSpec/issues/863) — AI command diverges from documentation. [#913](https://github.com/Fission-AI/OpenSpec/issues/913) — `/opsx:archive` offers «Sync now» when sync skill not installed → fails.
 
