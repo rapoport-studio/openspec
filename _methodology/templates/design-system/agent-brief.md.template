@@ -1,0 +1,87 @@
+<!--
+template-version: 1.0.0
+last-changed-by: define-design-system-spec-convention
+breaking-change-criteria: adding a required field, removing a field, renaming a slot
+-->
+# Agent Brief — {{change-slug}}
+
+> Required artefact in every design-system-related change (per D-DS-4). Lives in the change folder root, alongside `proposal.md` / `design.md` / `tasks.md`. **Not promoted at archive** — stays in the archive folder as historical record.
+
+## 1. Capability scope
+
+In-scope:
+- {{Bullet listing what this change covers.}}
+- {{...}}
+
+Out-of-scope:
+- {{Bullet listing what is explicitly NOT in this change. Name the follow-up that owns each excluded item.}}
+- {{...}}
+
+## 2. Source files to read
+
+| File | Lines | Purpose |
+|---|---|---|
+| {{path}} | {{1-N or full}} | {{what this provides}} |
+| {{path}} | {{...}} | {{...}} |
+
+## 3. Industry standards consulted
+
+| Source | URL |
+|---|---|
+| {{Standard name}} | {{URL}} |
+| {{...}} | {{...}} |
+
+## 4. Findings format requirement
+
+Every Finding in `design.md § 2` includes:
+- A direct citation: `path:line` for project files, URL for external sources.
+- One-sentence factual description, no judgement.
+
+No claims by memory. Where a fact is unsourced, it is surfaced as Q-DS-?.
+
+## 5. Decisions injected
+
+Pre-decided before this change started; not for re-derivation.
+
+- **{{Decision shorthand or D-DS-N reference}}** — {{decision statement}}.
+- **{{...}}** — {{...}}
+
+## 6. Open questions allowed
+
+Surfacing new Q-DS-? without a number is allowed during authoring. Final numbers assigned in the registry phase.
+
+A Q-DS-? entry includes: priority, owner, source file/section.
+
+Surfaced during this change (final numbers assigned at registry phase):
+
+- **{{Q-DS-N or shorthand}}** — {{question}}.
+- **{{...}}** — {{...}}
+
+## 7. Stop conditions
+
+Halt and ask the Design System Lead when:
+
+- A finding contradicts a `current/` spec without a clear migration path.
+- A required source file is missing or unreadable.
+- A governance question without precedent emerges.
+- Scope creeps beyond the studio surface.
+
+## 8. Output format expectations
+
+Required artefacts at the end of this run:
+
+- `proposal.md` — written
+- `design.md` — written
+- `tasks.md` — written
+- `agent-brief.md` — this file
+- {{Any additional drafts: `drafts/...`, registry amendments, methodology files}}
+
+## 9. Banned operations
+
+Never:
+
+- Cite a source without a path:line or URL.
+- Edit `openspec/current/` outside the archive phase.
+- Invent an ID (D-DS-? / Q-DS-?) without immediate registry assignment.
+- Reference a chat-message ID (e.g. `m####`-style) as a source. Decisions are sourced from `decisions.md`; questions from `open-questions.md`. If a decision was reached in chat but not registered, it is a governance gap — not a source.
+- Mutate a ratified decision. Supersede with a new change that registers a successor D-DS-N referencing the prior.

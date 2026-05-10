@@ -1,0 +1,61 @@
+<!--
+template-version: 1.0.0
+last-changed-by: define-design-system-spec-convention
+breaking-change-criteria: adding a required field, removing a field, renaming a slot
+-->
+# {{Change title}}
+
+> **Status:** proposed
+> **Capability:** design-system
+> **Linear:** {{Linear issue ID or TBD}}
+> **Depends on:** {{list of preceding change slugs, or "none"}}
+> **Blocks:** {{list of follow-up change slugs, or "none"}}
+
+---
+
+## Why
+
+{{One paragraph: what problem prompted this change. Cite path:line for any source claim. Reference D-DS-N or Q-DS-N where relevant.}}
+
+{{Optional second paragraph: why this is the right time / why this scope. Avoid restating the problem.}}
+
+---
+
+## What changes
+
+### 1. {{Change category 1 — e.g. "Token registry additions"}}
+
+{{Concrete description. List the files / sections / tokens / components that change. Reference R1..R13 if a rule constrains the shape.}}
+
+### 2. {{Change category 2}}
+
+{{...}}
+
+### 3. {{Change category 3 — optional}}
+
+{{...}}
+
+---
+
+## Out of scope
+
+- {{Explicit exclusion 1 — name the follow-up change that owns it.}}
+- {{Explicit exclusion 2 — …}}
+- {{Explicit exclusion 3 — …}}
+
+---
+
+## Risks
+
+- **{{Risk 1 short name}}.** {{One-sentence description.}} Mitigation: {{how this is contained}}.
+- **{{Risk 2 short name}}.** {{…}} Mitigation: {{…}}.
+
+---
+
+## Success criteria
+
+After archive:
+
+1. {{Verifiable outcome 1 — must be checkable post-archive.}}
+2. {{Verifiable outcome 2 — …}}
+3. {{Verifiable outcome 3 — …}}

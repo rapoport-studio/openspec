@@ -1,0 +1,114 @@
+<!--
+template-version: 1.0.0
+last-changed-by: define-design-system-spec-convention
+breaking-change-criteria: adding a required field, removing a field, renaming a slot
+-->
+# Design — {{Change title}}
+
+## 1. Context
+
+{{One to three paragraphs. State the current state of the corpus, the gap this change closes, and the constraint that makes this the right shape. Cite path:line for every claim about existing files. Reference D-DS-N decisions that are pre-decided inputs.}}
+
+---
+
+## 2. Findings
+
+### 2.1 {{Finding title}}
+
+{{Factual statement. Cite path:line.}}
+
+### 2.2 {{Finding title}}
+
+{{...}}
+
+### 2.3 {{Finding title}}
+
+{{...}}
+
+---
+
+## 3. Industry standards consulted
+
+| Source | Used for | URL |
+|---|---|---|
+| {{Source name}} | {{What this contributes}} | {{URL}} |
+| {{Source name}} | {{...}} | {{...}} |
+
+---
+
+## 4. {{Tailwind / DTCG / WCAG / other context section as needed}}
+
+{{Section body. Include only if this change interacts with a major external constraint that needs naming.}}
+
+---
+
+## 5. {{Structural section — five-file split, registry shape, etc.}}
+
+{{Section body — tables, diagrams in code-fence, schemas.}}
+
+---
+
+## 6. {{Specification section — the actual contract being introduced or amended}}
+
+{{Section body.}}
+
+---
+
+## 7. Convention compliance — R1..R13
+
+For each rule, name how this change complies (or note that the rule does not apply).
+
+| Rule | Applies? | Compliance note |
+|---|---|---|
+| R1 — semantic ≠ values | {{yes/no}} | {{...}} |
+| R2 — token map per surface | {{...}} | {{...}} |
+| R3 — intent ≠ implementation | {{...}} | {{...}} |
+| R4 — Tailwind v4 `@theme` source-of-truth | {{...}} | {{...}} |
+| R5 — variants closed list | {{...}} | {{...}} |
+| R6 — cross-cutting decisions in `decisions.md` | {{...}} | {{...}} |
+| R7 — iconography one file | {{...}} | {{...}} |
+| R8 — mode parity | {{...}} | {{...}} |
+| R9 — a11y at token level | {{...}} | {{...}} |
+| R10 — promotion criteria | {{...}} | {{...}} |
+| R11 — DTCG `$type` | {{...}} | {{...}} |
+| R12 — motion first-class | {{...}} | {{...}} |
+| R13 — themes vs modes | {{...}} | {{...}} |
+
+---
+
+## 8. Decisions registered
+
+{{D-DS-N rows added by this change. Each row: ID, status, owner, statement.}}
+
+| ID | Status | Owner | Statement |
+|---|---|---|---|
+| D-DS-{{N}} | proposed | {{owner}} | {{statement}} |
+
+---
+
+## 9. Open questions raised
+
+| ID | Priority | Owner | Question |
+|---|---|---|---|
+| Q-DS-{{N}} | {{low/medium/high}} | {{owner}} | {{question}} |
+
+---
+
+## 10. Migration plan (when this change touches `current/`)
+
+| Source section | Destination |
+|---|---|
+| {{section in current spec}} | {{target file + section}} |
+| {{...}} | {{...}} |
+
+Applied at archive (final phase of `tasks.md`). No edits to `current/` during proposal phase.
+
+---
+
+## 11. Verification
+
+After this change archives:
+
+- [ ] {{Outcome 1}}
+- [ ] {{Outcome 2}}
+- [ ] {{Outcome 3}}

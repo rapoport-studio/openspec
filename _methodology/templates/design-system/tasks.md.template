@@ -1,0 +1,94 @@
+<!--
+template-version: 1.0.0
+last-changed-by: define-design-system-spec-convention
+breaking-change-criteria: adding a required field, removing a field, renaming a slot
+-->
+# Tasks — {{Change title}}
+
+> Atomic checkboxes. Phases are sequential — each phase's verification must pass before the next starts. `current/` is untouched until the archive phase.
+
+---
+
+## Phase 0 — Prepare
+
+- [ ] 0.1 Confirm source spec files exist and are unmodified.
+- [ ] 0.2 Confirm dependency changes (if any) are archived.
+- [ ] 0.3 Confirm no parallel change in flight covers the same surface.
+
+---
+
+## Phase 1 — {{Authoring phase title}}
+
+- [ ] 1.1 {{Atomic step}}
+- [ ] 1.2 {{Atomic step}}
+- [ ] 1.3 {{Atomic step}}
+
+---
+
+## Phase 2 — {{Drafting phase title}}
+
+- [ ] 2.1 {{Atomic step}}
+- [ ] 2.2 {{Atomic step}}
+  - [ ] 2.2.1 {{Sub-step}}
+  - [ ] 2.2.2 {{Sub-step}}
+- [ ] 2.3 {{Atomic step}}
+
+---
+
+## Phase 3 — Verify drafts against R1..R13
+
+- [ ] 3.1 R1 — no OKLCH literals in `design-system.md` / `design-components.md` / `design-motion.md` / `ui.md`.
+- [ ] 3.2 R2 — every visual-surface section has a token map.
+- [ ] 3.3 R3 — no props tables, no Tailwind class strings.
+- [ ] 3.4 R4 — Tailwind v4 `@theme` is the single source of values.
+- [ ] 3.5 R5 — every variant has a one-sentence rationale.
+- [ ] 3.6 R6 — cross-cutting decisions live in `decisions.md`.
+- [ ] 3.7 R7 — iconography mapping is in one file.
+- [ ] 3.8 R8 — every semantic token row has light + dark sources (or `shared`).
+- [ ] 3.9 R9 — a11y baseline appears once at token level.
+- [ ] 3.10 R10 — promotion criteria are operationalised in `ui.md`.
+- [ ] 3.11 R11 — every token row has `$type`.
+- [ ] 3.12 R12 — motion lives in `design-motion.md`; component specs reference, do not redeclare.
+- [ ] 3.13 R13 — every "theme" / "mode" mention uses the term per R13.
+
+---
+
+## Phase 4 — Register decisions
+
+- [ ] 4.1 Append D-DS-{{N}} entries to `drafts/decisions.md` (or `drafts/decisions-amendment.md` if `decisions.md` already exists in `current/`).
+- [ ] 4.2 Each entry has ID / status / owner / statement.
+
+---
+
+## Phase 5 — Register open questions
+
+- [ ] 5.1 Append Q-DS-{{N}} entries to `drafts/open-questions.md` (or amendment).
+- [ ] 5.2 Each entry has ID / priority / owner / due / question / source.
+
+---
+
+## Phase 6 — Pre-archive checks
+
+- [ ] 6.1 All Phase 1..5 boxes checked.
+- [ ] 6.2 No edits to `current/` yet.
+- [ ] 6.3 No edits to `_methodology/` yet (if methodology changes are part of this change).
+- [ ] 6.4 Discrepancies-note (if applicable) lists any mismatches found during drafting.
+- [ ] 6.5 `agent-brief.md` (in change root) carries no chat-message references.
+
+---
+
+## Phase 7 — Apply migration (at archive)
+
+- [ ] 7.1 {{`git mv` or content promotion step}}
+- [ ] 7.2 {{...}}
+- [ ] 7.3 Append applied-delta footer to each touched `current/` file: `## {{Title}} (applied YYYY-MM-DD from change \`{{slug}}\`)`.
+- [ ] 7.4 `git mv openspec/changes/{{slug}}/` → `openspec/archive/YYYY-MM-DD-{{slug}}/`.
+- [ ] 7.5 Delete `drafts/` subfolder inside the archived change.
+
+---
+
+## Verification (final)
+
+- [ ] V1. {{Outcome 1}}
+- [ ] V2. {{Outcome 2}}
+- [ ] V3. {{Outcome 3}}
