@@ -60,6 +60,27 @@ Main table. Includes Phase A (Maestro) and Phase B candidates (Muse modes, Atlas
 
 A reader resolving "which model does <agent> use?" follows from this table; per-agent capability specs forward-reference the row by agent name, not by provider ID.
 
+### Forge audit pipeline — per-agent bindings (D-9)
+
+The Forge agent table above declares Forge core's default as `claude-opus-4-7` with no fallback. Inside Forge, the audit pipeline (`forge audit <module>`) fans out 12 specialised agents per run. D-9 permits a Haiku 4.5 carve-out for the explicitly-named low-stakes sub-pipelines below. Forge core, security, risk, and reasoning-heavy audit agents remain on Sonnet/Opus tier.
+
+| Audit agent | Default model | Weight | Reasoning |
+|---|---|:-:|---|
+| `security` | `claude-sonnet-4-7` | 2.0 | False negative = production security hole; reasoning over diff context |
+| `risk` | `claude-sonnet-4-7` | 2.0 | High cost of miss on operational risk; reasoning |
+| `architect` | `claude-sonnet-4-7` | 1.5 | Architectural reasoning; long-context judgment |
+| `tech-lead` | `claude-sonnet-4-7` | 1.5 | Velocity vs correctness tradeoff judgment |
+| `performance` | `claude-sonnet-4-7` | 1.5 | Runtime reasoning, not pattern matching |
+| `component-api` | `claude-sonnet-4-7` | 1.5 | API contract analysis; reasoning |
+| `qa` | `claude-sonnet-4-7` | 1.0 | Test-coverage reasoning |
+| `seo` | `claude-haiku-4-5` | 1.5 | Pattern matching: readability, keywords (D-9) |
+| `growth` | `claude-haiku-4-5` | 1.0 | Analytics pattern checks (D-9) |
+| `pm` | `claude-haiku-4-5` | 1.0 | Product lens; heuristic classification (D-9) |
+| `ui-designer` | `claude-haiku-4-5` | 1.0 | Visual pattern checks (D-9) |
+| `a11y` | `claude-sonnet-4-7` (staged Haiku candidate) | 1.5 | WCAG rule-checking; promoted to Haiku after one studio audit cycle confirms no regression. C-2 in `improve-forge-throughput` keeps a11y on Sonnet for v1 (D-9, staged) |
+
+Per-pipeline override at consumer site: `ForgeConfig.models.auditAgents?: Partial<Record<AgentName, ModelAlias>>` takes precedence over module-registry defaults. Forge core (Builder, plan generation) is unaffected — D-7 unchanged.
+
 ---
 
 ## Model identifier table
@@ -70,6 +91,7 @@ Maps the row labels in [§ Per-agent default + fallback](#per-agent-default--fal
 |---|---|---|---|
 | `claude-opus-4-7` | Anthropic | TBD per Anthropic identifier registry (currently the `MODELS.opus` constant in `packages/forge/src/core/anthropic.ts`) | [`MODEL_PRICING`](../../../packages/forge/src/core/anthropic.ts) in `packages/forge/src/core/anthropic.ts § initModelPricing` (extensible per RAP-166 / [`forge.md § Known gaps #6`](../../current/forge.md)) |
 | `claude-sonnet-4-7` | Anthropic | TBD per Anthropic identifier registry (currently the `MODELS.sonnet` constant in `packages/forge/src/core/anthropic.ts`) | same |
+| `claude-haiku-4-5` | Anthropic | `claude-haiku-4-5-20251001` (the `MODELS.haiku` constant in `packages/forge/src/core/anthropic.ts`) | [`MODEL_PRICING`](../../../packages/forge/src/core/anthropic.ts) in `packages/forge/src/core/anthropic.ts § initModelPricing` — entry `'claude-haiku-4-5-20251001': { input: 0.5, output: 2.5 }` |
 | `gpt-5.5-pro` | OpenAI | TBD per OpenAI identifier registry | TBD when provider abstraction (`add-provider-abstraction` Layer 1.5) ships an OpenAI client |
 | Perplexity API | Perplexity | TBD (Perplexity Sonar or equivalent for continuous-research mode) | TBD when Atlas runtime ships and the Perplexity client is wired |
 
@@ -105,6 +127,7 @@ Discipline for keeping this document current.
 | D-6 | Atlas uses two-stage pipeline (Perplexity discovery + Claude synthesis) | Each stage uses the canonical leader for its concern; Perplexity is web-aware, Claude is synthesis-strong; no single-provider single-call alternative ships the same quality |
 | D-7 | Cost-conscious models acceptable for Builder / Scout (Sonnet default), not for Echo / Architect / Maestro / Forge | Cost-consciousness applies to high-volume routine work; agents whose output enters a Pavel-review hard gate (Echo) or compounds across the orchestra (Maestro, Forge) demand Opus-grade quality |
 | D-8 | Methodology doc out of bundle scope | Per `add-philosophy-foundation § D-12`; runtime UI does not need methodology content in v1; bundle generator unmodified by this change |
+| D-9 | Haiku 4.5 acceptable for explicitly-named low-stakes Forge audit sub-pipelines | Forge audit pipeline fans out 12 agents per run; not all 12 require Opus/Sonnet reasoning depth. SEO, growth, PM, UI-designer, and (staged) A11Y are pattern-matching tasks where Haiku 4.5 (73.3% SWE-bench, 1/3 cost vs Sonnet) is sufficient. Forge core (Builder, plan generation, security/risk audit agents) remains Sonnet/Opus tier per D-7. Carve-out is enumerated, not blanket — new Haiku transitions require their own decision row. |
 
 ---
 
@@ -117,3 +140,9 @@ Discipline for keeping this document current.
 - [`packages/forge/src/core/anthropic.ts`](../../../packages/forge/src/core/anthropic.ts) — runtime constants (`MODELS`, `MODEL_PRICING`, `initModelPricing`); single source of truth for pricing rates per RAP-166.
 - [`openspec/_methodology/studio-charter.md`](../studio-charter.md) — operating-model charter; the methodology doc is consumed by spec authors who reference it from per-agent specs.
 - Future: `_methodology/tools/<future-doc>.md` — additional tool / capability methodology docs land in this same subdirectory as the orchestra grows.
+
+---
+
+## Haiku audit carve-out (applied 2026-05-11 from change `add-forge-haiku-audit-tier`)
+
+D-9 carve-out for low-stakes Forge audit sub-pipelines (`seo`, `growth`, `pm`, `ui-designer`; `a11y` staged). Methodology decision row and Forge audit sub-table added. Authoritative proposal/design/tasks: `openspec/archive/2026-05-11-add-forge-haiku-audit-tier/` — this marker is pointer-only.
