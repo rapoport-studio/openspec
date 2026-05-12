@@ -47,7 +47,7 @@ tldr: Defines the 10 highest collision-risk terms in the Rapoport Studio vocabul
 
 ### Surface
 
-**Surface** is a UI placement term in Rapoport Studio specs: it denotes a discrete viewport or rendering channel where a capability is exposed (e.g., the Telegram surface, the Studio surface). This clashes with Material Design 3's *surface* (tone-based depth layer controlling elevation and color), Meta Foundational Design System's surface semantics, and Microsoft Surface (hardware). Readers coming from any of these contexts will import the wrong mental model.
+**Surface** is a UI placement term in Rapoport Studio specs: it denotes a discrete viewport or rendering channel where a capability is exposed (e.g., the Telegram surface, the Workspace surface). This clashes with Material Design 3's *surface* (tone-based depth layer controlling elevation and color), Meta Foundational Design System's surface semantics, and Microsoft Surface (hardware). Readers coming from any of these contexts will import the wrong mental model.
 
 **Canon:** In Rapoport Studio OpenSpec, **Surface** means a discrete UI host or integration channel; it carries no elevation, depth, or hardware semantics.
 
