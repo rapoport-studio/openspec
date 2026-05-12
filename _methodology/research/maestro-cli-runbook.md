@@ -297,6 +297,6 @@ maestro doctor --profile ci
 ## See also
 
 - [`openspec/current/agents/maestro.md`](../../../current/agents/maestro.md) — Maestro capability spec (function, access scope, risk matrix)
-- [`openspec/changes/add-maestro-cli/design.md`](../../add-maestro-cli/design.md) — CLI invocation architecture and phase breakdown
+- [`openspec/archive/2026-05-12-add-maestro-cli/design.md`](../../archive/2026-05-12-add-maestro-cli/design.md) — CLI invocation architecture and phase breakdown
 - [`openspec/_methodology/tools/cli-standards.md`](../tools/cli-standards.md) — argv conventions, exit codes, output modes, logging schema (canonical contract for all studio CLIs)
 - [`tools/lint-maestro-cli.mjs`](../../../../tools/lint-maestro-cli.mjs) — CI lint script that verifies `--json`, exit codes, and `--help` section coverage
