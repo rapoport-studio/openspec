@@ -396,6 +396,8 @@ WhatsApp setup remains for clients who prefer it; n8n normalizes payloads to a s
 
 ## 12. Glossary
 
+> The canonical glossary is now [`_root/glossary.md`](../_root/glossary.md). This table is the studio's original 7 terms; the canonical glossary supersedes it.
+
 | Term | Meaning |
 |---|---|
 | **Studio** | The company (Rapoport Studio SRL). Also: the platform's internal workspace at `app.rapoport.studio`. |
