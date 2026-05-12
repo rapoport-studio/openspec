@@ -245,6 +245,7 @@ These are active change folders that **can ship in parallel** with MVP v1 work o
 ### Foundation (philosophy)
 
 - ~~`add-philosophy-foundation`~~ *(RAP-148 Phase A ✅ closed 2026-05-10, archived as `archive/2026-05-10-add-philosophy-foundation/`)* — agents-overview + charter prose foundation shipped via #350 (2026-05-08); archive #543. Phase B (Pavel-voice manifesto) carved out — when content is ready, author a new change folder (e.g., `add-philosophy-manifesto`) rather than re-opening the archive.
+- ~~`extend-philosophy-foundation-trilingual`~~ *(RAP-179/RAP-195/RAP-196 ✅ archived 2026-05-13 as `archive/2026-05-13-extend-philosophy-foundation-trilingual/`)* — Phases 1 (spec), 3 (EN), 4 (RO) complete. Phase 2 (RU canonical body) operator-blocked; `manifesto.ru.md` must be authored by Pavel in a follow-up PR on `feat/rap-179/manifesto-ru`.
 
 ---
 
