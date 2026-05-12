@@ -13,7 +13,7 @@ In-scope CLIs at authoring time:
 | CLI | Status | Notes |
 |---|---|---|
 | `forge` ([`packages/forge/`](../../../packages/forge/)) | Mature, predates this contract | Catalogued exceptions in [§ Known gaps](#known-gaps); migration tracked separately |
-| `maestro` (planned, [`packages/muse/bin/maestro`](../../current/agents/maestro.md)) | Anchored by this contract | First CLI built to spec from day 1 |
+| `maestro` ([`packages/muse/bin/maestro`](../../current/agents/maestro.md)) | Active | First CLI built to spec from day 1; CI lint enforced via `tools/lint-maestro-cli.mjs` |
 | `muse` (future, headless invocation surface) | Will trigger rule-of-three for `packages/cli-core/` extraction | Migration plan lands at extract time |
 
 Code extraction (`packages/cli-core/`) is **deferred** to the Muse CLI milestone per `add-cli-standards § Decisions D-1`. Until then, this document is the contract; enforcement is by review and (planned) lint rather than by shared library.
@@ -462,7 +462,7 @@ Per [user memory](../../../CLAUDE.md):
 | Supabase service role key | `SUPABASE_SERVICE_ROLE_KEY` | CLIs that read/write `orchestra_journal`, `agent_status`, etc. |
 | Supabase anon key | `SUPABASE_ANON_KEY` | Read-only DB queries from CLI when service-role isn't required |
 
-Unconventional names (`LINEAR_API_KEY`, `GH_TOKEN`, `OPENAI_API_KEY`) are **not** read. Operators set the canonical names; CLIs read only the canonical names. This is enforced by code review and (planned) the lint script in `add-maestro-cli` Phase 0.
+Unconventional names (`LINEAR_API_KEY`, `GH_TOKEN`, `OPENAI_API_KEY`) are **not** read. Operators set the canonical names; CLIs read only the canonical names. This is enforced by code review and the CI lint script at `tools/lint-maestro-cli.mjs` (`add-maestro-cli` Phase 1.6).
 
 ### Sharing across CLIs
 
@@ -483,7 +483,6 @@ Documented deviations from the contract. Each has an owner and a remediation pat
 | Gap | CLI | Remediation owner | ETA / change anchor |
 |---|---|---|---|
 | State path is `~/.forge/`, not `~/.studio/forge/` | `forge` | Forge maintainer | At `cli-core` extract time (rule-of-three trigger when `add-muse-cli` lands) |
-| No CI lint enforcing argv flag conventions | all | Maestro CLI maintainer | `add-maestro-cli` Phase 0 |
 | `forge build` exit code mapping not yet audited against [§2](#§2-exit-codes) | `forge` | Forge maintainer | Audit task in `add-maestro-cli` (so divergences surface during contract validation) |
 | `--profile` flag not yet implemented in any CLI | all | Whoever ships the first multi-environment use case | Deferred — capture in `add-cli-config-profiles` if/when needed |
 | `doctor` command not yet present in `forge` | `forge` | Forge maintainer | Tracked in [Forge known gaps](../../current/forge/verifier.md); ships when next Forge improvement wave lands |
@@ -510,3 +509,4 @@ This list is part of the contract. PRs that add new CLIs without compliance must
 | Date | Change | Anchor |
 |---|---|---|
 | 2026-05-10 | Initial publication; nine sections + known gaps + related | `add-cli-standards` ([RAP-228](https://linear.app/rapoport-studio-slr/issue/RAP-228)) |
+| 2026-05-12 | Maestro row status → Active; remove "No CI lint" Known Gaps row (shipped as `tools/lint-maestro-cli.mjs`); update §9 lint reference | `add-maestro-cli` Phase 1.6 (RAP-254) |
