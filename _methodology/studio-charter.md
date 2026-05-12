@@ -211,6 +211,7 @@ If you can't fill a section honestly yet, write a stub paragraph explaining what
 
 Each capability gets its own `openspec/current/<capability>.md`. A typical product has, at minimum:
 
+
 - `platform.md` (always)
 - `auth.md`
 - `db.md`
@@ -220,6 +221,41 @@ Each capability gets its own `openspec/current/<capability>.md`. A typical produ
 - One or more product-specific capability specs (e.g. for the psychology product, a `practice.md` for the practitioner workspace, a `client.md` for the client-facing surface, a `sessions.md` for session lifecycle).
 
 Each capability spec carries its own status (Active / Experimental / Stub / Deferred / Deprecated / TBD — see § 8).
+
+### 5.8 Mandatory `## Risks` section in `proposal.md`
+
+Every `proposal.md` **must** include a `## Risks` section. This section is **gating — PRs cannot merge with empty or trivially-filled Risks content.** Use the following structure verbatim; replace angle-bracket placeholders with actual analysis:
+
+```markdown
+## Risks
+
+### Value risk
+<one paragraph: who might not want this; what alternative they might pick>
+
+### Usability risk
+<one paragraph: who might struggle to use the change; what makes it confusing>
+
+### Feasibility risk
+<one paragraph: HIGH/MEDIUM/LOW; what makes it potentially infeasible>
+
+### Viability risk
+<one paragraph: business/legal/compliance angle>
+
+### SDD-specific risks
+
+| Risk | Mitigation |
+|---|---|
+| Spec drift — proposal wording diverges from merged code | Quarterly grep-audit; Forge verifier flags done-without-tests |
+| Hallucination — AI writes plausible-but-wrong logic | Phase split mandatory for 4+ file changes; human review gate |
+| Ambiguity — underspecified sections invite divergent implementation | design.md must resolve every decision before tasks.md execution starts |
+```
+
+**What "trivially filled" means (and is rejected):**
+- All paragraphs are `<placeholder>` text.
+- A section says "N/A" without one sentence of justification.
+- The SDD-specific table is empty or has only the template rows with no values.
+
+The L3 (Product) and L4 (SDD-specific) risk levels map directly to the sections above; see [`openspec/_methodology/risk-taxonomy.md`](risk-taxonomy.md) for the full taxonomy.
 
 ---
 
