@@ -432,7 +432,7 @@ WhatsApp setup remains for clients who prefer it; n8n normalizes payloads to a s
 
 ## 12. Glossary
 
-> The canonical glossary is now [`_root/glossary.md`](../_root/glossary.md). This table is the studio's original 7 terms; the canonical glossary supersedes it.
+> **The canonical glossary is now [`_root/glossary.md`](../_root/glossary.md).** This table is the studio's original 7 terms and is kept as a historical baseline; the canonical glossary supersedes it.
 
 | Term | Meaning |
 |---|---|
