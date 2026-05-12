@@ -1,5 +1,8 @@
 # Vivod Topology — Pre-engagement Scout
 
+<!-- openspec-refs: allow-unresolved -->
+<!-- This document describes Vivod's repository internals. All `openspec/changes/<slug>/`, `openspec/specs/`, etc. references describe paths inside `VIVOD-AI/vivod`, NOT this repo. They are not actionable refs from the studio side, so the openspec-refs guard skips this file. -->
+
 > Studio-internal topology scan of `VIVOD-AI/vivod`, anchored to a known commit. Captured during Phase 1 of [`onboard-vivod`](../../changes/onboard-vivod/). Read-only — nothing in this document was committed back to Vivod's repo.
 
 ```yaml
