@@ -293,12 +293,234 @@ What this network deliberately does **not** do, in any engagement:
 | `Q-NW-2` | P0 | What is the canonical base NDA template? Drafted by counsel before first non-Pavel specialist signs. |
 | `Q-NW-3` | P1 | Where does the specialist registry live in code — `packages/muse/specialists/`, a Supabase table, or both? Decision affects how Muse loads prompt augmentations at session start. |
 | `Q-NW-4` | P1 | What is the matching layer's v1 implementation — pure rule-based filter, scored heuristic, or ML? v1 may be coarse; commit to coarse explicitly so it doesn't accrete complexity prematurely. |
-| `Q-NW-5` | P1 | What is the threshold for "promotion to common library" of a specialist-contributed prompt? Three engagements is a starting point; needs validation when first promotion candidate appears. |
-| `Q-NW-6` | P2 | Does the studio publish anonymized network-level metrics (count, disciplines, retention)? Useful for client-facing trust signals; risk of leaking competitive information. |
-| `Q-NW-7` | P2 | When does this document graduate from `_methodology/` to `openspec/current/network.md`? Suggested trigger: third certified specialist + first promoted prompt. |
+| `Q-NW-5` | **resolved 2026-05-12** | What is the threshold for "promotion to common library" of a specialist-contributed prompt? **Resolution:** for studio-internal use the existing § 6.3 threshold (3 independent engagements with positive quality signals) stands. For *marketplace context* — i.e. when a published canvas exposes a specialist-contributed prompt as part of its sale — promotion additionally requires 2 senior endorsements per § 13. Two thresholds, one mechanism, distinct triggers. Resolved by [`changes/define-canvas-studio-thesis`](../changes/define-canvas-studio-thesis/) per §§ 12–15 of this document. |
+| `Q-NW-6` | **resolved 2026-05-12** | Does the studio publish anonymized network-level metrics? **Resolution:** metrics are split into two tiers. *Per-specialist* — footprint score (§ 13) and tier badge (§ 4.3) are public-by-default for `listed` and `open` specialists; `stealth` specialists publish nothing. *Aggregate network metrics* (§ 7.3 — median certification time, median engagements per specialist per year, prompts promoted per year) remain studio-internal; selective curated quotes may appear in marketing but the live aggregates do not. This avoids leaking competitive information while still giving buyers per-specialist trust signal. Resolved by [`changes/define-canvas-studio-thesis`](../changes/define-canvas-studio-thesis/) per § 12 of this document. |
+| `Q-NW-7` | P2 | When does this document graduate from `_methodology/` to `openspec/current/network.md`? Suggested trigger: third certified specialist + first promoted prompt. The 2026-05-12 thesis (§§ 12–15) does *not* itself trigger graduation — the trigger remains the specialist-count + promotion event. The §§ 12–15 commercial surface graduates *with* the rest of the document at that point. |
+
+---
+
+## 12. Public profile model — three visibility modes
+
+> Added 2026-05-12 by change [`define-canvas-studio-thesis`](../changes/define-canvas-studio-thesis/). Status: **hypothesis** — the contract defined here ships only after the validation experiment in [`validation-plan-q3-2026.md`](./validation-plan-q3-2026.md) graduates the thesis. Until then the contract is documented (so the next agent can review it) but no UI is built.
+
+The specialist registry exposes three visibility modes per specialist. Mode is set per-specialist (granularity may extend to per-discipline in v2; out of scope here). The specialist controls their own mode; the studio enforces only minimum tier requirements for `open` mode.
+
+### 12.1 The three modes
+
+| Mode | Profile location | Who can see it | Pricing visible | Direct contact |
+|---|---|---|---|---|
+| **Stealth** | Studio-internal only; the matching layer (§ 5) sees the profile, no other surface does | Pavel + matching layer | No | Studio-mediated only |
+| **Listed** | Visible in the network roster at `app.rapoport.studio/network` (auth-walled — visible to clients with an active engagement) and in matching candidate lists | Active clients + Pavel + matching layer | No (cost-band may be shown per § 14, exact pricing hidden) | Inquiry routed through studio |
+| **Open** | Public profile at `rapoport.studio/network/<slug>` | Anyone — including search engines | Yes — full per § 14 | Direct "request engagement" CTA on the public page |
+
+### 12.2 What is shown in each mode
+
+The composition of the profile differs by mode. The table below uses ✓ (shown), ◔ (shown only if specialist opts in), and ✗ (hidden).
+
+| Profile element | Stealth | Listed | Open |
+|---|---|---|---|
+| Name / pseudonym | ✓ | ✓ | ✓ |
+| Photo / avatar | ✓ | ✓ | ✓ |
+| One-line bio | ✓ | ✓ | ✓ |
+| Tier badge (Author / Senior; Apprentice / Reviewer hidden until Author) | ✓ | ✓ | ✓ |
+| Discipline tags | ✓ | ✓ | ✓ |
+| **Footprint score** (§ 13) — single number | ✓ (internal) | ✓ | ✓ |
+| **Footprint breakdown** (component-by-component) | ✓ (internal) | ◔ | ✓ |
+| Authored canvases (titles, links) | ✓ | ◔ | ✓ |
+| Cited decisions (D-X-N references) | ✓ | ◔ | ✓ |
+| Promoted prompts (named in library metadata) | ✓ | ✓ | ✓ |
+| Drift signals (§ 7.1) | ✓ (studio-internal) | ✗ | ✗ |
+| Hourly rate | ✗ | ✗ or band per § 14 | ✓ |
+| Per-canvas / per-blueprint rates | ✗ | ✗ | ✓ |
+| Royalty rate on published canvases | ✗ | ✗ | ✓ |
+| Availability status (open / partial / closed) | ✗ | ✓ | ✓ |
+| "Request engagement" CTA | ✗ | Routed via studio | Direct |
+
+The clear principle: **footprint** is exposable in all modes (it is the *signal*); **pricing** and **direct contact** are progressively exposed as the specialist chooses to be more public.
+
+### 12.3 Mode-change rules
+
+- A specialist may move freely between Stealth ↔ Listed ↔ Open, with two constraints:
+  - To enter `Open`, the specialist must hold tier `Certified Author` or higher (§ 4.3). `Apprentice` and `Reviewer` cannot publish public profiles (the studio does not surface a developing reputation).
+  - To enter `Open`, the specialist must have non-zero footprint (i.e. ≥ 1 authored canvas *or* ≥ 1 promoted prompt). Empty `Open` profiles dilute brand.
+- Mode changes are auditable — recorded with timestamp on the specialist record.
+- A specialist who moves to `Stealth` after being `Open`: the public URL `rapoport.studio/network/<slug>` 404s; cached engagements remain valid.
+
+### 12.4 Drift signals stay studio-internal regardless of mode
+
+Drift signals from § 7.1 (senior-review delta, client-revisions trend, spec-fidelity audit, implementation feedback) are *never* exposed publicly. They are calibration data for the studio, not buyer signal. The reasoning: drift signals are leading indicators that depend on full context (client expectations, engagement scope, training stage). Exposing them invites misinterpretation.
+
+The footprint score (§ 13) is the public-facing performance signal. Drift signals stay where they are.
+
+---
+
+## 13. Footprint score — the OpenSpec h-index
+
+> Added 2026-05-12 by change [`define-canvas-studio-thesis`](../changes/define-canvas-studio-thesis/). Status: **hypothesis**. Formula and weights are first-pass; expected to evolve through Tact 1 and 2 of the canvas-studio rollout (per `positioning.md § 1.4`).
+
+### 13.1 Why footprint instead of star ratings
+
+Star ratings (Upwork, Fiverr, Yelp) average qualitative judgement into a single dimension. They are easy to read, easy to game, and converge on mediocrity (the *3.8-of-5 problem* — ratings cluster in a narrow band that doesn't discriminate). The OpenSpec corpus produces a different kind of signal: a *graph* of authored artefacts, cited decisions, promoted prompts, and downstream usage. This graph supports a footprint score analogous to the academic *h-index* — it grows over time, is hard to game, and reflects accumulated contribution rather than reported sentiment.
+
+### 13.2 Components and weights (first-pass)
+
+The footprint score is the weighted sum of the following components, computed from the studio's specialist-canvas-decision graph:
+
+| Component | What it counts | Weight | Provenance |
+|---|---|---|---|
+| **Authored canvases** | Canvases the specialist authored (single or lead author) and that have been published in any visibility mode | 1× | Specialist record + canvas metadata |
+| **Forked canvases** | Canvases that other architects forked from the specialist's published canvas as a starting point | 3× | Canvas fork-graph |
+| **Purchased canvases** | Distinct paid blueprint exits where the canvas authored by this specialist was the basis | 5× | Stripe payment ↔ canvas link |
+| **Cited decisions** | `D-X-N` references in *other* OpenSpec corpora to a decision authored by this specialist (counted by citing-corpus, deduplicated within a corpus) | 2× per citation | Cross-corpus citation graph (requires Forge audit / cross-repo indexer — built when Tact 2 ships) |
+| **Promoted prompts** | Prompt augmentations promoted to the common library per § 6.3 | 10× | `decisions.md § D-NW-N` records (existing mechanism) |
+| **Canvases in production** | Canvases the buyer self-reported (or audit-detected) as deployed to production | 25× | Buyer self-report + optional Forge audit telemetry (see § 13.5 anti-gaming) |
+| **Senior endorsements** | Senior reviewer flagged the specialist's work as "best-in-category for the quarter" | 15× per endorsement | Senior reviewer log; quarterly cycle |
+
+### 13.3 What the score looks like in display
+
+```
+Footprint: 247
+
+Authored: 4 × 1   = 4
+Forked:   2 × 3   = 6
+Purchased: 8 × 5  = 40
+Cited:    35 × 2  = 70
+Promoted: 5 × 10  = 50
+In prod:  3 × 25  = 75
+Senior:   0 × 15  = 0
+
+Total:           247
+```
+
+The breakdown is *always shown* alongside the aggregate. Single numbers without provenance are propaganda; numbers with provenance are signal. Buyers may weight the components differently than the studio defaults — the component view supports that.
+
+### 13.4 Hypothetical archetype scores (illustrative)
+
+To calibrate the formula's reasonableness, three illustrative archetypes:
+
+| Archetype | Authored | Forked | Purchased | Cited | Promoted | In prod | Senior | Total |
+|---|---|---|---|---|---|---|---|---|
+| Newly graduated Author after 3 engagements | 3 | 0 | 0 | 0 | 0 | 0 | 0 | **3** |
+| Mid-career Author, year 1 in network | 6 | 2 | 4 | 8 | 1 | 0 | 0 | **58** |
+| Senior with publishing volume, year 3 | 12 | 8 | 25 | 60 | 6 | 5 | 4 | **496** |
+| Domain authority (rare archetype) | 4 | 12 | 40 | 200 | 10 | 8 | 8 | **1,070** |
+
+The wide spread is a feature, not a bug — it rewards different career strategies (volume vs. depth vs. influence) and gives buyers meaningful discrimination at the top end.
+
+### 13.5 Anti-gaming
+
+Six structural defences against score-gaming:
+
+1. **No self-purchase.** Specialist purchasing their own canvas (directly or via shell account) is detected via Stripe customer ID match against specialist record; flagged for senior review and excluded from score.
+2. **Citation-graph limited to ratified decisions.** A `D-X-N` only counts as "cited" if it appears in a *ratified* decisions.md entry (per the existing convention in `openspec/decisions.md`), not in a draft proposal. Forks of a specialist's own corpus do not count as citations.
+3. **Production-deployment claims require attestation.** A buyer self-report of "deployed to production" requires either (a) a screenshot + URL submitted via the studio admin surface, or (b) a Forge audit identifying the specialist's canvas as the upstream of an audited production repo. Unverified claims do not count.
+4. **Senior endorsements are rate-limited.** Each senior reviewer may issue at most 2 endorsements per quarter across the entire network, regardless of how many specialists they reviewed. This prevents endorsement inflation.
+5. **Score is monotonic but not immutable.** Score can be *clawed back* if a component is later invalidated (e.g. a published canvas is delisted for cause; a cited decision is superseded by a contradicting one). Clawbacks are logged on the specialist record with rationale.
+6. **The breakdown is always shown.** Buyers see the components, not just the aggregate. This makes manipulation visible — a specialist whose entire score comes from forks (with zero purchases) reads differently than one whose score comes from production deployments.
+
+### 13.6 What the score does *not* measure
+
+To avoid mis-marketing this metric internally:
+
+- It does *not* measure talent. Talent is upstream of contribution; the score measures *contribution*. A talented specialist new to the network has low footprint; that is correct.
+- It does *not* measure how pleasant the specialist is to work with. That is the engagement-feedback signal (§ 7.1, drift signals — internal).
+- It does *not* measure availability. Footprint is historical; availability is current and shown separately (§ 12.2).
+- It does *not* measure how much the specialist deserves to be paid. Pricing is set by the specialist within tier-band guidance (§ 14), informed by but not derived from footprint.
+
+---
+
+## 14. Pricing display — three disclosure levels and the pricing stack
+
+> Added 2026-05-12 by change [`define-canvas-studio-thesis`](../changes/define-canvas-studio-thesis/). Status: **hypothesis**. Default rates are placeholders; refined through validation outcomes (per [`validation-plan-q3-2026.md`](./validation-plan-q3-2026.md)).
+
+### 14.1 The pricing stack — four layers
+
+Specialists may offer up to four pricing layers in their profile, depending on their work mode:
+
+| Layer | What it prices | Typical buyer | Default range (illustrative) |
+|---|---|---|---|
+| **Hourly rate** | Ad-hoc consulting; calls; ad-hoc reviews | Architect engaging the specialist for a one-off conversation | $80–$400/hr by tier |
+| **Per-canvas rate** | A packaged canvas the specialist publishes for sale on the marketplace | Architect buying a starter blueprint | $1k–$15k by canvas complexity |
+| **Per-blueprint-exit rate** | Specialist's share when they participate in a buyer's blueprint exit | Architect whose canvas exit was assisted by this specialist | % of exit fee, typically 15–40% |
+| **Royalty rate** | Recurring share of every sale of the specialist's published canvas | Same as per-canvas, but recurring | 60–70% to specialist; 30–40% studio |
+
+A specialist need not offer all four. A pure marketplace publisher offers only per-canvas + royalty. A pure consultant offers only hourly. Most specialists offer some combination as their work evolves.
+
+### 14.2 Three disclosure levels
+
+Independently of pricing-stack composition, the specialist chooses how visibly each layer is shown.
+
+| Level | What is shown | When to use |
+|---|---|---|
+| **Hidden** | No price; "ask" CTA | Specialist who wants to negotiate per-engagement; specialist who wants to discourage cold inquiries |
+| **Range** | Either dollar-sign indicator ($, $$, $$$, $$$$) or numeric range ($150–$250/hr) | Specialist who wants to filter by budget without anchoring to a number |
+| **Exact** | Specific value | Open mode (§ 12) only; specialist who wants maximum-friction-removal for inquiries |
+
+A specialist may mix levels across pricing layers — e.g. hourly rate at *Range*, per-canvas rate at *Exact*, royalty rate at *Hidden*. The UI surfaces each layer separately.
+
+### 14.3 Tier-band guidance (floor and ceiling)
+
+Per § 4.3, the studio publishes per-tier rate guidance (not enforcement) for hourly rates:
+
+| Tier | Suggested floor (hourly) | Suggested ceiling (hourly) |
+|---|---|---|
+| Apprentice | n/a — no paid engagements | n/a |
+| Certified Reviewer | $60 | $120 |
+| Certified Author | $120 | $300 |
+| Senior | $250 | $600+ (no enforced ceiling) |
+
+Specialists may price below or above these bands with reason recorded on their profile (visible to studio reviewers, not necessarily to buyers). Pricing dramatically below floor signals to studio that either (a) specialist is undervaluing, or (b) other rationale exists worth understanding. Pricing dramatically above ceiling is allowed without comment — high-end pricing is its own quality signal.
+
+### 14.4 Why guidance and not enforcement
+
+Hard floor pricing is anti-competitive in some jurisdictions and creates rigidity. The studio's interest is met by *guidance + visibility* — specialists who price below floor make a visible choice; the market's response (or lack of it) calibrates over time. The studio reserves the right to require explanation for systematic floor-undercutting; this is documented in compensation contracts when Pulse activates and § 8 is rewritten.
+
+### 14.5 What is *not* in the pricing stack (and why)
+
+- **Outcome-based pricing** (% of buyer's revenue / cost-saving). Tempting but creates attribution hell. Not offered as a standard pricing layer; specialists who want to negotiate outcome-based deals do so off-platform.
+- **"Free first canvas" promo pricing.** Discouraged because it sets buyer expectations against the platform's positioning ("only architecture has a price"). Studio may run promotional pricing for the studio's own canvases; specialists may not advertise free canvases as marketing.
+
+---
+
+## 15. Race-to-bottom defenses
+
+> Added 2026-05-12 by change [`define-canvas-studio-thesis`](../changes/define-canvas-studio-thesis/). Status: **hypothesis**. The five mechanisms below are structurally why the marketplace is expected not to degenerate the way Upwork did. If any one fails in practice, the studio reverts to a more curated mode (Tact 2 instead of Tact 3 per `positioning.md § 1.4`).
+
+The dominant failure mode of open specialist marketplaces is *race-to-the-bottom*: open rating + open pricing → downward price spiral → quality drops → senior specialists leave → only newcomers remain → marketplace dies. Five mechanisms are built into the contract above to structurally prevent this:
+
+### 15.1 Floor-price-by-tier
+
+§ 14.3 above. Senior specialists do not compete with newcomers on price. The floor is a guidance number, but it is *publicly published* — buyers understand that pricing below floor signals something other than quality.
+
+### 15.2 Curated entry
+
+§§ 3 (NDA), 4 (training), 5 (matching layer human-confirm step). The barrier to becoming a network specialist is high (NDA + training + certification). Anyone can register on Upwork in five minutes; no one can become a Rapoport Studio specialist in less than approximately six weeks. This filters out price-dumping volume.
+
+### 15.3 Footprint, not stars
+
+§ 13. Footprint accumulates slowly and reflects actual work artefacts (canvases, citations, promoted prompts). It cannot be inflated by social games (asking buyers for stars, exchanging reviews). The signal a buyer sees grows from real contribution; manipulation is visible in the breakdown.
+
+### 15.4 Promotion to library as career path
+
+§ 6.3 (existing). A senior specialist has *non-financial* career paths within the network: their prompts get into the common library, their name attaches to `D-NW-N` decisions, their footprint compounds with citation. This retains top specialists who would otherwise leave when price-pressure increased.
+
+### 15.5 Studio as quality gatekeeper
+
+§ 5 (matching layer + human-confirm) + § 6.3 (review of contributed augmentations) + Tact 2 marketplace gate (in `positioning.md § 1.4`). The studio is willing to be the bottleneck on quality even at the cost of marketplace velocity. Tact 3 (open self-serve marketplace) is gated on automated certification *replacing* studio review — it does not arrive by removing review.
+
+### 15.6 What if these defences fail
+
+If race-to-the-bottom dynamics emerge despite the defences, the studio's recovery posture is:
+
+- **First response**: tighten matching-layer filters; raise tier requirements for `Open` mode publishing; raise floor-price guidance with stronger rationale shown to underpricing specialists.
+- **Second response**: revert to Tact 2 mode (no open self-serve); all marketplace listings require studio review; reduce specialist-publisher count.
+- **Third response (terminal)**: close marketplace dimension; revert to studio-as-sole-publisher (Tact 1); other monetization paths (engagement modes per `rapoport-studio-engagement.md § 4`) remain.
+
+The escalation ladder is defined here so a future agent under pressure does not improvise a worse one.
 
 ---
 
 ## Change log
 
 - `2026-05-05` — initial draft v1, behind the engagement charter. Authored as part of the studio's specialist-network packaging discussion.
+- `2026-05-12` — added §§ 12–15 (commercial / marketplace surface) via change [`define-canvas-studio-thesis`](../changes/define-canvas-studio-thesis/). Closed `Q-NW-5` and `Q-NW-6` in § 11. Status of overall doc unchanged (still draft v1, behind engagement charter). The §§ 12–15 additions are themselves **hypothesis** until the validation experiment in [`validation-plan-q3-2026.md`](./validation-plan-q3-2026.md) graduates the canvas-studio thesis; until then they document the contract without triggering implementation.
