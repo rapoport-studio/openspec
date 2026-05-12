@@ -487,6 +487,7 @@ Documented deviations from the contract. Each has an owner and a remediation pat
 | `forge build` exit code mapping not yet audited against [§2](#§2-exit-codes) | `forge` | Forge maintainer | Audit task in `add-maestro-cli` (so divergences surface during contract validation) |
 | `--profile` flag not yet implemented in any CLI | all | Whoever ships the first multi-environment use case | Deferred — capture in `add-cli-config-profiles` if/when needed |
 | `doctor` command not yet present in `forge` | `forge` | Forge maintainer | Tracked in [Forge known gaps](../../current/forge.md); ships when next Forge improvement wave lands |
+| Pre-extract auth carve-out: `packages/muse` imports `@rapoport-studio/forge/core` directly (auth + Anthropic + Linear + GitHub clients) instead of a shared `packages/cli-core/auth` | `maestro` (via `packages/muse`) | Maestro / Muse CLI maintainer | Lifted to `@rapoport-studio/cli-core/auth` at rule-of-three trigger when Muse CLI lands as the third consumer; boundary enforced by `eslint.config.mjs` patterns rule (see `add-maestro-cli` Phase 1.1) |
 
 This list is part of the contract. PRs that add new CLIs without compliance must add a row, not omit it.
 
