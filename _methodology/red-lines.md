@@ -1,92 +1,57 @@
 ---
-title: Red Lines — Categories Requiring Mandatory Human Verification
+title: Red lines for forge build
 status: stable
 owner: pavel
-audience: [author, executor, reviewer]
-date: 2026-05-12
-tldr: Seven task categories where AI autonomous output is permanently prohibited — structural accuracy gaps, not temporary model limits. Each entry carries a one-line What, one-line Why never autonomous, and an explicit human verifier pointer. Consumed as a hard-disclosure header by the Muse system prompt.
-red-line-categories:
-  - auth-rls
-  - payments
-  - migrations
-  - secrets
-  - public-copy-at-scale
-  - architectural-boundaries
-  - external-api-contracts
+audience: [pavel, ai, reviewer]
+tldr: Paths that must never go through forge build. Hand-coded only. Lint rule enforces with manual-review label requirement.
 ---
 
-# Red Lines — Categories Requiring Mandatory Human Verification
+# Red lines for forge build
 
-> Operational extract of [`risk-taxonomy.md`](risk-taxonomy.md) § L2 and L4. This document lists the categories where SDD retains the **spec → AI-assisted draft → mandatory human verification gate** pattern — permanently, not pending model progress. Research backing: [`research/trust-gradient-evolution-2023-2026.md`](research/trust-gradient-evolution-2023-2026.md).
+> These paths are off-limits to `forge build` and any auto-dispatch CI workflow. Hand-coded only.
 >
-> The seven categories below reflect structural accuracy gaps, not data gaps. The trust-gradient research documents that RLS/auth and concurrent-orchestrator categories gained only 15–25 accuracy points in 4 years, while pure CRUD gained 40+. That asymmetry is expected to persist through 2027.
+> Research backing: [`research/spec-to-code-validity-2026.md`](research/spec-to-code-validity-2026.md) (8 risk entries + 7 red lines); [`research/trust-gradient-evolution-2023-2026.md`](research/trust-gradient-evolution-2023-2026.md) (structural accuracy plateau).
+
+| Path / area | Reason | Backed by |
+|---|---|---|
+| `~/.forge/locks/`, `**/state.json`, process orchestration code in `packages/forge/src/orchestrator/` | Concurrent code accuracy <50% per CONCUR'25; memory: `forge_builder_orchestrator_commit_race` | [`trust-gradient-evolution-2023-2026.md`](research/trust-gradient-evolution-2023-2026.md) |
+| `supabase/migrations/*RLS*`, `*rls-policy*.sql`, RLS-only migrations | Veracode 45% fail rate flat 3.5 years; Lovable CVE-2025-48757 — 70% of audited apps had RLS disabled | [`spec-to-code-validity-2026.md`](research/spec-to-code-validity-2026.md) |
+| Cloudflare Worker secrets via `wrangler secret put`; `apps/*/src/lib/secrets/` | Training data thin; AI hallucinates `process.env`; memory: `worker_secrets_drift_from_infisical` | [`research/ai-risk-frameworks-and-indexing.md`](research/ai-risk-frameworks-and-indexing.md) |
+| Auth flows: `apps/studio/src/app/(auth-walled)/`, `lib/auth/`, `middleware.ts` | Auth compliance <55% (Veracode); session management is L1 risk | [`research/ai-risk-frameworks-and-indexing.md`](research/ai-risk-frameworks-and-indexing.md) |
+| Crypto primitives: any file importing `crypto`, `subtle`, Node `crypto` module for keys / signing / encryption | Hard red line — formal verification zone | [`spec-to-code-validity-2026.md`](research/spec-to-code-validity-2026.md) |
+| Payment / billing flows (when they appear): `apps/*/src/lib/billing/`, Stripe webhook handlers | Hard red line — money + security combination | [`spec-to-code-validity-2026.md`](research/spec-to-code-validity-2026.md) |
+| Migration scripts with DATA transformation (not schema-only): `INSERT`, `UPDATE`, `DELETE` in migrations | No undo; cascading risk on production data | [`spec-to-code-validity-2026.md`](research/spec-to-code-validity-2026.md) |
 
 ---
 
-### Auth / RLS boundaries
+## Lint enforcement
 
-**What.** Any Supabase Row Level Security policy, `USING`/`WITH CHECK` clause, or authentication flow (magic-link routes, session token handling, middleware guard).
+Path-based enforcement is implemented in `tools/lint-red-lines.mjs` (Phase 6 of `openspec/changes/establish-risk-framework/`). <!-- openspec-refs: skip-line -->
 
-**Why never autonomous.** Accuracy plateau at 40–50% through 2026 (Veracode 2025; Lovable CVE-2025-48757 — 70% of audited apps had RLS disabled). The model cannot infer "who reads this table" from schema alone; app-specific threat models are not in training data.
+PRs touching any listed path fail CI unless the `manual-review` GitHub label is set on the PR. The lint rule parses path patterns from the table above — this file is the single source of truth.
 
-**Verifier.** L2 security review by Pavel (or designated AppSec) on every PR touching RLS or auth middleware. Checklist: OWASP LLM Top 10 items LLM01, LLM02, LLM06; Supabase RLS — no `USING (true)` policies without explicit justification.
+Message on failure:
 
----
-
-### Payments / crypto business invariants
-
-**What.** Stripe webhook handlers, payment-intent state machines, refund logic, idempotency keys, any code asserting financial invariants (e.g., `amount > 0`, double-charge guards).
-
-**Why never autonomous.** Pattern-match accuracy 60–75% (2026); novel attack surface (replay attacks, race conditions on charge) not covered by benchmark corpora. Money is irreversible; a 30% error rate is not tolerable.
-
-**Verifier.** Pavel review + payment specialist sign-off before shipping. Automated: invariant unit tests with property-based cases (fast-check or equivalent) required in the same PR.
+```
+PR touches red-line path `<path>` (reason: <reason>).
+Add `manual-review` label to confirm hand-coded review was performed.
+```
 
 ---
 
-### DB migrations
+## Quarterly review
 
-**What.** Any Supabase migration file (`supabase/migrations/*.sql`) that adds or drops columns, changes nullability, creates or drops indexes, or modifies foreign key constraints.
+Red lines are reviewed quarterly. A path may be **removed** if measured AI accuracy on that category improves substantially (e.g., RLS accuracy crossing 70%). Removal requires a new change proposal — it cannot be done in a routine PR.
 
-**Why never autonomous.** Migrations are irreversible once applied to production. AI-generated schema changes silently omit `NOT NULL` defaults, misread column ordering, or drop indexes without recognising downstream query plans. Risk multiplies when the migration also changes an RLS-governed table.
+Red lines may be **added** when new structural accuracy gaps are documented in research. The bar is the same: empirical evidence of sub-55% accuracy over a sustained period.
 
-**Verifier.** Human reviewer confirms: (1) migration is additive or includes a rollback path; (2) all `NOT NULL` columns have a backfill or default; (3) if RLS-governed table is touched, escalate to the Auth/RLS verifier above. Supabase MCP `apply_migration` checkpoint emits row counts — Pavel acknowledges before merge.
-
----
-
-### Secrets
-
-**What.** Infisical secret creation/rotation, Cloudflare Worker `wrangler secret put` invocations, `.env` file changes, or any code path that reads, writes, or logs a secret value.
-
-**Why never autonomous.** Secrets are not code-reviewable after commit (they leave traces in history, logs, CI output). The studio's memory records two incidents of Worker drift from Infisical rotation (`worker_secrets_drift_from_infisical`). An AI agent misrouting a key name causes silent auth failures that are hard to diagnose.
-
-**Verifier.** Pavel only. No AI agent may execute secret-write operations. Secret names (not values) may appear in code. Every rotation is logged in the Infisical audit trail and cross-checked against Worker bindings.
+Next scheduled review: **2026-Q3** (after trust-gradient snapshot update).
 
 ---
 
-### Public-facing copy at scale
+## Cross-references
 
-**What.** Marketing copy, legal notices, terms of service, pricing text, or any user-visible string rendered on `rapoport.studio` or `app.rapoport.studio` that reaches a wide audience without per-user customisation.
-
-**Why never autonomous.** Legal exposure (misleading claims, GDPR consent language) and brand voice. AI-generated copy tends to be fluent but factually imprecise ("unlimited" when limits exist; compliance language that doesn't match the actual data-processing terms). At scale, corrections require redeployment and may trigger regulatory scrutiny.
-
-**Verifier.** Founder review (Pavel) for tone and legal accuracy. For compliance-adjacent strings (cookie banners, data-processing notices), legal counsel sign-off is required before deploy.
-
----
-
-### Architectural-class boundaries
-
-**What.** Changes to the package-boundary table in `CLAUDE.md` (which package may import which), ESLint `no-restricted-imports` rule additions, monorepo workspace splits or merges, or new cross-package import paths not yet sanctioned in the boundary table.
-
-**Why never autonomous.** Package boundaries encode long-lived architectural decisions. An incorrect import permitted by an AI agent cascades into circular dependencies, bundle bloat, or broken isolation contracts that require expensive refactors. The boundary table exists precisely because these decisions are non-local.
-
-**Verifier.** Architect (Pavel) review of the diff against `CLAUDE.md § Package boundaries`. ESLint boundary guard must pass (`pnpm lint`) — but green lint is necessary, not sufficient; human must confirm the new path is intentional.
-
----
-
-### External-API contracts
-
-**What.** Changes to any public-facing API route (path, method, response shape), webhook payload format, or client-exposed TypeScript type that downstream consumers (n8n, Telegram bridge, future partners) depend on.
-
-**Why never autonomous.** Breaking a public contract cannot be fixed by redeployment alone — every consumer must update. AI agents optimise for internal consistency and routinely drop or rename fields without flagging the breaking-change risk to external callers.
-
-**Verifier.** Human changelog entry required in the PR description: list every removed/renamed field and which consumers are affected. For Telegram/n8n bridges: smoke-test the integration before merge. For partner-facing APIs: version bump required; breaking change must be communicated.
+- [`risk-taxonomy.md`](risk-taxonomy.md) — L2 Security and L4 SDD level definitions that inform these red lines
+- [`_root/risk-register.md`](../_root/risk-register.md) — R2 (concurrent) and R7 (security policies) entries that back these prohibitions
+- [`research/spec-to-code-validity-2026.md`](research/spec-to-code-validity-2026.md) — empirical sources for all 7 entries
+- [`security/security-review-checklist.md`](security/security-review-checklist.md) — OWASP LLM Top 10 checklist used when `manual-review` label is applied
