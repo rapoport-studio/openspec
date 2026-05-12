@@ -57,7 +57,7 @@ Every `## Access scope` section in an agent capability spec must contain all fiv
 
 ## Filled-in instances
 
-The three tables below are copied verbatim from [`openspec/changes/bootstrap-cli-orchestra-mvp/design.md § Access scope per CLI`](../changes/bootstrap-cli-orchestra-mvp/design.md). They use a three-column Resource / Read / Write format — an MVP subset of the five-column template above; Notes and Source-of-truth columns will be filled in when each agent's full capability spec lands.
+The three tables below are copied verbatim from [`openspec/archive/2026-05-12-bootstrap-cli-orchestra-mvp/design.md § Access scope per CLI`](../archive/2026-05-12-bootstrap-cli-orchestra-mvp/design.md). They use a three-column Resource / Read / Write format — an MVP subset of the five-column template above; Notes and Source-of-truth columns will be filled in when each agent's full capability spec lands.
 
 ### Forge
 
