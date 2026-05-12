@@ -32,7 +32,7 @@ The table below maps common artifacts from product / design / engineering practi
 | Onboarding = "read these 40 Notion pages" | `openspec/_root/README.md` + this file | Scoped and navigable |
 | "Who maintains this?" — unclear | Every file was created by a change with an owner | Traceable via `openspec/archive/` |
 | Figma link shared in Slack, no context | `openspec/current/design-system.md` links the canonical Figma file | The spec is the stable reference |
-| Mirror / perception layer for brands | `openspec/brands/<slug>/perception.md` | Renamed from `mirror/`; same content |
+| Mirror / perception layer for brands | `openspec/brands/<slug>/identity.md` | Renamed from `mirror/<slug>/perception.md` |
 
 **What stays the same:**
 

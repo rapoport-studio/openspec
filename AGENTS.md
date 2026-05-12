@@ -65,6 +65,38 @@ For reference, [archive/2026-05-03-add-muse-research-tools-with-personas/](archi
 
 ---
 
+## MVP CLI orchestra
+
+Three CLIs collaborate to author, build, and observe changes:
+
+| CLI | Package | Role |
+|---|---|---|
+| `muse` | `packages/muse/bin/muse/` | Spec-authoring agent. `muse draft RAP-NNN` turns a Linear issue into an OpenSpec change triplet. |
+| `forge` | `packages/forge/` | Build executor. `forge build RAP-NNN` implements the tasks from an OpenSpec change and opens a PR. |
+| `maestro` | `packages/muse/bin/maestro/` | Telemetry surface. `maestro lineage RAP-NNN` shows the full event trace; `maestro metrics` aggregates cost. |
+
+All three emit structured events to `~/.rapoport/events/YYYY-MM-DD.jsonl` via `@rapoport-studio/cli-core/events`. The shared event library lives at `packages/cli-core/`.
+
+**End-to-end MVP flow:**
+
+```
+muse draft RAP-456           # draft the OpenSpec change
+# review + edit openspec/changes/<slug>/
+# open PR manually, get it merged
+forge build RAP-456          # implement the tasks (opens code PR)
+maestro lineage RAP-456      # see the full trace of both runs
+```
+
+**Relevant specs:**
+
+- `openspec/current/cli-core.md` — shared event library
+- `openspec/current/agents/muse.md` — Muse CLI spec
+- `openspec/current/agents/maestro.md` — Maestro CLI spec
+- `openspec/current/forge/README.md` — Forge CLI spec
+- `openspec/archive/2026-05-12-bootstrap-cli-orchestra-mvp/` — the change that shipped this
+
+---
+
 ## Folder naming
 
 - **While active**: bare slug — `openspec/changes/<slug>/` (e.g. `add-client-onboarding`). No date prefix.

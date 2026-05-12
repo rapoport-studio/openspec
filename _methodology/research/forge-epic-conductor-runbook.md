@@ -1,6 +1,6 @@
 # Forge Epic + Conductor — Operator Runbook
 
-> **5-minute read.** Everything you need to set up a Linear epic for the conductor, drive it with `forge epic`, and operate the long-running `forge conductor` daemon. For deep design context see [`openspec/changes/add-forge-epic-conductor/design.md`](../../changes/add-forge-epic-conductor/design.md); for the full command reference see [`openspec/current/forge/commands.md`](../../current/forge/commands.md).
+> **5-minute read.** Everything you need to set up a Linear epic for the conductor, drive it with `forge epic`, and operate the long-running `forge conductor` daemon. For deep design context see [`openspec/archive/2026-05-12-add-forge-epic-conductor/design.md`](../../archive/2026-05-12-add-forge-epic-conductor/design.md); for the full command reference see [`openspec/current/forge/commands.md`](../../current/forge/commands.md).
 
 ---
 
@@ -81,7 +81,7 @@ RAP-401
 
 ## Spec source
 
-openspec/changes/add-forge-epic-conductor/design.md § Phase 3
+openspec/archive/2026-05-12-add-forge-epic-conductor/design.md § Phase 3
 ```
 
 Run `forge epic <parent-key> --validate` to lint all sub-issue bodies before dispatching.
