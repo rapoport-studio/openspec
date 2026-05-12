@@ -66,6 +66,8 @@ Possible regulation mechanisms, none committed:
 
 Research goal: which mechanisms are administrable by a studio of this size without becoming a bureaucracy? Which are felt as fair by specialists vs. felt as redistribution-by-fiat?
 
+**Evidence base added 2026-05-12.** [`social-positioning-analogs.md`](./social-positioning-analogs.md) § 8 catalogues 8 organisations strong on both transparency and equitable distribution (Stocksy patronage, Outlandish proportional-to-hours, Hypha 35%-clip-breakdown, Loomio equal-shares, Up & Go 95/5, Nava equity-for-all, Resonate 70% to artist, Buffer COL-formula). The single load-bearing observation: *transparency is structural, not rhetorical* — anchored in legal entity, public document, or operational tooling. § 10 distills the implication for Q3: three concrete mechanism shapes — patronage / worker-owner-core / PBC-universal-equity. **Pick one; do not blend.** Adjacent thinking in `social-positioning-analogs.md § 9` (Benkler peer production triad + Ostrom 8 commons design principles + Mazzucato value-extraction frame) supplies the academic fundament.
+
 ### Q4 — What does the specialist need to *see* to feel valued?
 
 Even if the studio measures correctly, value-felt depends on what's surfaced back to the specialist. Hourly earnings alone — even when accurate — don't communicate "your work compounded." Reuse counts, library-promotion notifications, "your prompt ran in 3 engagements this quarter" — these may be cheaper to deliver and more durable to receive.
@@ -112,6 +114,7 @@ Either way, **no commitments are made from this file**. It is a research thread,
 | [`specialist-network.md § 8`](../specialist-network.md) | The compensation placeholder this thread is meant to inform. |
 | [`specialist-network.md § 11`](../specialist-network.md) | `Q-NW-5` (library promotion threshold) is the operational shadow of Q1 here. |
 | [`rap-119-as-research-bed.md`](./rap-119-as-research-bed.md) | Observation protocol that wires Q1–Q4 to RAP-119 surfaces (D7 triplets, Block B course-meta, D4 soft-enforcement, three named domains). First empirical test of all four questions; conclusions fold back here post-Review-week. |
+| [`social-positioning-analogs.md`](./social-positioning-analogs.md) | 21-organisation evidence base for Q3 mechanism candidates. Surfaces three structural shapes (patronage / worker-owner-core / PBC-universal-equity) and the seven-trust-register framework adjacent to Q4. Academic fundament (Benkler / Ostrom / Mazzucato) in § 9. |
 
 ---
 
