@@ -23,7 +23,7 @@ tldr: Declares which Diataxis quadrant and audience tags apply to each OpenSpec 
 
 **How-to** — Solving a specific task. Assumes the reader knows what they want; guides them through the steps to do it. Outcome: the problem is solved. Studio example: [`openspec/changes/bootstrap-cli-orchestra-mvp/tasks.md`](../changes/bootstrap-cli-orchestra-mvp/tasks.md) — executor steps to ship a change.
 
-**Reference** — Information lookup. Dry, precise, complete. The reader already knows their goal; they need the facts. Outcome: the reader found what they needed. Studio example: [`openspec/current/forge.md`](../current/forge.md) — canonical Forge capability description.
+**Reference** — Information lookup. Dry, precise, complete. The reader already knows their goal; they need the facts. Outcome: the reader found what they needed. Studio example: [`openspec/current/forge/README.md`](../current/forge/README.md) — canonical Forge capability description.
 
 **Explanation** — Building understanding. Discusses context, rationale, and trade-offs. No action items. Outcome: the reader understands why. Studio example: [`openspec/changes/bootstrap-cli-orchestra-mvp/proposal.md`](../changes/bootstrap-cli-orchestra-mvp/proposal.md) — motivation and framing for a change.
 
@@ -36,7 +36,7 @@ tldr: Declares which Diataxis quadrant and audience tags apply to each OpenSpec 
 | `proposal.md` | Explanation | `[founder, architect, executor]` | [`openspec/changes/bootstrap-cli-orchestra-mvp/proposal.md`](../changes/bootstrap-cli-orchestra-mvp/proposal.md) |
 | `design.md` | Reference | `[architect, executor]` | [`openspec/changes/bootstrap-cli-orchestra-mvp/design.md`](../changes/bootstrap-cli-orchestra-mvp/design.md) |
 | `tasks.md` | How-to | `[executor]` | [`openspec/changes/bootstrap-cli-orchestra-mvp/tasks.md`](../changes/bootstrap-cli-orchestra-mvp/tasks.md) |
-| capability spec (`current/*.md`) | Reference | `[architect, executor, ai]` | [`openspec/current/forge.md`](../current/forge.md) |
+| capability spec (`current/*.md`) | Reference | `[architect, executor, ai]` | [`openspec/current/forge/README.md`](../current/forge/README.md) |
 | research (`_methodology/research/*.md`) | Explanation | `[founder, architect, ai-engineer]` | [`openspec/_methodology/research/multi-audience-documentation.md`](research/multi-audience-documentation.md) |
 | methodology (`_methodology/*.md`) | Reference | `[ai, architect, executor]` | [`openspec/_methodology/risk-taxonomy.md`](risk-taxonomy.md) |
 | `README.md` | Tutorial | `[founder, executor]` | [`README.md`](../../../README.md) |

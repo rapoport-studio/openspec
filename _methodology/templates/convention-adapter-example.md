@@ -1,7 +1,7 @@
 # Convention adapter — worked example
 
 > **Audience.** Engineers adding a new engagement to Forge. Pair with
-> `openspec/current/forge.md § Convention adapters` and
+> `openspec/current/forge/entities.md § Convention adapters` and
 > `openspec/archive/2026-05-08-add-forge-convention-adapter/design.md § 1`.
 
 A **convention adapter** lets Forge run against a non-studio OpenSpec corpus without leaking per-project conditionals into the build agent. Each engagement ships exactly one TS file under `packages/forge/src/conventions/<slug>.ts` plus a one-line registration in the built-in map.
@@ -187,7 +187,7 @@ The Phase 2 conventions tests (`packages/forge/src/__tests__/conventions/{studio
 
 ## Cross-references
 
-- `openspec/current/forge.md § Convention adapters` — runtime contract + integration points.
+- `openspec/current/forge/entities.md § Convention adapters` — runtime contract + integration points.
 - `openspec/archive/2026-05-08-add-forge-convention-adapter/design.md` — full interface, eight locked decisions (§ 9), diff-at-archive grammar (§ 7).
 - `openspec/_methodology/projects/unbind.yaml` — example of an engagement profile that drives an adapter's frontmatter / registry shape.
 - `packages/forge/src/conventions/unbind.ts` — the most feature-complete reference adapter today.

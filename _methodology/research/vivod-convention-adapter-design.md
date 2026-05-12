@@ -606,7 +606,7 @@ This is the **suggested** phasing for `add-forge-vivod-convention-adapter` (the 
 | 5 | Branch shape helper (Hybrid + Full) + integration with the build agent's branch-naming step | 1 day |
 | 6 | `forge spec --fix --project vivod` scaffolds the sub-folder change-folder layout correctly | 1 day |
 | 7 | End-to-end smoke test against a real Vivod fixture (vendored capability spec from the anchored commit) | 1 day |
-| 8 | Documentation: amend `openspec/current/forge.md` with the Vivod adapter; add the engagement-charter cross-reference | 0.5 day |
+| 8 | Documentation: amend `openspec/current/forge/entities.md` with the Vivod adapter; add the engagement-charter cross-reference | 0.5 day |
 | | **Total** | **11 working days ≈ 2.2 weeks** |
 
 ### 7.3 Escalation triggers

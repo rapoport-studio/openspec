@@ -318,9 +318,9 @@ Three named scenarios:
 
 This is the right pattern. Don't change it.
 
-**Scenario B — Forge fails verification.** Builder runs the verification gate, the gate fails. Per [`forge.md § Build outcome`](../../current/forge.md), Builder sets `BuildState.outcome = "failed"` and stops. The orchestrator's contract is to:
+**Scenario B — Forge fails verification.** Builder runs the verification gate, the gate fails. Per [`forge/verifier.md § Build outcome`](../../current/forge/verifier.md), Builder sets `BuildState.outcome = "failed"` and stops. The orchestrator's contract is to:
 - Emit a `build_failed` event to `~/.forge/events.jsonl`.
-- Append to lessons-learned (`~/.forge/lessons-learned.md`) per [`forge.md § Lessons-learned mechanism`](../../current/forge.md).
+- Append to lessons-learned (`~/.forge/lessons-learned.md`) per [`forge/entities.md § Lessons-learned mechanism`](../../current/forge/entities.md).
 - Update the Linear issue with a comment.
 
 **Who's notified?** Today: Pavel-via-Linear. Tomorrow: Maestro reads the `build_failed` event (or `orchestra_journal` entry, after Layer 2) and can route follow-up. Maestro **does not retry** — it surfaces. The retry decision is Pavel's or Architect's.
@@ -510,6 +510,6 @@ This is the right pattern. Don't change it.
 - [`openspec/current/platform.md`](../../current/platform.md)
 - [`openspec/current/agents-overview.md`](../../current/agents-overview.md)
 - [`openspec/current/agents/maestro.md`](../../current/agents/maestro.md) — prior art for the Access scope allowlist pattern
-- [`openspec/current/forge.md`](../../current/forge.md)
+- [`openspec/current/forge/README.md`](../../current/forge/README.md)
 - [`openspec/current/muse.md`](../../current/muse.md)
 - [`CLAUDE.md`](../../../CLAUDE.md) — hard rules, package boundaries, environment gotchas

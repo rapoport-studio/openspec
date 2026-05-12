@@ -640,7 +640,7 @@ This is the **suggested** phasing for `add-forge-dentour-convention-adapter` (th
 | 6 | Branch shape helper (Hybrid mode; PR target `develop`) + `auth-portal` blacklist + skeleton-aware warning | 1 day |
 | 7 | `forge spec --fix --project dentour` sub-folder change layout scaffold | 1 day |
 | 8 | End-to-end smoke test against real Dentour fixtures (vendored from anchored commit) | 1 day |
-| 9 | Documentation: amend `openspec/current/forge.md` with the Dentour adapter entry | 0.5 day |
+| 9 | Documentation: amend `openspec/current/forge/entities.md` with the Dentour adapter entry | 0.5 day |
 | | **Total** | **11.5 working days ≈ 2.3 weeks** |
 
 ### 7.3 Escalation triggers

@@ -281,7 +281,7 @@ What this network deliberately does **not** do, in any engagement:
 | [`studio-charter.md`](./studio-charter.md) | The bootstrap charter for sub-products. Sub-products inherit the same network and the same training discipline. The relationship goes both ways: a sub-product's specialists are sourced from this network, and graduates of sub-product engagements feed back into the network. |
 | [`projects/<slug>.yaml`](./projects/) | Per-engagement profiles. Each engagement's `specialists:` block records the active roster, NDA status per specialist, training certifications, and contributed prompts in scope. |
 | `openspec/current/muse.md` (studio repo) | The runtime that loads specialist-contributed prompts and tools per § 6. The contribution model in § 6 is the "input contract" Muse honors. |
-| `openspec/current/studio.md` (studio repo) | The internal workspace where canvas lives. Specialist invitations, NDA status, and profile management surfaces will live in admin views of this app when the network has its first three onboarded members. |
+| `openspec/current/studio-workspace/README.md` (studio repo) | The internal workspace where canvas lives. Specialist invitations, NDA status, and profile management surfaces will live in admin views of this app when the network has its first three onboarded members. |
 
 ---
 

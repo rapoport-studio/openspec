@@ -498,8 +498,8 @@ This charter previously described a single per-client TG group hosted by `@rapop
 
 - Capability spec: [`openspec/current/telegram.md`](../current/telegram.md) — inaugural file.
 - Engagement methodology: [`openspec/_methodology/rapoport-studio-engagement.md § 8 Appendix B → D11`](rapoport-studio-engagement.md).
-- Studio API surface: `openspec/current/studio.md § /api/studio/telegram/* surface`.
-- Database surface: `openspec/current/db.md § TG canvas surface schema`.
+- Studio API surface: `openspec/current/studio-workspace/spec.md § /api/studio/telegram/* surface`.
+- Database surface: `openspec/current/db/entities.md § TG canvas surface schema`.
 - Muse runtime: `openspec/current/muse.md § TG canvas surface as Muse — Headless mode`.
 - Platform-level integration: `openspec/current/platform.md § Client communication architecture` (rewritten in same change).
 
