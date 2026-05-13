@@ -104,3 +104,32 @@ Continuity with the 13 existing research files. Bold-prefix is greppable for too
 - Block-level authorship research (open): [`openspec-block-authorship.md`](./openspec-block-authorship.md)
 - Studio AGENTS workflow: [`openspec/AGENTS.md`](../../AGENTS.md)
 - Project CLAUDE.md (hard rules): [`/CLAUDE.md`](../../../CLAUDE.md)
+
+---
+
+## Triage (applied 2026-05-13 from change `add-specialist-onboarding` — P0.2 Variant B)
+
+When a research thread reaches a conclusion that feeds into a methodology decision, the author appends a `## Triage` section at the end of the file. The triage section records:
+
+- The decision or open question the thread informs.
+- Which openspec document should be updated (or was updated) as a result.
+- Whether the thread is `closed` (conclusion reached), `open` (still accumulating observations), or `superseded` (a later thread overrides it).
+
+**Template:**
+
+```markdown
+## Triage
+
+- **Feeds into**: `openspec/current/<file>.md § <Section>`
+- **Status**: open | closed | superseded by `<later-thread.md>`
+- **Decision or finding**: one-paragraph summary.
+- **Applied**: yes (YYYY-MM-DD) | pending founder ratification | not yet actionable
+```
+
+The `Lifecycle:` frontmatter field (optional) can supplement triage for threads where lifecycle tracking is useful:
+
+```markdown
+> **Lifecycle**: draft | active | closed | archived
+```
+
+Both are optional conventions layered on top of the existing authorship-convention frontmatter. No retroactive application required.

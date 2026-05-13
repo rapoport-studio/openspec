@@ -119,7 +119,8 @@ Goal: the specialist can author a `proposal.md` / `design.md` / `tasks.md` tripl
 Training surface:
 
 - Read [`rapoport-studio-engagement.md § 5`](./rapoport-studio-engagement.md) (the OpenSpec convention).
-- Read three representative archived changes from a real studio engagement (the most recent three under `openspec/archive/` of any active engagement).
+- Read three representative archived changes from a real studio engagement — the exemplar at [`openspec/_training/exemplar/`](../openspec/_training/exemplar/) is the curated starting set (small, single-purpose, spec-only, clean `tasks.md`, no live-system requirements).
+- Work through the Axis A curriculum at [`openspec/_training/openspec-authoring-axis-a.md`](../openspec/_training/openspec-authoring-axis-a.md).
 - Author a "training change" against a fictional but well-shaped capability brief; the studio's senior reviewer (currently Pavel) provides line-level feedback in canvas.
 - Pass criterion: training change lands in studio-internal `_training/<specialist-slug>-graduation/` with reviewer sign-off and zero outstanding structural critiques.
 
@@ -129,7 +130,7 @@ Goal: the specialist can read a `proposal.md` and ask the questions that move it
 
 Training surface:
 
-- Read the studio's business-model validation framework (lives at `_training/business-model-validation.md`; to be authored as the first piece of training infrastructure when the second specialist is onboarded).
+- Read the studio's business-model validation framework at [`openspec/_training/business-model-validation.md`](../openspec/_training/business-model-validation.md).
 - Run a stress-test pass on three real (anonymized) `proposal.md` files from past studio engagements.
 - Pass criterion: written critique of all three reaches the bar of catching at least one structural defect per proposal that the senior reviewer agrees was material.
 
@@ -192,7 +193,7 @@ A specialist's profile may contain:
 
 ### 6.2 Storage
 
-Specialist prompts and tools live in the studio repo under `packages/muse/specialists/<slug>/` (a deferred package per `platform.md`). Until that package exists, profiles live as markdown files under `_methodology/specialists/<slug>.md`. Either way the profile is studio-internal IP per the base NDA.
+The specialist registry lives in the `specialists` Supabase table (per `openspec/current/db/entities.md § Specialist tables` — answer to Q-NW-3 below). Specialist-specific prompt augmentations are referenced via the `prompt_augmentations_uri` column (a relative path under `packages/muse/specialists/<slug>/` — a deferred package per `platform.md`). Until that package exists, prompt files are markdown stubs under `_methodology/specialists/<slug>.md`. Either way the profile and prompts are studio-internal IP per the base NDA.
 
 ### 6.3 Promotion to common library
 
@@ -289,9 +290,9 @@ What this network deliberately does **not** do, in any engagement:
 
 | ID | Priority | Question |
 |---|---|---|
-| `Q-NW-1` | P0 | What is the legal shape of the specialist relationship under MITP — contractor, employee, or hybrid? Determines payroll, NDA enforceability, IP-assignment clause. **Owner: i-avocat.md.** |
-| `Q-NW-2` | P0 | What is the canonical base NDA template? Drafted by counsel before first non-Pavel specialist signs. |
-| `Q-NW-3` | P1 | Where does the specialist registry live in code — `packages/muse/specialists/`, a Supabase table, or both? Decision affects how Muse loads prompt augmentations at session start. |
+| `Q-NW-1` | P0 | What is the legal shape of the specialist relationship under MITP — contractor, employee, or hybrid? Determines payroll, NDA enforceability, IP-assignment clause. **Owner: i-avocat.md.** Open pending counsel review. |
+| `Q-NW-2` | P0 | What is the canonical base NDA template? Drafted by counsel before first non-Pavel specialist signs. Open pending i-avocat engagement. |
+| ~~`Q-NW-3`~~ | ~~P1~~ | ~~Where does the specialist registry live in code?~~ **Closed 2026-05-13** — registry is the `specialists` Supabase table; prompt augmentations referenced via `prompt_augmentations_uri` column. See `openspec/current/db/entities.md § Specialist tables` and `§ 6.2 Storage` above. |
 | `Q-NW-4` | P1 | What is the matching layer's v1 implementation — pure rule-based filter, scored heuristic, or ML? v1 may be coarse; commit to coarse explicitly so it doesn't accrete complexity prematurely. |
 | `Q-NW-5` | **resolved 2026-05-12** | What is the threshold for "promotion to common library" of a specialist-contributed prompt? **Resolution:** for studio-internal use the existing § 6.3 threshold (3 independent engagements with positive quality signals) stands. For *marketplace context* — i.e. when a published canvas exposes a specialist-contributed prompt as part of its sale — promotion additionally requires 2 senior endorsements per § 13. Two thresholds, one mechanism, distinct triggers. Resolved by [`changes/define-canvas-studio-thesis`](../changes/define-canvas-studio-thesis/) per §§ 12–15 of this document. |
 | `Q-NW-6` | **resolved 2026-05-12** | Does the studio publish anonymized network-level metrics? **Resolution:** metrics are split into two tiers. *Per-specialist* — footprint score (§ 13) and tier badge (§ 4.3) are public-by-default for `listed` and `open` specialists; `stealth` specialists publish nothing. *Aggregate network metrics* (§ 7.3 — median certification time, median engagements per specialist per year, prompts promoted per year) remain studio-internal; selective curated quotes may appear in marketing but the live aggregates do not. This avoids leaking competitive information while still giving buyers per-specialist trust signal. Resolved by [`changes/define-canvas-studio-thesis`](../changes/define-canvas-studio-thesis/) per § 12 of this document. |
