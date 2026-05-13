@@ -195,7 +195,7 @@ The Unbind external-engagement enablement (epic [RAP-83](https://linear.app/rapo
 
 **Open (gated on MVP v1 Track A or human dependencies):**
 
-- `migrate-unbind-into-studio` *(scaffold via PR #326, 0/43 done)* — formalises operating Unbind from inside the studio app once MVP v1 substrate is ready.
+- `migrate-unbind-into-studio` *(scaffold via PR #326, 3/43 done — batch-1 2026-05-13, batch-2 2026-05-13)* — formalises operating Unbind from inside the studio app once MVP v1 substrate is ready. Wave 0.1 ✅ (RAP-85/86 upstream verified); Wave 2.1 partial ✅ (`forge.config.mjs § projects.unbind` block present with all six fields). Remaining 40 tasks OPERATOR-BLOCKED on kickoff-call D-SE1 ratification (0.2), Unbind-side repo access (0.3), bot/Infisical verification (0.4), live Supabase apply (1.1–1.2), and live Forge CLI (2.1–2.2, Waves 3–5).
 - `engagement-onboarding-runbook-unbind` *(RAP-88, in flight)* — `_methodology/projects/unbind-kickoff-runbook.md` + generic `_template-kickoff-runbook.md`.
 - `add-github-presence` *(RAP-90, in flight)* — `rapoport-studio/.github` org-profile + `rapoport-studio/openspec` public mirror.
 - `add-project-connect-onebutton` Phase 2+ *(RAP-84 / RAP-126, gated)* — GitHub App install flow, blocked on Olya kickoff.
