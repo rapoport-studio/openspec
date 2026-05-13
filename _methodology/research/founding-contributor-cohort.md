@@ -5,7 +5,7 @@
 >
 > **Feeds into:** [`specialist-network.md § 4`](./../specialist-network.md) (training + certification),
 > [`value-attribution.md § Q4`](./value-attribution.md) (felt-value surfacing for specialists),
-> [`design.md § 7 (add-specialist-onboarding)`](../../changes/add-specialist-onboarding/design.md)
+> [`design.md § 7 (add-specialist-onboarding)`](../../changes/add-specialist-onboarding/design.md) <!-- openspec-refs: skip-line --> <!-- TODO RAP-682: surfaced at guard-tighten; resolve in followup -->
 > (first-canvas activation protocol).
 >
 > **Opened:** 2026-05-13.

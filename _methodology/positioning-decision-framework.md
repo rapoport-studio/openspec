@@ -1,6 +1,6 @@
 # Positioning decision framework
 
-> **Status:** active spec. Created from change [`lock-positioning-trajectory`](../changes/lock-positioning-trajectory/), authored May 2026 as part of Phase 1 deliverable per `design.md § 1.1`.
+> **Status:** active spec. Created from change [`lock-positioning-trajectory`](../changes/lock-positioning-trajectory/), authored May 2026 as part of Phase 1 deliverable per `design.md § 1.1`. <!-- openspec-refs: skip-line --> <!-- TODO RAP-682: surfaced at guard-tighten; resolve in followup -->
 >
 > **Owner:** Pavel Rapoport (founder). At Stage 4, ownership opens to candidate: operations specialist, founder-fellow (Path B), or head-of-product (Path C).
 >

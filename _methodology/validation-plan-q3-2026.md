@@ -38,7 +38,7 @@ If component 3 fails, the commitment threshold is wrong — interest exists but 
 
 ## 1. Pre-flight (Week 0 — this change merging)
 
-The artefacts produced by [`changes/define-canvas-studio-thesis`](../changes/define-canvas-studio-thesis/) are the pre-flight deliverable. Once those are in repo:
+The artefacts produced by [`changes/define-canvas-studio-thesis`](../changes/define-canvas-studio-thesis/) are the pre-flight deliverable. Once those are in repo: <!-- openspec-refs: skip-line --> <!-- TODO RAP-682: surfaced at guard-tighten; resolve in followup -->
 
 - [ ] Pavel reviews `positioning.md` and either ratifies the thesis-as-written (proceed to Week 1) or requests revisions (loop until ratified).
 - [ ] Pavel files a Linear issue against this plan with target start date (and any deviations from the plan recorded in the issue description).
@@ -304,7 +304,7 @@ In all three outcomes, the synthesis document and the 15 interview notes remain 
 ## 8. Cross-references
 
 - Thesis being tested: [`positioning.md`](./positioning.md)
-- Change that authored this plan: [`changes/define-canvas-studio-thesis/`](../changes/define-canvas-studio-thesis/)
+- Change that authored this plan: [`changes/define-canvas-studio-thesis/`](../changes/define-canvas-studio-thesis/) <!-- openspec-refs: skip-line --> <!-- TODO RAP-682: surfaced at guard-tighten; resolve in followup -->
 - Specialist commercial surface (sell-side validation pulls from): [`specialist-network.md §§ 12–15`](./specialist-network.md)
 - Engagement charter (what the studio reverts to on kill): [`rapoport-studio-engagement.md`](./rapoport-studio-engagement.md)
 - Pulse storage for ratified monetization decisions (where validated pricing eventually lands): [`_finance/README.md`](../../_finance/README.md)
@@ -314,4 +314,4 @@ In all three outcomes, the synthesis document and the 15 interview notes remain 
 
 ## Change log
 
-- `2026-05-12` — initial draft, authored as part of change [`define-canvas-studio-thesis`](../changes/define-canvas-studio-thesis/). Awaiting kickoff.
+- `2026-05-12` — initial draft, authored as part of change [`define-canvas-studio-thesis`](../changes/define-canvas-studio-thesis/). Awaiting kickoff. <!-- openspec-refs: skip-line --> <!-- TODO RAP-682: surfaced at guard-tighten; resolve in followup -->

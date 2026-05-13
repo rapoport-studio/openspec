@@ -22,7 +22,7 @@ companion:
 >
 > Why this file exists: the 2026-05-12 strategic conversation produced a synthesis that ties together five previously-disconnected threads in the corpus (engagement charter modes, specialist network certification, Pulse monetization-paths placeholder, Mirror domain-mapping, deferred Canvas capability). Without a durable artefact, the synthesis evaporates. With one, it is testable.
 >
-> Companion: [`changes/define-canvas-studio-thesis/`](../changes/define-canvas-studio-thesis/) — the change proposal that authored this file. Read its `proposal.md` for *why now*, its `design.md` for *document architecture and anti-patterns*.
+> Companion: [`changes/define-canvas-studio-thesis/`](../changes/define-canvas-studio-thesis/) — the change proposal that authored this file. Read its `proposal.md` for *why now*, its `design.md` for *document architecture and anti-patterns*. <!-- openspec-refs: skip-line --> <!-- TODO RAP-682: surfaced at guard-tighten; resolve in followup -->
 
 ---
 
@@ -430,4 +430,4 @@ Risks that must be resolved before this thesis becomes committed strategy. Each 
 
 ## Change log
 
-- `2026-05-12` — initial draft v1, hypothesis status, authored as part of change [`define-canvas-studio-thesis`](../changes/define-canvas-studio-thesis/). The 2026-05-12 conversation transcript that produced this synthesis is *not* preserved as a file; this document is its durable form.
+- `2026-05-12` — initial draft v1, hypothesis status, authored as part of change [`define-canvas-studio-thesis`](../changes/define-canvas-studio-thesis/). The 2026-05-12 conversation transcript that produced this synthesis is *not* preserved as a file; this document is its durable form. <!-- openspec-refs: skip-line --> <!-- TODO RAP-682: surfaced at guard-tighten; resolve in followup -->

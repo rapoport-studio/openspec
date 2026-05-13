@@ -294,15 +294,15 @@ What this network deliberately does **not** do, in any engagement:
 | `Q-NW-2` | P0 | What is the canonical base NDA template? Drafted by counsel before first non-Pavel specialist signs. Open pending i-avocat engagement. |
 | ~~`Q-NW-3`~~ | ~~P1~~ | ~~Where does the specialist registry live in code?~~ **Closed 2026-05-13** — registry is the `specialists` Supabase table; prompt augmentations referenced via `prompt_augmentations_uri` column. See `openspec/current/db/entities.md § Specialist tables` and `§ 6.2 Storage` above. |
 | `Q-NW-4` | P1 | What is the matching layer's v1 implementation — pure rule-based filter, scored heuristic, or ML? v1 may be coarse; commit to coarse explicitly so it doesn't accrete complexity prematurely. |
-| `Q-NW-5` | **resolved 2026-05-12** | What is the threshold for "promotion to common library" of a specialist-contributed prompt? **Resolution:** for studio-internal use the existing § 6.3 threshold (3 independent engagements with positive quality signals) stands. For *marketplace context* — i.e. when a published canvas exposes a specialist-contributed prompt as part of its sale — promotion additionally requires 2 senior endorsements per § 13. Two thresholds, one mechanism, distinct triggers. Resolved by [`changes/define-canvas-studio-thesis`](../changes/define-canvas-studio-thesis/) per §§ 12–15 of this document. |
-| `Q-NW-6` | **resolved 2026-05-12** | Does the studio publish anonymized network-level metrics? **Resolution:** metrics are split into two tiers. *Per-specialist* — footprint score (§ 13) and tier badge (§ 4.3) are public-by-default for `listed` and `open` specialists; `stealth` specialists publish nothing. *Aggregate network metrics* (§ 7.3 — median certification time, median engagements per specialist per year, prompts promoted per year) remain studio-internal; selective curated quotes may appear in marketing but the live aggregates do not. This avoids leaking competitive information while still giving buyers per-specialist trust signal. Resolved by [`changes/define-canvas-studio-thesis`](../changes/define-canvas-studio-thesis/) per § 12 of this document. |
+| `Q-NW-5` | **resolved 2026-05-12** | What is the threshold for "promotion to common library" of a specialist-contributed prompt? **Resolution:** for studio-internal use the existing § 6.3 threshold (3 independent engagements with positive quality signals) stands. For *marketplace context* — i.e. when a published canvas exposes a specialist-contributed prompt as part of its sale — promotion additionally requires 2 senior endorsements per § 13. Two thresholds, one mechanism, distinct triggers. Resolved by [`changes/define-canvas-studio-thesis`](../changes/define-canvas-studio-thesis/) per §§ 12–15 of this document. | <!-- openspec-refs: skip-line --> <!-- TODO RAP-682: surfaced at guard-tighten; resolve in followup -->
+| `Q-NW-6` | **resolved 2026-05-12** | Does the studio publish anonymized network-level metrics? **Resolution:** metrics are split into two tiers. *Per-specialist* — footprint score (§ 13) and tier badge (§ 4.3) are public-by-default for `listed` and `open` specialists; `stealth` specialists publish nothing. *Aggregate network metrics* (§ 7.3 — median certification time, median engagements per specialist per year, prompts promoted per year) remain studio-internal; selective curated quotes may appear in marketing but the live aggregates do not. This avoids leaking competitive information while still giving buyers per-specialist trust signal. Resolved by [`changes/define-canvas-studio-thesis`](../changes/define-canvas-studio-thesis/) per § 12 of this document. | <!-- openspec-refs: skip-line --> <!-- TODO RAP-682: surfaced at guard-tighten; resolve in followup -->
 | `Q-NW-7` | P2 | When does this document graduate from `_methodology/` to `openspec/current/network.md`? Suggested trigger: third certified specialist + first promoted prompt. The 2026-05-12 thesis (§§ 12–15) does *not* itself trigger graduation — the trigger remains the specialist-count + promotion event. The §§ 12–15 commercial surface graduates *with* the rest of the document at that point. |
 
 ---
 
 ## 12. Public profile model — three visibility modes
 
-> Added 2026-05-12 by change [`define-canvas-studio-thesis`](../changes/define-canvas-studio-thesis/). Status: **hypothesis** — the contract defined here ships only after the validation experiment in [`validation-plan-q3-2026.md`](./validation-plan-q3-2026.md) graduates the thesis. Until then the contract is documented (so the next agent can review it) but no UI is built.
+> Added 2026-05-12 by change [`define-canvas-studio-thesis`](../changes/define-canvas-studio-thesis/). Status: **hypothesis** — the contract defined here ships only after the validation experiment in [`validation-plan-q3-2026.md`](./validation-plan-q3-2026.md) graduates the thesis. Until then the contract is documented (so the next agent can review it) but no UI is built. <!-- openspec-refs: skip-line --> <!-- TODO RAP-682: surfaced at guard-tighten; resolve in followup -->
 
 The specialist registry exposes three visibility modes per specialist. Mode is set per-specialist (granularity may extend to per-discipline in v2; out of scope here). The specialist controls their own mode; the studio enforces only minimum tier requirements for `open` mode.
 
@@ -357,7 +357,7 @@ The footprint score (§ 13) is the public-facing performance signal. Drift signa
 
 ## 13. Footprint score — the OpenSpec h-index
 
-> Added 2026-05-12 by change [`define-canvas-studio-thesis`](../changes/define-canvas-studio-thesis/). Status: **hypothesis**. Formula and weights are first-pass; expected to evolve through Tact 1 and 2 of the canvas-studio rollout (per `positioning.md § 1.4`).
+> Added 2026-05-12 by change [`define-canvas-studio-thesis`](../changes/define-canvas-studio-thesis/). Status: **hypothesis**. Formula and weights are first-pass; expected to evolve through Tact 1 and 2 of the canvas-studio rollout (per `positioning.md § 1.4`). <!-- openspec-refs: skip-line --> <!-- TODO RAP-682: surfaced at guard-tighten; resolve in followup -->
 
 ### 13.1 Why footprint instead of star ratings
 
@@ -432,7 +432,7 @@ To avoid mis-marketing this metric internally:
 
 ## 14. Pricing display — three disclosure levels and the pricing stack
 
-> Added 2026-05-12 by change [`define-canvas-studio-thesis`](../changes/define-canvas-studio-thesis/). Status: **hypothesis**. Default rates are placeholders; refined through validation outcomes (per [`validation-plan-q3-2026.md`](./validation-plan-q3-2026.md)).
+> Added 2026-05-12 by change [`define-canvas-studio-thesis`](../changes/define-canvas-studio-thesis/). Status: **hypothesis**. Default rates are placeholders; refined through validation outcomes (per [`validation-plan-q3-2026.md`](./validation-plan-q3-2026.md)). <!-- openspec-refs: skip-line --> <!-- TODO RAP-682: surfaced at guard-tighten; resolve in followup -->
 
 ### 14.1 The pricing stack — four layers
 
@@ -485,7 +485,7 @@ Hard floor pricing is anti-competitive in some jurisdictions and creates rigidit
 
 ## 15. Race-to-bottom defenses
 
-> Added 2026-05-12 by change [`define-canvas-studio-thesis`](../changes/define-canvas-studio-thesis/). Status: **hypothesis**. The five mechanisms below are structurally why the marketplace is expected not to degenerate the way Upwork did. If any one fails in practice, the studio reverts to a more curated mode (Tact 2 instead of Tact 3 per `positioning.md § 1.4`).
+> Added 2026-05-12 by change [`define-canvas-studio-thesis`](../changes/define-canvas-studio-thesis/). Status: **hypothesis**. The five mechanisms below are structurally why the marketplace is expected not to degenerate the way Upwork did. If any one fails in practice, the studio reverts to a more curated mode (Tact 2 instead of Tact 3 per `positioning.md § 1.4`). <!-- openspec-refs: skip-line --> <!-- TODO RAP-682: surfaced at guard-tighten; resolve in followup -->
 
 The dominant failure mode of open specialist marketplaces is *race-to-the-bottom*: open rating + open pricing → downward price spiral → quality drops → senior specialists leave → only newcomers remain → marketplace dies. Five mechanisms are built into the contract above to structurally prevent this:
 
@@ -524,4 +524,4 @@ The escalation ladder is defined here so a future agent under pressure does not 
 ## Change log
 
 - `2026-05-05` — initial draft v1, behind the engagement charter. Authored as part of the studio's specialist-network packaging discussion.
-- `2026-05-12` — added §§ 12–15 (commercial / marketplace surface) via change [`define-canvas-studio-thesis`](../changes/define-canvas-studio-thesis/). Closed `Q-NW-5` and `Q-NW-6` in § 11. Status of overall doc unchanged (still draft v1, behind engagement charter). The §§ 12–15 additions are themselves **hypothesis** until the validation experiment in [`validation-plan-q3-2026.md`](./validation-plan-q3-2026.md) graduates the canvas-studio thesis; until then they document the contract without triggering implementation.
+- `2026-05-12` — added §§ 12–15 (commercial / marketplace surface) via change [`define-canvas-studio-thesis`](../changes/define-canvas-studio-thesis/). Closed `Q-NW-5` and `Q-NW-6` in § 11. Status of overall doc unchanged (still draft v1, behind engagement charter). The §§ 12–15 additions are themselves **hypothesis** until the validation experiment in [`validation-plan-q3-2026.md`](./validation-plan-q3-2026.md) graduates the canvas-studio thesis; until then they document the contract without triggering implementation. <!-- openspec-refs: skip-line --> <!-- TODO RAP-682: surfaced at guard-tighten; resolve in followup -->

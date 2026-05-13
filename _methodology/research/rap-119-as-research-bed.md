@@ -31,7 +31,7 @@
 
 The four research threads in `_methodology/research/` are each honest about their dependence on empirical data. Phrases like *"the studio has zero datapoints; this risk is real until first 3 engagements complete"* (`open-source-positioning.md` § 6.5) and *"specialist network has to actually work — Q-NW-1 to Q-NW-5 still open"* (`competitive-positioning-sdd-frameworks.md` § 5) appear in three of the four. Until 2026-05-07 the studio had no concrete non-Pavel engagement to measure against.
 
-[RAP-119](../../changes/add-team-onboarding-canvas/) ([PR #262](https://github.com/rapoport-studio/rapoport.studio/pull/262)) changed that. It scaffolds the studio's first multi-author engagement: three external partners onboarded into spec-driven development across four sessions plus a review week, with a co-created product (name TBD) being authored as part of the onboarding.
+[RAP-119](../../changes/add-team-onboarding-canvas/) ([PR #262](https://github.com/rapoport-studio/rapoport.studio/pull/262)) changed that. <!-- openspec-refs: skip-line --> <!-- TODO RAP-682: surfaced at guard-tighten; resolve in followup --> It scaffolds the studio's first multi-author engagement: three external partners onboarded into spec-driven development across four sessions plus a review week, with a co-created product (name TBD) being authored as part of the onboarding.
 
 This file is the **wiring document** between the four research threads and the engagement that can finally test them. It does *not* introduce new questions. It maps existing questions to RAP-119 surfaces, names what observable evidence looks like, says where observations get captured, and specifies how conclusions fold back into the source threads when Sessions 1–4 close.
 

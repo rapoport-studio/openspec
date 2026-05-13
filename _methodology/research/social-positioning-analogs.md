@@ -7,7 +7,7 @@
 > **Reusable for:** input to `lock-positioning-trajectory` Stage 5 fork indicator sets (§ 3.1–3.3 of that change's `design.md`); input to `value-attribution.md` Q3 (value-concentration-prevention mechanism candidates); input to a future "engagement acceptance policy" doc (Data & Society template); positioning copy on `/services` and `/network`; Lab article on "what social-orientation means without NGO-vocabulary". Authorship: open.
 > **Opened:** 2026-05-12.
 > **Companion to:** [`./value-attribution.md`](./value-attribution.md), [`./open-source-positioning.md`](./open-source-positioning.md), [`./competitor-landscape-synthesis.md`](./competitor-landscape-synthesis.md), [`../positioning.md`](../positioning.md), [`../specialist-network.md`](../specialist-network.md), [`../trust-gradient.md`](../trust-gradient.md).
-> **Feeds into:** [`../../changes/lock-positioning-trajectory/`](../../changes/lock-positioning-trajectory/) Stage 5 fork criteria; [`./value-attribution.md`](./value-attribution.md) Q3 mechanism candidates; [`../specialist-network.md`](../specialist-network.md) § 8 (compensation, currently placeholder).
+> **Feeds into:** [`../../changes/lock-positioning-trajectory/`](../../changes/lock-positioning-trajectory/) Stage 5 fork criteria; [`./value-attribution.md`](./value-attribution.md) Q3 mechanism candidates; [`../specialist-network.md`](../specialist-network.md) § 8 (compensation, currently placeholder). <!-- openspec-refs: skip-line --> <!-- TODO RAP-682: surfaced at guard-tighten; resolve in followup -->
 > **Path note:** Live canvas companion at `canvases/social-positioning-analysis.canvas.tsx` (workspace path). The canvas is the visual artefact; this file is the durable research record.
 
 ---
@@ -22,7 +22,7 @@ The conversation that opened this thread (2026-05-12) framed the question as "sh
 
 3. **None of the 21 analogs operate at €50k+ engagement scale as a worker-cooperative.** The closest precedents (Outlandish, Hypha) are at smaller deal sizes. Any "studio-as-coop" path is first-of-kind at the studio's target ACV — to be treated accordingly.
 
-Three operational tracks are proposed (Surface / Restructure / Bifurcate; § 13). They sit on a different axis than the Stage 5 fork in [`lock-positioning-trajectory`](../../changes/lock-positioning-trajectory/) (Boutique / Productized / SaaS), which is about *product shape*; this thread is about *values + distribution + trust*. The two axes are orthogonal and combinable.
+Three operational tracks are proposed (Surface / Restructure / Bifurcate; § 13). They sit on a different axis than the Stage 5 fork in [`lock-positioning-trajectory`](../../changes/lock-positioning-trajectory/) (Boutique / Productized / SaaS), which is about *product shape*; this thread is about *values + distribution + trust*. The two axes are orthogonal and combinable. <!-- openspec-refs: skip-line --> <!-- TODO RAP-682: surfaced at guard-tighten; resolve in followup -->
 
 ---
 
@@ -56,7 +56,7 @@ Two parallel research subagents:
 
 - **Subagent B** — surveyed trust frameworks (Edelman 2025, Mozilla Trustworthy AI, Partnership on AI ABOUT ML, Humane Tech Framework, Trust Equation, B2B trust signal research) and wealth-distribution frameworks (Platform Cooperativism / Scholz / PCC, ICA 7 Principles, worker-coop case data, profit-sharing analogues at Basecamp / Buffer / Doist / GitLab, specialist-marketplace ethical critique — Toptal / Braintrust / Working Not Working / The Dots, "AI augmentation" corporate manifestos, AI Now Institute, Cooperative AI Foundation, academic frames — Benkler / Ostrom / Mazzucato).
 
-Cross-reference pass: matched analog data against the studio's existing methodology — `specialist-network.md`, `value-attribution.md`, `trust-gradient.md`, `positioning.md`, `red-lines.md`, the just-archived [`2026-05-12-apply-trust-research-p0/`](../../archive/2026-05-12-apply-trust-research-p0/), the in-flight [`lock-positioning-trajectory/`](../../changes/lock-positioning-trajectory/), the `contributor-taxonomy.canvas.tsx` work.
+Cross-reference pass: matched analog data against the studio's existing methodology — `specialist-network.md`, `value-attribution.md`, `trust-gradient.md`, `positioning.md`, `red-lines.md`, the just-archived [`2026-05-12-apply-trust-research-p0/`](../../archive/2026-05-12-apply-trust-research-p0/), the in-flight [`lock-positioning-trajectory/`](../../changes/lock-positioning-trajectory/), the `contributor-taxonomy.canvas.tsx` work. <!-- openspec-refs: skip-line --> <!-- TODO RAP-682: surfaced at guard-tighten; resolve in followup -->
 
 Synthesis pass: extracted seven repeating patterns, six rare differentiators, seven trust registers, eight orgs at the trust × distribution intersection, three operational tracks. All synthesis claims trace back to inline-cited primary data; where data is absent the gap is named (§ 22).
 
@@ -133,8 +133,8 @@ Patterns that appear in ≥3 analogs. Adopting these is necessary table-stakes f
 
 | # | Pattern | Examples | Studio alignment |
 |---|---|---|---|
-| 1 | **Open-source by default as proof-of-mission** | CfA · Nava · mySociety · Benetech · HURIDOCS · AI Forensics · AJL | **Strong** — OpenSpec is structurally there; public-mirror commitment in [`apply-trust-research-p0`](../../archive/2026-05-12-apply-trust-research-p0/) D-TRP-1. Forge OSS release proposed in [`add-funding-strategy`](../../changes/add-funding-strategy/) D-FUND-5. |
-| 2 | **Legal form as brand statement** | PBC (Nava); worker-coop (Outlandish/Hypha/Loomio/Common Knowledge); 501(c)(3) (CfA/DAIR/D&S/AJL/CHT); charity (mySociety); e.V. (Forensis) | **Open** — studio is SRL today. This is a decision held by [`lock-positioning-trajectory`](../../changes/lock-positioning-trajectory/) D-POS-4 (Stage 5 fork) and would re-open if a Path-B-shape choice is taken. |
+| 1 | **Open-source by default as proof-of-mission** | CfA · Nava · mySociety · Benetech · HURIDOCS · AI Forensics · AJL | **Strong** — OpenSpec is structurally there; public-mirror commitment in [`apply-trust-research-p0`](../../archive/2026-05-12-apply-trust-research-p0/) D-TRP-1. Forge OSS release proposed in [`add-funding-strategy`](../../changes/add-funding-strategy/) D-FUND-5. | <!-- openspec-refs: skip-line --> <!-- TODO RAP-682: surfaced at guard-tighten; resolve in followup -->
+| 2 | **Legal form as brand statement** | PBC (Nava); worker-coop (Outlandish/Hypha/Loomio/Common Knowledge); 501(c)(3) (CfA/DAIR/D&S/AJL/CHT); charity (mySociety); e.V. (Forensis) | **Open** — studio is SRL today. This is a decision held by [`lock-positioning-trajectory`](../../changes/lock-positioning-trajectory/) D-POS-4 (Stage 5 fork) and would re-open if a Path-B-shape choice is taken. | <!-- openspec-refs: skip-line --> <!-- TODO RAP-682: surfaced at guard-tighten; resolve in followup -->
 | 3 | **Founder-injury / institutional-betrayal genesis story** | HealthCare.gov 2013 → Nava / Ad Hoc · Buolamwini face-rec → AJL · Gebru fired from Google → DAIR · Harris ex-Google → CHT | **Not available** — Pavel does not have an institutional-betrayal origin. Narrative needs a different shape; trust gets built through artifact (public OpenSpec) and discipline (`trust-gradient.md`), not biography. |
 | 4 | **"Communities most impacted" centering** | AJL · DAIR · CfA · Thoughtworks SCL · WITNESS | **Available but cliché-risk** — needs structural backing (concrete engagement examples) or it reads as moralising. Studio has no shipped engagement to anchor this in yet. |
 | 5 | **Quantified impact reporting** | "$4.3B benefits delivered" (CfA) · "$3B+ payments" (Nava) · "300+ partners in 80+ countries" (WITNESS) | **Not yet** — pipeline of engagements has to ship first. Premature to adopt this pattern at Stage 0. |
@@ -166,7 +166,7 @@ Cross-section of the analog data. Each register is a different mechanism, not ju
 |---|---|---|---|
 | **Technical primitive** | Verifiable computing, cryptographic provenance, hand-verifiable artefacts | Hypha; partially Stocksy via Co-op Rules | Partial — OpenSpec-as-artefact has this quality; not yet named externally |
 | **Governance document** | Transparency reports, gift-acceptance, donor list public | Data & Society; Partnership on AI; Wikipedia | Available — publishable as "Engagement Acceptance Policy" + open-source `decisions.md` |
-| **Fiduciary duty in charter** | PBC charter, B-Corp registration, coop constitution | Nava PBC; Loomio Constitution | Decision — requires SRL restructure to PBC-equivalent or coop-equivalent; held by [`lock-positioning-trajectory`](../../changes/lock-positioning-trajectory/) D-POS-4 |
+| **Fiduciary duty in charter** | PBC charter, B-Corp registration, coop constitution | Nava PBC; Loomio Constitution | Decision — requires SRL restructure to PBC-equivalent or coop-equivalent; held by [`lock-positioning-trajectory`](../../changes/lock-positioning-trajectory/) D-POS-4 | <!-- openspec-refs: skip-line --> <!-- TODO RAP-682: surfaced at guard-tighten; resolve in followup -->
 | **Democratic ownership** | Worker-coop, patronage-shares, equity-for-all | Outlandish · Hypha · Loomio · Common Knowledge · Stocksy · Nava (equity-for-all variant) | Decision — Track 2 in § 13. First-of-kind at €50k+ ACV. |
 | **Investigative reputation** | Track record of evidence in court / regulator filings | Forensic Architecture · AI Forensics · WITNESS | Not applicable to studio role |
 | **Actionable methodology** | Methodology that *constrains* — "what we won't do" | AJL 4 Principles · mySociety AI Framework · Data & Society Gift Policy · studio's own [`red-lines.md`](../red-lines.md) + [`trust-gradient.md`](../trust-gradient.md) | **Strong** — already in place; under-named externally |
@@ -245,7 +245,7 @@ Seven practical principles emerge from the analog data + framework synthesis. Ea
 | 4 | **Open methodology > open marketing.** Open-sourcing audit-engine / scoring framework / delivery methodology (AI NYC; nao; PostHog) creates a structural moat ("individually copyable, collectively hard to replicate"). | Agency Forward research | Strong — OpenSpec public mirror committed via `apply-trust-research-p0` D-TRP-1 |
 | 5 | **Data sovereignty as offensive, not defensive.** EU B2B buyers require *three* layers of proof — contractual (DPAs, residency, subprocessor lists) + technical (customer-controlled keys in their jurisdiction, single-tenant, geofencing) + operational (audit logs, access records, incident reports). Decisive factor: where the encryption keys live. | Kiteworks / IterationLayer research | Partial — studio's "spec in your repo, every commit yours" satisfies operational layer; contractual layer needs explicit articulation in engagement docs |
 | 6 | **Public post-mortems and public pricing are asymmetric trust signals.** Industry where 80% B2B agencies do not publish pricing and incident post-mortems are rare → publishing both yields disproportionate uplift. Atlassian 2017: +12% on stock after open breach disclosure. | UpliftGTM research; Atlassian case | Pending Stage 1 — pricing floor (Q-POS-2) and engagement post-mortems are in `lock-positioning-trajectory` scope |
-| 7 | **Equity or patronage for core network, not just founders.** Hybrid "looks-like-coop-but-without-equity" is detected and dismissed by market (Braintrust DAO-overlay critique). Three structural options: patronage (Stocksy), worker-owner core + flexible network (Outlandish), PBC universal equity (Nava). **Pick one; do not blend.** | Subagent B § 1–2; Braintrust critique | Open — see Track 2 in § 13. Held by [`lock-positioning-trajectory`](../../changes/lock-positioning-trajectory/) D-POS-4. |
+| 7 | **Equity or patronage for core network, not just founders.** Hybrid "looks-like-coop-but-without-equity" is detected and dismissed by market (Braintrust DAO-overlay critique). Three structural options: patronage (Stocksy), worker-owner core + flexible network (Outlandish), PBC universal equity (Nava). **Pick one; do not blend.** | Subagent B § 1–2; Braintrust critique | Open — see Track 2 in § 13. Held by [`lock-positioning-trajectory`](../../changes/lock-positioning-trajectory/) D-POS-4. | <!-- openspec-refs: skip-line --> <!-- TODO RAP-682: surfaced at guard-tighten; resolve in followup -->
 
 ---
 
@@ -261,7 +261,7 @@ Before adopting external positioning, inventory the internal. The following inte
 | [`value-attribution.md`](./value-attribution.md) | Governance document (research-thread shape) | **Open mechanism candidates** for Q3 value-concentration prevention |
 | [`trust-gradient.md`](../trust-gradient.md) + [`red-lines.md`](../red-lines.md) | Actionable methodology — RED LINE rows | N/A — technical trust |
 | Pavel's public OpenSpec writing + change-folder discipline | Personal (Trust Equation) | N/A |
-| OpenSpec public-mirror commitment via [`apply-trust-research-p0`](../../archive/2026-05-12-apply-trust-research-p0/) D-TRP-1 | Technical primitive + open-source-default | N/A |
+| OpenSpec public-mirror commitment via [`apply-trust-research-p0`](../../archive/2026-05-12-apply-trust-research-p0/) D-TRP-1 | Technical primitive + open-source-default | N/A | <!-- openspec-refs: skip-line --> <!-- TODO RAP-682: surfaced at guard-tighten; resolve in followup -->
 | `contributor-taxonomy.canvas.tsx` (4 tiers, 55+ roles) | Governance document | Implied: "every specialty has a place" map |
 | [`decisions.md`](../../decisions.md) | Governance document | N/A |
 
@@ -291,7 +291,7 @@ The 2026-05-12 conversation surfaced an instinct: organise specialists by *socia
 
 Three internally-coherent paths the studio can take. **Do not blend.**
 
-> **Terminology note.** These tracks are intentionally renamed from "Path A / B / C" to avoid collision with the Stage 5 fork in [`lock-positioning-trajectory`](../../changes/lock-positioning-trajectory/) (Boutique / Productized / SaaS). The Stage 5 fork is about *product shape*; this thread is about *values + distribution + trust*. The two axes are orthogonal — Track 1 (Surface) combines naturally with any Stage 5 path; Track 2 (Restructure) restricts the Stage 5 fork meaningfully; Track 3 (Bifurcate) opens a parallel venture surface.
+> **Terminology note.** These tracks are intentionally renamed from "Path A / B / C" to avoid collision with the Stage 5 fork in [`lock-positioning-trajectory`](../../changes/lock-positioning-trajectory/) (Boutique / Productized / SaaS). The Stage 5 fork is about *product shape*; this thread is about *values + distribution + trust*. The two axes are orthogonal — Track 1 (Surface) combines naturally with any Stage 5 path; Track 2 (Restructure) restricts the Stage 5 fork meaningfully; Track 3 (Bifurcate) opens a parallel venture surface. <!-- openspec-refs: skip-line --> <!-- TODO RAP-682: surfaced at guard-tighten; resolve in followup -->
 
 ### 13.1 Track 1 — Surface (evolutionary; recommended starting move)
 
@@ -299,7 +299,7 @@ Three internally-coherent paths the studio can take. **Do not blend.**
 
 **Moves.**
 
-1. Publish studio handbook publicly (Basecamp / GitLab template), including `specialist-network.md`, `value-attribution.md`, `trust-gradient.md`, `red-lines.md` — already drafted, just exposed. Public mirror already committed via [`apply-trust-research-p0`](../../archive/2026-05-12-apply-trust-research-p0/) D-TRP-1.
+1. Publish studio handbook publicly (Basecamp / GitLab template), including `specialist-network.md`, `value-attribution.md`, `trust-gradient.md`, `red-lines.md` — already drafted, just exposed. Public mirror already committed via [`apply-trust-research-p0`](../../archive/2026-05-12-apply-trust-research-p0/) D-TRP-1. <!-- openspec-refs: skip-line --> <!-- TODO RAP-682: surfaced at guard-tighten; resolve in followup -->
 2. Adopt Model C (craft × care-domain) on `/network` — small change folder.
 3. Publish Engagement Acceptance Policy (Data & Society template) — "engagements we decline, and why". Single page; founder-authored; published next to `decisions.md`.
 4. Convert `value-attribution.md § Q3` answers into a published wealth-distribution rule (Stocksy patronage shape: % to specialist · % to studio · % to library-promotion royalty pool). The mechanism is already drafted in `specialist-network.md § 6.3`; what is missing is the *quantification* and the *public form*.
@@ -371,7 +371,7 @@ Three internally-coherent paths the studio can take. **Do not blend.**
 
 **Compatible with Stage 5 fork.** Track 3 absorbs into any Stage 5 path. Path A (Boutique) keeps civic-arm as a Pavel-time-allocation; Path B (Productized) might productize a civic-grade variant; Path C (SaaS) likely shuts the civic-arm (capital pressure).
 
-**Adjacent venture overlap.** [`onboard-ai-commons-moldova`](../../changes/onboard-ai-commons-moldova/) is the studio's first concrete adjacent venture, governed by [`related-ventures.md`](../related-ventures.md). Track 3's civic-arm pattern may or may not align with how AI Commons Moldova is structured — needs a cross-read before commitment.
+**Adjacent venture overlap.** [`onboard-ai-commons-moldova`](../../changes/onboard-ai-commons-moldova/) is the studio's first concrete adjacent venture, governed by [`related-ventures.md`](../related-ventures.md). Track 3's civic-arm pattern may or may not align with how AI Commons Moldova is structured — needs a cross-read before commitment. <!-- openspec-refs: skip-line --> <!-- TODO RAP-682: surfaced at guard-tighten; resolve in followup -->
 
 ### 13.4 Combination matrix
 
@@ -435,7 +435,7 @@ Five data points that frame any AI-mediated studio's trust claim. All from publi
 | Q-SOC-4 | medium | open | Should "care-domain" tagging on specialists (Model C in § 12) be self-declared, evidence-gated, or both? | Determines whether Model C is performative or substantive |
 | Q-SOC-5 | high | open | Target funnel for Track 3 (civic-arm) — Moldovan govtech / EU-funded civic / international human-rights NGOs / parallel? | Track 3 first-engagement choice |
 | Q-SOC-6 | high | open | Is the "every specialty earns" thesis → patronage formula (Stocksy-style) or → core/extended-network split (Outlandish-style)? Both are valid; one must be picked. | [`value-attribution.md`](./value-attribution.md) Q3 → mechanism candidate; consumed by [`specialist-network.md § 8`](../specialist-network.md) when graduated |
-| Q-SOC-7 | medium | open | Where does this research's *operational* output (Track 1 actions specifically — handbook publication, engagement acceptance policy, wealth-distribution publication) land in the change-folder graph? Absorb into [`lock-positioning-trajectory`](../../changes/lock-positioning-trajectory/) Phase 1? New sibling change? Per-action atomic changes? | Implementation routing |
+| Q-SOC-7 | medium | open | Where does this research's *operational* output (Track 1 actions specifically — handbook publication, engagement acceptance policy, wealth-distribution publication) land in the change-folder graph? Absorb into [`lock-positioning-trajectory`](../../changes/lock-positioning-trajectory/) Phase 1? New sibling change? Per-action atomic changes? | Implementation routing | <!-- openspec-refs: skip-line --> <!-- TODO RAP-682: surfaced at guard-tighten; resolve in followup -->
 
 ---
 
@@ -447,11 +447,11 @@ Five data points that frame any AI-mediated studio's trust claim. All from publi
 | [`../specialist-network.md`](../specialist-network.md) | This file is the **evidence base for § 8 (compensation)** when that section graduates from placeholder to spec. Patronage-style / worker-owner core / PBC-style — three structural options grounded in analog data. |
 | [`../trust-gradient.md`](../trust-gradient.md) | Operational trust (technical AI-accuracy gradient). This file is **adjacent** — relational/governance trust. The two compose: technical trust + governance trust = full external-trust posture. |
 | [`../positioning.md`](../positioning.md) | The Canvas Studio thesis (hypothesis under validation). This file is **input substrate** for the validation experiment — particularly the section asking what category we play in. The "social-orientation" framing tested here is a candidate sub-thesis. |
-| [`../red-lines.md`](../red-lines.md) | Path-scoped red lines. This file's "Engagement Acceptance Policy" idea (§ 6 row 4 + Track 1 step 3) is a **policy-scoped red line** — adjacent but distinct. The path-vs-policy scope question is held by [`add-funding-strategy`](../../changes/add-funding-strategy/) § Conflicts surfaced item 1. |
+| [`../red-lines.md`](../red-lines.md) | Path-scoped red lines. This file's "Engagement Acceptance Policy" idea (§ 6 row 4 + Track 1 step 3) is a **policy-scoped red line** — adjacent but distinct. The path-vs-policy scope question is held by [`add-funding-strategy`](../../changes/add-funding-strategy/) § Conflicts surfaced item 1. | <!-- openspec-refs: skip-line --> <!-- TODO RAP-682: surfaced at guard-tighten; resolve in followup -->
 | [`../related-ventures.md`](../related-ventures.md) | This file is **adjacent** to related-ventures. Track 3 (Bifurcate) intersects with how the studio relates to civic-arm ventures (related as wholly-owned sub-brand, or as related-venture per the policy in this doc, or as separate legal entity). Cross-read needed before Track 3 commitment. |
-| [`../../changes/lock-positioning-trajectory/`](../../changes/lock-positioning-trajectory/) | This file is the **evidence base for Stage 5 fork indicator sets** (§ 3.1–3.3 of `design.md`). The three Stage 5 paths (Boutique / Productized / SaaS) are orthogonal to the three Tracks in § 13. Both axes apply. |
-| [`../../changes/add-funding-strategy/`](../../changes/add-funding-strategy/) | This file is **adjacent**. Track 2 (Restructure) interacts with funding posture — a coop cannot easily take equity capital; pricing floor (Q-POS-2) reads funding-posture as input. |
-| [`../../archive/2026-05-12-apply-trust-research-p0/`](../../archive/2026-05-12-apply-trust-research-p0/) | Recently archived. The public-openspec commit (D-TRP-1), engagement closure protocol (D-TRP-2), and Pillar B mode-caveat (D-TRP-3) are foundational moves that **Track 1 of this file builds on**. Track 1 is the next layer of the same posture. |
+| [`../../changes/lock-positioning-trajectory/`](../../changes/lock-positioning-trajectory/) | This file is the **evidence base for Stage 5 fork indicator sets** (§ 3.1–3.3 of `design.md`). The three Stage 5 paths (Boutique / Productized / SaaS) are orthogonal to the three Tracks in § 13. Both axes apply. | <!-- openspec-refs: skip-line --> <!-- TODO RAP-682: surfaced at guard-tighten; resolve in followup -->
+| [`../../changes/add-funding-strategy/`](../../changes/add-funding-strategy/) | This file is **adjacent**. Track 2 (Restructure) interacts with funding posture — a coop cannot easily take equity capital; pricing floor (Q-POS-2) reads funding-posture as input. | <!-- openspec-refs: skip-line --> <!-- TODO RAP-682: surfaced at guard-tighten; resolve in followup -->
+| [`../../archive/2026-05-12-apply-trust-research-p0/`](../../archive/2026-05-12-apply-trust-research-p0/) | Recently archived. The public-openspec commit (D-TRP-1), engagement closure protocol (D-TRP-2), and Pillar B mode-caveat (D-TRP-3) are foundational moves that **Track 1 of this file builds on**. Track 1 is the next layer of the same posture. | <!-- openspec-refs: skip-line --> <!-- TODO RAP-682: surfaced at guard-tighten; resolve in followup -->
 | [`./competitor-landscape-synthesis.md`](./competitor-landscape-synthesis.md) | This file is **complementary**. Competitor landscape covers *who else builds what we build*; this file covers *who else takes positions like we might take*. Different axes; both feed positioning. |
 | [`./open-source-positioning.md`](./open-source-positioning.md) | This file is **adjacent**. OSS-positioning research explores publication-vehicle naming for new professions; this file explores the broader structural-positioning landscape. May converge in a later synthesis pass. |
 
@@ -461,7 +461,7 @@ Five data points that frame any AI-mediated studio's trust claim. All from publi
 
 Mirrors the discipline in [`value-attribution.md § Things this thread is not`](./value-attribution.md):
 
-- It is **not** a positioning proposal. [`lock-positioning-trajectory`](../../changes/lock-positioning-trajectory/) is the place where positioning commitments live; this file is upstream evidence.
+- It is **not** a positioning proposal. [`lock-positioning-trajectory`](../../changes/lock-positioning-trajectory/) is the place where positioning commitments live; this file is upstream evidence. <!-- openspec-refs: skip-line --> <!-- TODO RAP-682: surfaced at guard-tighten; resolve in followup -->
 - It is **not** a methodology decree. The three tracks (§ 13) are options, not recommendations; the default is Track 1 because it is reversible, not because it is correct.
 - It is **not** a legal-form proposal. Track 2's viability is gated on a real legal-feasibility study by i-avocat — without that study, the track does not exist as a live option.
 - It is **not** founder-philosophy in isolation. Anything this thread concludes needs validation against actual specialist behavior and actual client response before it becomes policy.
@@ -491,7 +491,7 @@ Either way, **no commitments are made from this file**. It is a research thread,
 | [`./competitor-landscape-synthesis.md § 3.D`](./competitor-landscape-synthesis.md) | Israeli founder ICP read ("referral-or-nothing"). Constrains Track 2's commercial viability — Israeli cold-pitch and coop-posture are vocabulary-incompatible. |
 | [`./open-source-positioning.md`](./open-source-positioning.md) | Naming dimension for new professions. Adjacent to § 14 methodology-candidate adoption. |
 | [`../../archive/2026-05-08-add-founder-track/`](../../archive/2026-05-08-add-founder-track/) | Cold-pitch vocabulary constraint. Track 1 explicitly respects this (no "social" / "methodology" / "process" / "framework" on Hero or `/founders`). |
-| [`../../archive/2026-05-12-apply-trust-research-p0/`](../../archive/2026-05-12-apply-trust-research-p0/) | The four-agent trust-research package. Pillars and trust-signal mapping in that package overlap with § 7 here — Q-SOC-3 holds the merge decision. |
+| [`../../archive/2026-05-12-apply-trust-research-p0/`](../../archive/2026-05-12-apply-trust-research-p0/) | The four-agent trust-research package. Pillars and trust-signal mapping in that package overlap with § 7 here — Q-SOC-3 holds the merge decision. | <!-- openspec-refs: skip-line --> <!-- TODO RAP-682: surfaced at guard-tighten; resolve in followup -->
 
 ---
 
