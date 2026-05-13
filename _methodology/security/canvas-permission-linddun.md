@@ -61,7 +61,7 @@ Ten flows sourced from existing specs. Each flow is classified, trust-boundaries
 | **CF-TG** | Telegram surface | Telegram API → `canvas_proposals`, `tg_user_bindings`, `channels` | Confidential — proposal content, Telegram identity binding | Telegram servers → Workers → Supabase | `openspec/archive/2026-05-09-add-tg-canvas-surface/` |
 | **CF-OA** | OAuth token storage | OAuth callback → `linear_oauth_connections` | Restricted — access token; can impersonate user on Linear | OAuth provider → Studio callback → Postgres | `openspec/archive/2026-05-10-add-linear-oauth-connection/` |
 | **CF-IN** | Inbox lead capture | Public form → `inbox` | Confidential — name, email, IP address, business description | Public internet → Supabase public insert | `openspec/archive/2026-05-04-add-client-onboarding/` |
-| **CF-SA** | Specialist application | Application form → `specialist_applications` | Confidential — professional background, contact details, work samples | Public internet → Supabase public insert | `openspec/changes/add-specialist-onboarding/` |
+| **CF-SA** | Specialist application | Application form → `specialist_applications` | Confidential — professional background, contact details, work samples | Public internet → Supabase public insert | `openspec/archive/2026-05-13-add-specialist-onboarding/` |
 | **CF-ML** | Magic-link sign-in | Email magic link → `auth.users` materialisation | Restricted — email address; auth token in URL | Email provider → Browser → Supabase Auth | Supabase Auth docs |
 | **CF-PC** | Cross-canvas project connection | `project_connections.config` (credential fields) → consuming canvas | Restricted — API keys, webhook secrets, integration credentials | Forge service-role read → canvas viewer read path | `openspec/archive/2026-05-08-add-project-connections/` |
 
@@ -216,8 +216,8 @@ Six open questions extracted from § 4. Each becomes a Linear sub-issue or feeds
 | `openspec/current/mirror.md` | CF-MR and CF-RG flow definitions |
 | `openspec/current/canvas.md` | CF-CM flow definition |
 | `openspec/changes/redesign-canvas-permission-model/` | Role hierarchy this threat model validates against |
-| `openspec/changes/add-document-zone-permissions/` | Consumes W4 audience-tagging recommendation |
-| `openspec/changes/add-specialist-onboarding/` | CF-SA flow; external_collaborator trust boundary introduction |
+| `openspec/archive/2026-05-13-add-document-zone-permissions/` | Consumes W4 audience-tagging recommendation |
+| `openspec/archive/2026-05-13-add-specialist-onboarding/` | CF-SA flow; external_collaborator trust boundary introduction |
 
 ---
 

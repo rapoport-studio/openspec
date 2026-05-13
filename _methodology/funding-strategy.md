@@ -12,7 +12,7 @@ tldr: Five-channel non-dilutive capital stack. ODA M1 primary 2026 target. OSS l
 >
 > This file is public methodology — strategy and decision rules are open. Specific monetary outcomes (amounts granted, internal runway numbers) live in the private `funding-pack` repo.
 >
-> Change origin: `openspec/changes/add-funding-strategy/`. Archive path after close-out: `openspec/archive/YYYY-MM-DD-add-funding-strategy/`.
+> Change origin: `openspec/archive/2026-05-13-add-funding-strategy/`.
 
 ---
 

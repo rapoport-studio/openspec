@@ -7,7 +7,7 @@
 > **Reusable for:** internal positioning copy, planning conversations, future home-page revision triggered by a Stage-5 decision, optional Lab MDX article on "the deployment-tier shift". Authorship: open.
 > **Opened:** 2026-05-12.
 > **Companion to:** [`competitive-positioning-sdd-frameworks.md`](./competitive-positioning-sdd-frameworks.md) (tool-layer SDD comparison), [`competitor-landscape-synthesis.md`](./competitor-landscape-synthesis.md) (regional landscape MD/RO/IL/EU), [`open-source-positioning.md`](./open-source-positioning.md).
-> **Feeds into:** [`openspec/changes/lock-positioning-trajectory/`](../../changes/lock-positioning-trajectory/) (the change that codifies the framework derived from this research); quarterly strategic review; Stage-5 fork decision (~Q2 2027); `studio-charter.md` if Studio shape changes.
+> **Feeds into:** [`openspec/archive/2026-05-13-lock-positioning-trajectory/`](../../archive/2026-05-13-lock-positioning-trajectory/) (the change that codifies the framework derived from this research); quarterly strategic review; Stage-5 fork decision (~Q2 2027); `studio-charter.md` if Studio shape changes.
 
 ---
 
@@ -29,7 +29,7 @@ It is not:
 
 - A regional competitor refresh — that lives in the four regional files.
 - A new ICP decision — Muse-first founder-track is already locked per `competitor-landscape-synthesis.md` § 3.C.
-- An OpenSpec change proposal — this is research, the proposal that consumes it is [`openspec/changes/lock-positioning-trajectory/`](../../changes/lock-positioning-trajectory/).
+- An OpenSpec change proposal — this is research, the proposal that consumes it is [`openspec/archive/2026-05-13-lock-positioning-trajectory/`](../../archive/2026-05-13-lock-positioning-trajectory/).
 
 ---
 
@@ -386,7 +386,7 @@ In the spirit of [`competitor-landscape-synthesis.md`](./competitor-landscape-sy
 - [`../../current/muse.md`](../../current/muse.md)
 
 **OpenSpec change that consumes this research:**
-- [`openspec/changes/lock-positioning-trajectory/`](../../changes/lock-positioning-trajectory/) — codifies the framework derived from this file (Stages 0–5 as observable signals, Stage 5 fork criteria for Path A/B/C, drift triggers)
+- [`openspec/archive/2026-05-13-lock-positioning-trajectory/`](../../archive/2026-05-13-lock-positioning-trajectory/) — codifies the framework derived from this file (Stages 0–5 as observable signals, Stage 5 fork criteria for Path A/B/C, drift triggers)
 
 **Source artifacts (Cursor canvases, not in repo):**
 - `~/.cursor/projects/Users-pavelrapoport-Documents-GitHub-rapoport-studio/canvases/deployco-positioning.canvas.tsx` — interactive 7-layer stack and player cards
