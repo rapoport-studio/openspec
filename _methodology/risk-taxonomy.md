@@ -69,6 +69,8 @@ Five levels, ordered external → internal. Each level operates at a different c
 
 **Review cadence.** Per change proposal at draft time.
 
+**Canonical instance — positioning trajectory.** Stage-transition failure (a drift trigger from `_methodology/positioning-decision-framework.md § 4` firing without corrective action) is a Business Viability risk: the studio builds the right product but fails to reach the market stage where it becomes viable. Registered at archive of `lock-positioning-trajectory` (2026-05-13).
+
 ---
 
 ## L4 — SDD-specific
