@@ -10,7 +10,7 @@ tldr: Article-by-article mapping of GDPR and Moldova Law 133/2011 to the studio 
 
 # GDPR + Moldova Law 133/2011 compliance matrix
 
-> **Companion to:** [`openspec/changes/validate-personal-data-security/`](../../changes/validate-personal-data-security/)
+> **Companion to:** [`openspec/archive/2026-05-13-validate-personal-data-security/`](../../archive/2026-05-13-validate-personal-data-security/)
 > **Compliance scope elected (P0.2):** Option A — GDPR + Moldova Law 133/2011 only. UK GDPR / AI Act / ISO 27001 unlocked on demand.
 > **Status note on gap tickets:** Linear epic not yet open (P0.4 is operator-blocked). Placeholders `RAP-XXX` will be replaced when founder opens the epic and child issues.
 > **LINDDUN cross-reference:** Each gap maps to one or more LINDDUN NC-category threats in [`canvas-permission-linddun.md`](canvas-permission-linddun.md).

@@ -12,7 +12,7 @@ tldr: Reusable adversarial RLS audit harness for the studio platform. Documents 
 
 # Canvas RLS adversarial audit 2026
 
-> **Companion to:** [`openspec/changes/validate-personal-data-security/`](../../changes/validate-personal-data-security/)
+> **Companion to:** [`openspec/archive/2026-05-13-validate-personal-data-security/`](../../archive/2026-05-13-validate-personal-data-security/)
 > **Harness location:** [`tools/security/rls-redteam.sh`](../../../tools/security/rls-redteam.sh)
 > **Scenarios location:** [`tools/security/scenarios/`](../../../tools/security/scenarios/)
 > **First run status:** ⛔ **operator-blocked** — requires Supabase preview credentials (D-VS-2 default: preview for routine; live monthly with explicit gate)

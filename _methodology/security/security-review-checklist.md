@@ -69,6 +69,34 @@ tldr: PR review checklist. Tick each row applicable to the PR. Required for any 
 
 ---
 
+---
+
+## Additional rows (applied 2026-05-13 from change `validate-personal-data-security`)
+
+The following rows supplement the OWASP LLM Top 10 checklist for PRs that touch data surfaces, content authoring, or RLS policies.
+
+| ID | Category | Applies to this PR? | Notes / Mitigation |
+|---|---|---|---|
+| DSAR | **DSAR runbook applicable** — PR introduces or modifies a table/field containing user-identifiable data. If yes, verify the DSAR extraction query in `_methodology/security/dsar-runbook.md § 3` covers the new surface; add a query template if not. | y / n / n-a | |
+| AUD-TAG | **Audience tags set on new content surfaces** — PR adds a new content type, Mirror section, or document-zone surface. If yes, verify per-section audience classification is documented (client / collaborator / internal-only) per W3+W4 analysis in `archive/2026-05-13-validate-personal-data-security/`. Enforcement deferred to `add-document-zone-permissions`; classification is required now. | y / n / n-a | |
+| RLS-AUDIT | **RLS adversarial audit re-run** — PR touches `supabase/migrations/**` with RLS policy changes. If yes, run `tools/security/rls-redteam.sh` against preview Supabase and attach `PASS/FAIL` summary table. Zero critical/major findings required. See `db/conventions.md § RLS adversarial-audit convention`. | y / n / n-a | |
+
+---
+
+---
+
+## Additional rows (applied 2026-05-13 from change `validate-personal-data-security`)
+
+The following rows supplement the OWASP LLM Top 10 checklist for PRs that touch data surfaces, content authoring, or RLS policies.
+
+| ID | Category | Applies to this PR? | Notes / Mitigation |
+|---|---|---|---|
+| DSAR | **DSAR runbook applicable** — PR introduces or modifies a table/field containing user-identifiable data. If yes, verify the DSAR extraction query in `_methodology/security/dsar-runbook.md § 3` covers the new surface; add a query template if not. | y / n / n-a | |
+| AUD-TAG | **Audience tags set on new content surfaces** — PR adds a new content type, Mirror section, or document-zone surface. If yes, verify per-section audience classification is documented (client / collaborator / internal-only) per W3+W4 analysis in `archive/2026-05-13-validate-personal-data-security/`. Enforcement deferred to `add-document-zone-permissions`; classification is required now. | y / n / n-a | |
+| RLS-AUDIT | **RLS adversarial audit re-run** — PR touches `supabase/migrations/**` with RLS policy changes. If yes, run `tools/security/rls-redteam.sh` against preview Supabase and attach `PASS/FAIL` summary table. Zero critical/major findings required. See `db/conventions.md § RLS adversarial-audit convention`. | y / n / n-a | |
+
+---
+
 ## Related
 
 - [`threat-model-template.md`](threat-model-template.md) — Shostack 4-Question Frame for per-capability threat modelling

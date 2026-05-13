@@ -11,7 +11,7 @@ tldr: W6 side-channel review for the studio platform. Covers render, error-messa
 
 # Side-channel audit — canvas access model
 
-> **Companion to:** [`openspec/changes/validate-personal-data-security/`](../../changes/validate-personal-data-security/)
+> **Companion to:** [`openspec/archive/2026-05-13-validate-personal-data-security/`](../../archive/2026-05-13-validate-personal-data-security/)
 > **Cross-reference:** `canvas-permission-linddun.md` (DD and D-category threats) | `canvas-rls-adversarial-audit-2026.md` (W5 row-level RLS) | `redesign-canvas-permission-model` (D-PM-4 credential elision)
 > **Static analysis date:** 2026-05-13
 > **Live verification:** operator-blocked (see per-section notes)

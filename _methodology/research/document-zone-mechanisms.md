@@ -11,7 +11,7 @@ tldr: W3 content audit + W4 sub-document access mechanism research for the studi
 
 # Document zone mechanisms — sub-document access design
 
-> **Companion to:** [`openspec/changes/validate-personal-data-security/`](../../changes/validate-personal-data-security/)
+> **Companion to:** [`openspec/archive/2026-05-13-validate-personal-data-security/`](../../archive/2026-05-13-validate-personal-data-security/)
 > **Consumes:** W1 LINDDUN output (`canvas-permission-linddun.md`) for sensitivity signals
 > **Produces:** § 4 per-section Mirror mapping — the input artefact for `add-document-zone-permissions` Phase 0
 > **D-VS-1 resolution:** v1 content audit uses synthetic artefacts (representative but not real engagement data). Real files may be audited with founder consent + light anonymisation in v2.

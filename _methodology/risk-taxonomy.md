@@ -41,6 +41,8 @@ Five levels, ordered external → internal. Each level operates at a different c
 
 **Review cadence.** Annually or when a new AI surface is introduced (Maestro email, Telegram canvas, in-app AI features).
 
+**Canonical instance — grant compliance (applied 2026-05-13 from change `add-funding-strategy`).** Reporting, audit, and clawback obligations from received grants are a Regulatory risk. Mitigation: per-grant compliance tracking in `funding-pack/applications/<id>/`; accountant review when retained. Owner: Pavel + counsel.
+
 ---
 
 ## L2 — Security
@@ -70,6 +72,8 @@ Five levels, ordered external → internal. Each level operates at a different c
 **Review cadence.** Per change proposal at draft time.
 
 **Canonical instance — positioning trajectory.** Stage-transition failure (a drift trigger from `_methodology/positioning-decision-framework.md § 4` firing without corrective action) is a Business Viability risk: the studio builds the right product but fails to reach the market stage where it becomes viable. Registered at archive of `lock-positioning-trajectory` (2026-05-13).
+
+**Canonical instance — funding viability (applied 2026-05-13 from change `add-funding-strategy`).** Runway exhaustion before validated wedge is a Business Viability risk. Mitigation: `_methodology/funding-strategy.md` five-channel diversification; quarterly review (D-FUND-7). Owner: Pavel.
 
 ---
 
@@ -114,6 +118,66 @@ Five levels, ordered external → internal. Each level operates at a different c
 
 ---
 
+## Privacy-disclosure risk category (applied 2026-05-13 from change `validate-personal-data-security`)
+
+**Definition.** Risks arising from unintended exposure of personally identifiable information across the studio's data surfaces — canvas content, Mirror fields, user metadata, and backup/export paths. Distinct from L2 Security (application-level exploits) and L1 Regulatory (legal obligations): Privacy-disclosure covers architectural privacy threats that may not violate a law but erode user trust and violate the studio's data-minimisation ethos.
+
+**Framework.** LINDDUN GO (7-category privacy threat model): Linkability, Identifiability, Non-repudiation, Detectability, Disclosure of information, Unawareness, Non-compliance. Exemplar artefact: `_methodology/security/canvas-permission-linddun.md`.
+
+**Where it lives.** For capabilities with PII surface: a `## LINDDUN GO summary` section in `design.md` (mandatory when trigger criteria in `threat-model-template.md § LINDDUN GO requirement` are met). Full threat catalogue + matrix artefact for novel surfaces.
+
+**Owner.** Change author + Pavel review.
+
+**Trigger.** See `_methodology/security/threat-model-template.md § LINDDUN GO requirement` for the enumerated trigger conditions.
+
+**Review cadence.** Per change when triggered. Cross-cutting privacy review annually or when new PII processor added.
+
+---
+
+## Compliance non-conformance risk category (applied 2026-05-13 from change `validate-personal-data-security`)
+
+**Definition.** Risks of failing to satisfy specific regulatory article obligations (GDPR, Moldova Law 133/2011) even when the application is technically secure. Examples: DSAR response exceeding 30-day window, breach notification not filed within 72 hours, no lawful basis documented for a new data collection.
+
+**Framework.** GDPR + MD-133 compliance matrix — article-by-article gap tracking. Artefact: `_methodology/security/gdpr-md-compliance-matrix.md` (in `archive/2026-05-13-validate-personal-data-security/`).
+
+**Where it lives.** Per-change: `design.md § Risks` compliance row when the change touches personal data handling. Studio-level: `_methodology/security/gdpr-md-compliance-matrix.md` tracks gap status across articles.
+
+**Owner.** Pavel + legal counsel (counsel required for breach notification template letters and DPIA).
+
+**Review cadence.** Per-change when PII surface touched. Gap status reviewed annually or when new processor engaged.
+
+---
+
+## Privacy-disclosure risk category (applied 2026-05-13 from change `validate-personal-data-security`)
+
+**Definition.** Risks arising from unintended exposure of personally identifiable information across the studio's data surfaces — canvas content, Mirror fields, user metadata, and backup/export paths. Distinct from L2 Security (application-level exploits) and L1 Regulatory (legal obligations): Privacy-disclosure covers architectural privacy threats that may not violate a law but erode user trust and violate the studio's data-minimisation ethos.
+
+**Framework.** LINDDUN GO (7-category privacy threat model): Linkability, Identifiability, Non-repudiation, Detectability, Disclosure of information, Unawareness, Non-compliance. Exemplar artefact: `_methodology/security/canvas-permission-linddun.md`.
+
+**Where it lives.** For capabilities with PII surface: a `## LINDDUN GO summary` section in `design.md` (mandatory when trigger criteria in `threat-model-template.md § LINDDUN GO requirement` are met). Full threat catalogue + matrix artefact for novel surfaces.
+
+**Owner.** Change author + Pavel review.
+
+**Trigger.** See `_methodology/security/threat-model-template.md § LINDDUN GO requirement` for the enumerated trigger conditions.
+
+**Review cadence.** Per change when triggered. Cross-cutting privacy review annually or when new PII processor added.
+
+---
+
+## Compliance non-conformance risk category (applied 2026-05-13 from change `validate-personal-data-security`)
+
+**Definition.** Risks of failing to satisfy specific regulatory article obligations (GDPR, Moldova Law 133/2011) even when the application is technically secure. Examples: DSAR response exceeding 30-day window, breach notification not filed within 72 hours, no lawful basis documented for a new data collection.
+
+**Framework.** GDPR + MD-133 compliance matrix — article-by-article gap tracking. Artefact: `_methodology/security/gdpr-md-compliance-matrix.md` (in `archive/2026-05-13-validate-personal-data-security/`).
+
+**Where it lives.** Per-change: `design.md § Risks` compliance row when the change touches personal data handling. Studio-level: `_methodology/security/gdpr-md-compliance-matrix.md` tracks gap status across articles.
+
+**Owner.** Pavel + legal counsel (counsel required for breach notification template letters and DPIA).
+
+**Review cadence.** Per-change when PII surface touched. Gap status reviewed annually or when new processor engaged.
+
+---
+
 ## Cross-references
 
 | Resource | Purpose |
@@ -124,6 +188,10 @@ Five levels, ordered external → internal. Each level operates at a different c
 | [`research/trust-gradient-evolution-2023-2026.md`](research/trust-gradient-evolution-2023-2026.md) | Which categories remain structurally hard for AI (L4 + L2 reference) |
 | `_methodology/security/security-review-checklist.md` | L2 OWASP checklist (Phase 3 forward reference) |
 | `_methodology/studio-charter.md` | L1 regulatory posture |
+| `_methodology/security/canvas-permission-linddun.md` | Privacy-disclosure LINDDUN GO exemplar artefact |
+| `archive/2026-05-13-validate-personal-data-security/` | Source change: W1–W6 security artefacts, LINDDUN GO, GDPR+MD-133 matrix, DSAR runbook, breach notification runbook, adversarial RLS audit |
+| `_methodology/security/canvas-permission-linddun.md` | Privacy-disclosure LINDDUN GO exemplar artefact |
+| `archive/2026-05-13-validate-personal-data-security/` | Source change: W1–W6 security artefacts, LINDDUN GO, GDPR+MD-133 matrix, DSAR runbook, breach notification runbook, adversarial RLS audit |
 
 ---
 

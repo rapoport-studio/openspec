@@ -12,7 +12,7 @@ tldr: Privacy-focused threat model for the canvas access surface. Applies the se
 
 # Canvas permission LINDDUN threat model
 
-> **Companion to:** [`openspec/changes/validate-personal-data-security/`](../../changes/validate-personal-data-security/)
+> **Companion to:** [`openspec/archive/2026-05-13-validate-personal-data-security/`](../../archive/2026-05-13-validate-personal-data-security/)
 > **LINDDUN scope elected (P0.1):** Option A — LINDDUN GO (lightweight 7-category × 10-flow matrix).
 > **PRO escalation trigger (D-VS-5):** Any single threat classified Critical with no architectural mitigation available. No such threat found in v1; PRO NOT triggered.
 > **Status:** Draft. Founder review pending (operator-blocked).
@@ -207,7 +207,7 @@ Six open questions extracted from § 4. Each becomes a Linear sub-issue or feeds
 
 | Artefact | Relationship |
 |---|---|
-| `openspec/changes/validate-personal-data-security/design.md` | Owns the framework selection rationale and artefact shape specification |
+| `openspec/archive/2026-05-13-validate-personal-data-security/design.md` | Owns the framework selection rationale and artefact shape specification |
 | `openspec/_methodology/security/gdpr-md-compliance-matrix.md` | NC-category threats map to specific GDPR articles in that matrix |
 | `openspec/_methodology/security/canvas-rls-adversarial-audit-2026.md` | W5 adversarial audit validates DD-category closed threats |
 | `openspec/_methodology/security/side-channel-audit.md` | W6 side-channel review validates DD and D-category closed threats |
