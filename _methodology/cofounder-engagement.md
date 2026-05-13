@@ -10,7 +10,7 @@ tldr: Companion to rapoport-studio-engagement.md. Lifts § 13's four-actor model
 
 > **Companion** to [`rapoport-studio-engagement.md`](./rapoport-studio-engagement.md). The engagement charter governs how Studio SRL sells services into external repositories. This document governs what happens economically when Pavel is *also* a cofounder of the product the studio is building.
 >
-> **When to use this doc.** If your engagement is `cofounder-engagement` per [`changes/establish-studio-economy/design.md § D-ECN-1`](../changes/establish-studio-economy/design.md), read this end-to-end. If your engagement is `client-engagement`, this doc does not apply — read the engagement charter alone.
+> **When to use this doc.** If your engagement is `cofounder-engagement` per [`archive/2026-05-13-establish-studio-economy/design.md § D-ECN-1`](../archive/2026-05-13-establish-studio-economy/design.md), read this end-to-end. If your engagement is `client-engagement`, this doc does not apply — read the engagement charter alone.
 >
 > **Status.** Proposed as part of `establish-studio-economy` (P0 capture). Ratification per cofounder engagement happens at that engagement's kickoff in `<slug>.yaml § engagement.cofounder` block.
 
@@ -22,7 +22,7 @@ A `cofounder-engagement` Contract exists when **Pavel personally holds equity in
 
 Two cofounder engagements are active or pre-kickoff as of this document's authoring:
 
-- **Unbind** — joint product with Olya. Olya's role: administrative. Pavel's role: development + spec authoring. Equity split: 50/50 (subject to confirmation conversation per PF-1 in [`changes/establish-studio-economy/tasks.md`](../changes/establish-studio-economy/tasks.md)).
+- **Unbind** — joint product with Olya. Olya's role: administrative. Pavel's role: development + spec authoring. Equity split: 50/50 (subject to confirmation conversation per PF-1 in [`archive/2026-05-13-establish-studio-economy/tasks.md`](../archive/2026-05-13-establish-studio-economy/tasks.md)).
 - **Vivod** — joint product with Misha Ganevich. Misha's role: management, contractors, Israeli sales, in-market network. Pavel's role: development. Equity split: 50/50 (explicitly agreed).
 
 This document is the canonical reference for how those engagements are economically structured. Per-engagement specifics (vesting schedule, cliff, exit clauses, IP carve-outs) ratify in `<slug>.yaml § engagement.cofounder` at the engagement's kickoff and in the founders agreement legal document.
@@ -141,7 +141,7 @@ Two ledgers coexist per cofounder engagement; reading them together produces the
 Tracks: Studio's cash revenue from billing the joint Product as a vendor; Studio's cost of delivery (Anthropic / specialist / overhead).
 
 - Revenue: Studio fees billed monthly / per-milestone to joint Product.
-- Cost: Anthropic usage tagged to joint Product per [`design.md § D-ECN-3`](../changes/establish-studio-economy/design.md); specialist subcontracts; overhead allocation.
+- Cost: Anthropic usage tagged to joint Product per [`design.md § D-ECN-3`](../archive/2026-05-13-establish-studio-economy/design.md); specialist subcontracts; overhead allocation.
 - Margin: realized this quarter, same as any client-engagement.
 
 ### Ledger B — Pavel-as-cofounder equity in Joint Product
@@ -154,7 +154,7 @@ Tracks: Pavel's equity vesting in the joint Product; mark-to-market value (illus
 
 ### Cross-engagement dashboard view
 
-Per [`design.md § D-ECN-6`](../changes/establish-studio-economy/design.md):
+Per [`design.md § D-ECN-6`](../archive/2026-05-13-establish-studio-economy/design.md):
 
 | Column | Cofounder engagement read |
 |---|---|
@@ -237,11 +237,11 @@ Because Andrei's firm (i-avocat) is **also a paying Studio client**, both cofoun
 
 - [`rapoport-studio-engagement.md`](./rapoport-studio-engagement.md) — engagement charter (this doc is its companion).
 - [`rapoport-studio-engagement.md § 13`](./rapoport-studio-engagement.md) — four-actor model (this doc operationalizes § 13 for cofounder engagements specifically).
-- [`changes/establish-studio-economy/design.md § D-ECN-1`](../changes/establish-studio-economy/design.md) — Contract subtype enum (`cofounder-engagement` vs `client-engagement`).
-- [`changes/establish-studio-economy/proposal.md`](../changes/establish-studio-economy/proposal.md) — strategic rationale for the cofounder vs client distinction.
+- [`archive/2026-05-13-establish-studio-economy/design.md § D-ECN-1`](../archive/2026-05-13-establish-studio-economy/design.md) — Contract subtype enum (`cofounder-engagement` vs `client-engagement`).
+- [`archive/2026-05-13-establish-studio-economy/proposal.md`](../archive/2026-05-13-establish-studio-economy/proposal.md) — strategic rationale for the cofounder vs client distinction.
 - [`projects/vivod.yaml`](./projects/vivod.yaml) — first cofounder engagement to ratify D-SE8 (pre-kickoff late May / early June 2026).
 - [`projects/unbind.yaml`](./projects/unbind.yaml) — second cofounder engagement to ratify D-SE8 (active engagement; retroactive ratification per PF-1).
 - [`specialist-network.md`](./specialist-network.md) — specialist routing into engagements.
 - [`risk-taxonomy.md`](./risk-taxonomy.md) — risk model that every cofounder Contract `## Risks` block references.
-- [`changes/amend-vivod-cofounder-economics/`](../changes/amend-vivod-cofounder-economics/) — change folder appending Vivod D-SE8.
-- [`changes/amend-unbind-cofounder-economics/`](../changes/amend-unbind-cofounder-economics/) — change folder appending Unbind D-SE8.
+- [`archive/2026-05-13-amend-vivod-cofounder-economics/`](../archive/2026-05-13-amend-vivod-cofounder-economics/) — change folder appending Vivod D-SE8.
+- [`archive/2026-05-13-amend-unbind-cofounder-economics/`](../archive/2026-05-13-amend-unbind-cofounder-economics/) — change folder appending Unbind D-SE8.
