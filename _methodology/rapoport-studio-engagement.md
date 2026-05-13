@@ -340,6 +340,25 @@ Ending the engagement is a single conversation. Concretely:
 
 There is no licensing tail on delivered specs or code: both are work-product owned by your team. The studio retains the right to reference *the existence* of the engagement in case studies (with your written approval per the SOW), but never the substance of any spec or any merged code.
 
+### 11.1 Spec-merge gating
+
+An engagement does not enter the `closed` state until the OpenSpec triplet
+(`proposal.md`, `design.md`, `tasks.md`) authored during the engagement is
+merged into the `main` branch of the client's primary repository.
+
+If the client elects not to merge a portion of the triplet (e.g., declines
+to ship a specific phase), the change archive records the declined portion
+explicitly. Closure does not block on declined portions; closure does block
+on undecided portions.
+
+This gating is the structural mechanism behind Pillar C
+(Portability) of the studio's homepage trust pillars — see
+`archive/2026-05-06-expand-home-with-services-and-community/research/muse-trust-and-ownership.md § 2.3`.
+
+> **Applicability.** This clause applies to engagements commencing on or after
+> 2026-05-12. In-flight engagements continue under the prior § 11 prose unless
+> the client explicitly opts in (record opt-in as a new `D11` row in *Appendix B*).
+
 ---
 
 ## 12. Glossary
@@ -448,7 +467,7 @@ This section is filled in at kickoff and stays append-only for the duration of t
 | D5 | Communication: email floor + *(Telegram opt-in / opt-out / Slack / etc.)* | *(rationale)* | *(kickoff)* |
 | D6 | Research contribution: *(none / scoped subfolder / all subfolders)* — applies if your repo has an `openspec/_research/` discipline | *(rationale)* | *(kickoff)* |
 | D7 | Specialist roster: *(list of network members + role + scope per § 2 capability #1)*. Names may be redacted in the public version of this charter copy if your engagement has confidentiality constraints. | *(rationale: which disciplines the brief calls for)* | *(kickoff)* |
-| D8 | Responsibility split per § 13: Pavel acts as *(personal cofounder of your company / studio administrator only / hybrid of both)*; studio entity acts as *(strategic partner with infrastructure license / vendor under fee / both)*. Methodology vs deliverable carve-out: *(default per § 13.2 rule 5 / engagement-specific list attached as Appendix C)*. | *(rationale: matches founders agreement model A/B/C)* | *(kickoff)* |
+| D8 | Responsibility split per § 13: Pavel acts as *(personal cofounder of your company / studio administrator only / hybrid of both)*; studio entity acts as *(strategic partner with infrastructure license / vendor under fee / both)*. Methodology vs deliverable carve-out: *(default per § 13.2 rule 5 / engagement-specific list attached as Appendix D)*. | *(rationale: matches founders agreement model A/B/C)* | *(kickoff)* |
 | D9 | … | … | … |
 
 ### D11 — TG canvas surface opt-in (added 2026-05-09 by `add-tg-canvas-surface` / RAP-121)
@@ -482,4 +501,91 @@ next turn rejected. Audio in R2 retained per existing 30d lifecycle.
 
 ---
 
+## Appendix C — Closure checklist (client-facing)
+
+This is the checklist the client receives by email at engagement off-ramp.
+It is also embedded in the engagement-closure email template at
+`_methodology/templates/closure-email-template.md`. The studio is
+responsible for confirming items the studio controls; the client is
+responsible for confirming the rest.
+
+### C.1 Spec & artifacts (4)
+- [ ] OpenSpec triplet merged into client `main` branch — link: <URL>
+- [ ] Linear issues exported to client-owned destination — format: <CSV | JSON>
+- [ ] Canvas conversation history snapshot offered — format: <Markdown export>
+- [ ] Mirror perception document in client repo — path: <repo path>
+
+### C.2 Access revocation (4)
+- [ ] Studio-member access to client repo revoked — confirmed by: <client-side reviewer>
+- [ ] Specialist canvas access revoked — confirmed by: <studio>
+- [ ] Bot tokens / OAuth grants revoked — confirmed by: <client>
+- [ ] Telegram / WhatsApp surface archived or transferred — disposition: <archived | transferred>
+
+### C.3 Knowledge transfer (2)
+- [ ] Final review meeting completed — date: <YYYY-MM-DD>
+- [ ] Postmortem published or scheduled — link: <URL> | scheduled-for: <YYYY-MM-DD>
+
+### C.4 Financial & consent (2)
+- [ ] Final invoice settled
+- [ ] Case study consent confirmed (or declined or deferred) — disposition: <consent | declined | deferred>
+
+---
+
 *This charter is versioned in the studio's repository at `openspec/_methodology/rapoport-studio-engagement.md`. The version delivered to your project is a copy at the time of kickoff.*
+
+---
+
+## § Discovery — deliverable contract (applied 2026-05-13 from change `lock-positioning-trajectory`)
+
+> **Q-POS-3 → D-POS-DISCOVERY-1.** Ratified deliverable contract for the Discovery tier. This section extends § 4.2's discovery description with the explicit per-item scope, resolving the ambiguity between the route structure (established in `archive/2026-05-04-add-client-onboarding/`) and the Stage 1 deliverable contract.
+
+**Fixed scope: €5k, 3–4 weeks.**
+
+The standard Discovery delivers exactly three artifacts:
+
+1. **OpenSpec capability corpus** — `openspec/current/` files covering the domain's first-class capabilities (platform.md at minimum; additional capability stubs where the domain warrants it). Authored in prose-style, not formal-delta style. Status: `Stub` or `Active` per the honest assessment of what discovery produced.
+
+2. **Mirror domain map** — `openspec/brands/<engagement-slug>/identity.md` covering the seven canonical Mirror steps: actors, resources, states, transactions, integrations, communications, metrics. This is the durable domain artifact; it anchors all subsequent OpenSpec changes.
+
+3. **First-pass render** — a rendered preview output (e.g., `forge render` or equivalent) demonstrating that the spec compiles cleanly into the studio's reference architecture. Not a production deploy; a coherence check.
+
+**Not included in standard Discovery scope:**
+
+- Sprint plan or Phase 1 implementation proposal
+- First-sprint-week of execution
+- Recommendation document or options analysis
+
+A sprint plan, if wanted, is the first task of a subsequent full engagement (D-POS-ENGAGEMENT-1). Discovery is bounded; extensions are new work, not Discovery scope creep.
+
+**Conflict resolution note:** `archive/2026-05-04-add-client-onboarding/` ratified the Discovery route's commercial structure (€5k, 3–4 weeks, "Validation Atelier" name). This section ratifies the Stage 1 deliverable contract within that structure. If the two descriptions diverge in future, this section is the normative one (it is later and more specific).
+
+---
+
+## § Engagement model — Stage 1 (applied 2026-05-13 from change `lock-positioning-trajectory`)
+
+> **Q-POS-7 → D-POS-ENGAGEMENT-1; Q-POS-2 → pending D-POS-PRICE.** Ratified engagement model for Stage 1. Extends § 4 by giving the sprint-based billing model its authoritative home.
+
+### Engagement model
+
+**Sprint-based: €10–15k per 2-week sprint × N sprints.**
+
+Each sprint is a fixed-scope, fixed-time unit. The scope is a subset of tasks from an agreed OpenSpec change (one `tasks.md`). Sprint N cannot start before Sprint N-1 delivers and is reviewed. Sprint count is proposed at discovery close and revised at the end of each sprint.
+
+**Optional retainer:** ongoing advisory (not delivery) at €2–3k/month for clients who want async access between sprints. Retainer is not a sprint; it does not produce a deliverable. It covers async answers, spec reviews, and blocker calls. Retainer activates after a minimum of two delivery sprints.
+
+**Founder Track equity variant:** deferred to Stage 2. Q-POS-1 resolved to MD/RO Client Track first; IL Founder Track is warm but not actively driven in 2026 without an inside-partner. When Stage 2 activates and IL Founder Track is live, a cash + small equity variant may be ratified via `amend-positioning-stage-2`. Until then, Founder Track clients in MD/RO engage under the standard sprint model above.
+
+### Pricing floor (pending D-POS-PRICE — operator decision required)
+
+> **⚠️ Operator-blocked.** The absolute pricing floor for a full engagement is gated by `add-funding-strategy` archive. The sprint unit price above (€10–15k / sprint) is the current operative figure. The floor (minimum engagement size = N sprints minimum) is ratified when `add-funding-strategy` produces D-FUND-* on bootstrapped vs investor-targeted posture.
+>
+> - Bootstrapped scenario → floor likely €30–50k (3–4 sprints minimum).
+> - Investor-targeted scenario → floor likely €50–80k (4–6 sprints minimum).
+>
+> Close trigger: `add-funding-strategy` archives. Off-cycle review if gap between funding archive and next quarterly review exceeds 6 weeks.
+
+Until D-POS-PRICE-N is ratified, Discovery (€5k fixed) is the only hard-priced tier. Full engagements are quoted per-sprint from the range above.
+
+### Mode selection
+
+Engagement mode (deliverables-only / hybrid / full — § 4) is independent of the sprint model. The sprint model is the **billing and pacing structure**; mode determines what the studio touches in the client's repo. Both dimensions are locked in Appendix B at kickoff.

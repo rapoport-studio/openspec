@@ -36,6 +36,26 @@ A new sub-product (e.g. the psychology product) is therefore expected to:
 
 ---
 
+## Positioning — Stage 1 lock (applied 2026-05-13 from change `lock-positioning-trajectory`)
+
+> **Normative source.** Stage-transition logic lives in [`_methodology/positioning-decision-framework.md`](./positioning-decision-framework.md). This section is a **summary** — it records the Stage 1 posture for quick reference. Every item here links to a D-POS-N decision in the framework's § 6.
+
+The studio operates on a **six-stage positioning ladder.** Stage 1 is the first paying-engagements stage. As of May 2026, the studio is transitioning from Stage 0 (foundation built, zero paying clients) to Stage 1.
+
+**Geographic priority (D-POS-PRIORITY-1):** MD/RO Client Track is the primary geographic focus. IL Founder Track is kept warm but not actively driven in 2026 without an inside-partner. Source: `competitor-landscape-synthesis.md § 3.D` + `add-founder-track D-F2`. See framework § 6 Q-POS-1 → D-POS-PRIORITY-1.
+
+**Discovery deliverable contract (D-POS-DISCOVERY-1):** Discovery is **€5k fixed, 3–4 weeks**, delivering OpenSpec capability corpus + Mirror domain map + first-pass render. No sprint plan, no sprint execution included in standard scope. See framework § 6 Q-POS-3 → D-POS-DISCOVERY-1.
+
+**Engagement model (D-POS-ENGAGEMENT-1):** Sprint-based — **€10–15k per 2-week sprint × N sprints** with optional retainer for ongoing advisory. Founder Track equity variant deferred to Stage 2 (Q-POS-1 resolved to MD/RO first). See framework § 6 Q-POS-7 → D-POS-ENGAGEMENT-1.
+
+**Pricing floor (pending D-POS-PRICE):** Hard gated by `add-funding-strategy` archive. Once bootstrapped vs investor-targeted posture is ratified, D-POS-PRICE-N is filed in the next quarterly review. See framework § 6 Q-POS-2.
+
+**Positive vocabulary lock (D-POS-VOCAB-1):** 5 ratified tokens for all cold-pitch surfaces (Hero, `/services`, `/discovery`, Founder Track): **architecture**, **artifact**, **diligence**, **agent-native**, **orchestration**. These extend the Founder Track approved list from `add-founder-track D-F4` without colliding with the existing forbidden list (`spec`, `methodology`, `process`, `review gate`, `discipline`, `framework`). See framework § 6 Q-POS-5 → D-POS-VOCAB-1.
+
+**Quarterly review:** first scheduled September 2026. Contract defined in `positioning-decision-framework.md § 5`.
+
+---
+
 ## 2. Operating model — how a project moves
 
 ```
