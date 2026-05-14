@@ -174,11 +174,91 @@ Net: H1 + H7 confirmed; H2/H3/H4/H5/H6 require a successful build to exercise, d
 
 ---
 
-## Next steps
+## Update — Run 4 (full pipeline after F-NEW-3 fix)
 
-The plan-phase regression (F-NEW-3) needs Forge code-level investigation that's out of scope for the audit batch. Two paths forward, in order of preference:
+> 2026-05-14, post-merge of PR #1040 (F-NEW-3 fix in `packages/forge/src/commands/plan/plan-builder.ts`).
 
-1. **Investigate F-NEW-3 root cause and fix Forge.** Owner: whoever has bandwidth on the Forge codebase. Once fixed, re-dispatch the pilot; verify H2/H3/H4/H5/H6 with a successful build.
-2. **Hand-author RAP-746 implementation** to unblock the audit batch. The OpenSpec change folder + Linear sub-issue + canonical body are all ready; an operator can open a PR following the tasks.md phases directly. The audit batch's remaining six sub-issues queue similarly.
+After F-NEW-3 landed in main, the build was re-dispatched. Two more flag-related findings surfaced before the build finally proceeded, then the full pipeline (plan → build → verify → push → PR) completed.
 
-Either path produces a deployable home-audit improvement. The Forge investigation is the higher-leverage choice because every future epic dispatch depends on it.
+### F-NEW-5 — Stale-plan freshness check + deprecated `--auto-plan` flag
+
+`forge build` refuses to use a plan generated against an older Linear-issue mtime. Re-running `forge plan` is the canonical path; `--use-stale-plan` is the escape hatch. The `--auto-plan` flag (passed by the conductor's auto-flag set) does **not** auto-regenerate stale plans — the flag is marked `(deprecated)` in `forge build --help`.
+
+**Manifestation in pilot:** `forge plan RAP-746 --json` was run during F-NEW-3 verification. The Linear issue was subsequently updated (Forge bot comments + my label edits). When `forge build RAP-746 --auto-plan` ran later, it threw `Error: Stale plan: the Linear issue was updated after this plan was generated. Re-run forge plan RAP-746 or pass --use-stale-plan to proceed.`
+
+**Workaround:** added `--use-stale-plan` to the build invocation. The plan content was substantively correct; only the timestamp differed.
+
+**Recommendation:** either (a) make `--auto-plan` actually regenerate stale plans (removing the "deprecated" label), or (b) update `forge epic --close` to skip-and-replan when it dispatches a sub-issue with a stale plan rather than failing the conductor.
+
+### F-NEW-6 — `--auto-approve-plan` vs `--auto-plan` flag-name inconsistency
+
+The `forge build` orchestrator at `checkpoint: plan-acceptance` checks for `--auto-approve-plan` to bypass interactive confirmation in non-interactive mode. But the error message recommends `--auto-plan`:
+
+```
+non-interactive mode requires --auto-approve-plan for checkpoint 'plan-acceptance'.
+Re-run with --auto-plan --auto-migrations --auto-push --auto-pr for unattended dispatch.
+```
+
+The help text marks `--auto-plan` as `(deprecated)` while documenting `--auto-approve-plan` as the canonical flag, but runtime accepts both — and the error message points at the deprecated form. Operators see contradictory guidance.
+
+**Recommendation:** align the error message to the help text (recommend `--auto-approve-plan`), or fully retire `--auto-plan` if `--auto-approve-plan` is canonical.
+
+### F-NEW-7 — Builder rejected spec instructions; spec was technically wrong (positive finding)
+
+**The most important finding of the pilot.** The build completed with the following deviation note in the final Forge transcript:
+
+```
+**Key deviations from plan (noted for PR body):**
+1. `subsets: ['latin','cyrillic']` on `next/font/local` is not valid — the API
+   only accepts `preload: boolean`. Used `preload: true` instead to achieve
+   the same preload link emission.
+2. `text:` on `next/font/local` is not valid (Google Fonts-only feature).
+   Crimson Pro subsetting would require font-file-level tooling outside this
+   change scope.
+```
+
+**Both deviations are correct.** `subsets` and `text` are `next/font/google`-only options. `next/font/local` accepts `src`, `display`, `variable`, `weight`, `preload`, `fallback`, `adjustFontFallback`, `declarations` — **not** `subsets` or `text`. The spec author (the audit's design.md drafter) modelled the local-font configuration on the google-font API and got it wrong; the Builder caught the mismatch, adapted to the correct API, and flagged the deviation in the final summary.
+
+**This is a positive finding.** The Builder operated as a quality gate against the spec, not just a code executor against instructions. The spec drift was caught and corrected automatically with a clear human-readable note in the PR description.
+
+**Action taken:** spec amended in this same repair PR. `design.md` D-HFC-2 rewritten to specify `preload: true` (the correct local-font API). D-HFC-4 marked as deferred — woff2-level subsetting requires a font toolchain change (`pyftsubset` / `glyphhanger`) outside the audit batch's scope. `tasks.md` Phase 3 + Phase 5 mirror the amendments.
+
+### Full pipeline metrics (Run 4)
+
+- **Duration:** 494 sec end-to-end (8.2 min).
+- **Turns:** 73 (assistant ↔ tool roundtrips).
+- **Total cost:** $2.67 USD ($0.55 plan via Opus 4.7 + $2.12 build via Sonnet 4.6).
+- **Cache reads:** ~6 M tokens (excellent utilisation; ~99% of input tokens served from cache).
+- **Models per role:** architect → claude-opus-4-7 (plan); builder → claude-sonnet-4-6 (build); verifier → (skipped — Builder self-committed).
+- **Files changed:** 8 (additions: 94, deletions: 49). Inter font binary deleted (-344 KB).
+- **PR opened:** [#1046](https://github.com/rapoport-studio/rapoport.studio/pull/1046) (subsequently merged).
+- **Linear bot transitions observed:** Todo → In Progress on dispatch; PR attached to issue automatically; assignee `hello@rapoport.studio` (Maestro identity per memory `maestro_email_identity`).
+
+### Hypothesis results (final, all exercised)
+
+| ID | Hypothesis | Result |
+|---|---|---|
+| H1 | Conductor topo-sort | **Confirmed** (4× across retries; deterministic skip-reason strings). |
+| H2 | state.json outcome lies | **Refuted for this build.** `Status: completed, Outcome: completed-with-pr` matched `gh pr view 1046` → OPEN, MERGEABLE. No divergence observed. May still lie in builder-self-commit-race scenarios; this build hit the self-commit path without false negative. |
+| H3 | Build-lock serial | **Confirmed.** RAP-678 held the lock; Run 3 failed fast with BuildLockedError, Run 4 (after lock released) proceeded. |
+| H4 | Verifier filter bug present? | **Unknown.** Builder self-committed before verifier ran (per Forge's normal flow when the builder fully resolves all checkpoints); verifier did not exercise. CI's separate test step did run and reported pre-existing failures, not Forge's verifier. |
+| H5 | Linear bot transitions | **Confirmed.** Todo → In Progress on dispatch, PR auto-attached. Done transition pending merge (occurred after Pavel merged PR #1046). |
+| H6 | `--auto-pr` opens PR | **Confirmed.** PR #1046 created automatically; memory `forge_auto_push_does_not_push` was already documented STALE post-RAP-392 and this run confirms. |
+| H7 | New defects surfaced | **Confirmed.** F-NEW-1 (sandbox-labels trap), F-NEW-3 (plan-builder shape mismatch, now fixed), F-NEW-5 (stale-plan + deprecated flag), F-NEW-6 (flag-name inconsistency), F-NEW-7 (spec drift caught by Builder = positive). |
+
+### Repair PR (post-pilot)
+
+This update is committed alongside two CI-repair fixes:
+
+1. **`tools/check-forge-spec.mjs` tripwire** was already failing on main (commands `install-skills` and `mcp-server` undocumented). Pre-existing drift from PRs #993 and #992. `openspec/current/forge/commands.md` gains a `### Utility commands` subsection.
+2. **HFC spec amendment** per F-NEW-7 above.
+
+These are bundled into one PR so the post-mortem, the spec amendment, and the tripwire fix land coherently.
+
+---
+
+## Net assessment
+
+The conductor and the underlying build pipeline are **production-ready** for OpenSpec-backed sub-issues with correct labelling and a primary worktree on main. Three operator pitfalls (F-NEW-1, F-NEW-2, F-NEW-5/6) and one real Forge defect (F-NEW-3, now fixed) were surfaced. The Builder's behaviour as a spec-quality gate (F-NEW-7) is a stronger signal than expected — operators should treat Builder deviation notes as ground truth and amend specs accordingly, not vice versa.
+
+The audit batch's remaining six sub-issues (RAP-747..752) can now dispatch via the conductor once each is promoted to Todo + `auto-build`, with the F-NEW-1 + F-NEW-2 operator checklist applied pre-dispatch. The two Q-blocked sub-issues (RAP-750 HTN, RAP-751 CCP) still wait on Pavel's open-question resolution.
