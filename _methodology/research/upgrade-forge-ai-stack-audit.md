@@ -3,7 +3,7 @@
 
 > **Date:** 2026-05-12
 > **Branch:** `feat/upgrade-forge-to-modern-ai-stack/phase-0-audit`
-> **Change:** `openspec/changes/upgrade-forge-to-modern-ai-stack/`
+> **Change:** `openspec/archive/2026-05-14-upgrade-forge-to-modern-ai-stack/`
 > **Baseline test run:** 905 tests in 75 test files — all passed (no code changes made)
 
 ---
