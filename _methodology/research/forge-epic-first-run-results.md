@@ -62,7 +62,7 @@ This is **not a new finding** — memory `forge_dispatch_repo_root.md` already d
 **State observed before fix:**
 
 - Primary worktree at `/Users/pavelrapoport/Documents/GitHub/rapoport.studio` was on branch `claude/main-tracker-2026-05-14` at commit `99df24f02` — **8 commits behind `origin/main`**.
-- The scaffold PR #1036 merged at `df39581e0` (`origin/main` tip). The primary worktree did not yet have my `openspec/changes/optimize-home-fonts-and-cache/` folder.
+- The scaffold PR #1036 merged at `df39581e0` (`origin/main` tip). The primary worktree did not yet have my `openspec/changes/optimize-home-fonts-and-cache/` folder. <!-- openspec-refs: skip-line -->
 - `findSpecFolder()` in [`commands/inspect/orchestrator.ts:61`](../../../packages/forge/src/commands/inspect/orchestrator.ts) resolves `openspec/changes/<slug>/` against `repoRoot` (= primary worktree) and returned `null` for the slug.
 - `inspect.specFolder = null` combined with `audit` label triggered F-NEW-1's auto-sandbox path.
 
