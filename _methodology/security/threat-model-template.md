@@ -154,24 +154,6 @@ Add a `## LINDDUN GO summary` section to `design.md` when the trigger applies. A
 
 ---
 
-## LINDDUN GO requirement for capabilities with PII surface (applied 2026-05-13 from change `validate-personal-data-security`)
-
-Capabilities that introduce or materially extend a **PII surface** (user-identifiable data fields, cross-tenant data flows, external processor integrations, or new data collection surfaces) MUST also complete a **LINDDUN GO pass** in addition to the Shostack 4Q frame.
-
-**LINDDUN GO** is the lightweight 7-category privacy threat model (Linkability, Identifiability, Non-repudiation, Detectability, Disclosure of information, Unawareness, Non-compliance). The 7×N matrix format (category × data flow) is documented in the worked exemplar at `_methodology/security/canvas-permission-linddun.md`.
-
-**When the requirement triggers:**
-- New `auth.users` metadata fields or new `app_metadata` flags.
-- New tables containing user-identifiable data (email, IP, user content).
-- New external processors (Anthropic, Cloudflare sub-product, third-party integrations).
-- New cross-boundary data flows (e.g., mirror export, DSAR extraction path, webhook outbound).
-
-**When it does NOT trigger:** Internal refactors, UI copy changes, spec-only changes, changes with no new PII data flow.
-
-Add a `## LINDDUN GO summary` section to `design.md` when the trigger applies. A full artefact (threat catalogue + matrix) is required only when the threat surface is novel — reference the exemplar for the format.
-
----
-
 ## References
 
 - [Adam Shostack — 4-Question Frame](https://github.com/adamshostack/4QuestionFrame)
