@@ -7,16 +7,57 @@
 
 ## Prose-style proposals
 
-Every change in `openspec/changes/<slug>/` consists of exactly three prose files:
+Every change in `openspec/changes/<slug>/` consists of **four** prose files:
 
 ```
 openspec/changes/<slug>/
-├── proposal.md   # Why + What changes
-├── design.md     # How (interfaces, data shapes, boundaries)
-└── tasks.md      # Phased checklist for the executor
+├── proposal.md       # Why + What changes
+├── design.md         # How (interfaces, data shapes, boundaries)
+├── tasks.md          # Phased checklist for the executor
+└── verification.md   # Deterministic acceptance assertions (NEW — produced by `muse draft`)
 ```
 
 There is **no `specs/` directory**, no per-capability delta files, no `Requirement` blocks. Capability specs live in `openspec/current/*.md` and are amended in place at archive time — not delta-restructured during a proposal.
+
+### `verification.md` canonical shape
+
+Four sections, in this order:
+
+```markdown
+# Verification — <change-slug>
+
+> Companion to proposal.md / design.md / tasks.md. Lists the deterministic
+> acceptance assertions Forge runs before opening the PR.
+
+## Spec alignment
+Prose (1-2 paragraphs). What "done" means at the capability-spec level.
+
+## Hallucination risks
+Bulleted list: MUST appear / MUST NOT appear paths, packages, function names.
+
+## Pattern references
+Bulleted list: existing files the diff should mimic in shape/style.
+
+## Acceptance
+One deterministic assertion per line. Six allowed shapes:
+- Done when: [ -f <path> ]
+- Done when: grep -c '<marker>' <path> returns <N>
+- Done when: pnpm <cmd>
+- Done when: gh pr list --head <branch> returns ≥<N>
+- Done when: jq -r '<path>' <state.json> returns '<value>'
+- Reviewer confirms: <semantic claim — LLM reviewer carve-out>
+```
+
+**Two mandatory boilerplate gates** (always the last two lines in `## Acceptance`, injected by `muse draft`):
+
+```
+- Done when: gh pr list --head <branch-for-this-change> returns ≥1
+- Done when: jq -r '.outcome' ~/.forge/state/<RAP-NN>.json returns 'completed-with-pr'
+```
+
+These cover the two most common silent-failure modes: PR not created and outcome field not yet populated.
+
+`forge build` runs the `## Acceptance` section at the spec-acceptance checkpoint (checkpoint #2.5, between `migrations` and `code-review`). Missing `verification.md` is legacy-mode — the checkpoint is skipped for changes that pre-date `add-spec-acceptance-gate`.
 
 ### What gets amended where, and when
 

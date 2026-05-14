@@ -8,7 +8,7 @@
 
 ## Objective
 
-Determine whether the Forge reviewer receives raw builder reasoning (SDK transcript) as part of its input, and if so, classify the inclusion as unconditional, degraded-mode-only, or already-absent per the decision tree in `openspec/changes/add-spec-acceptance-gate/design.md § 6`.
+Determine whether the Forge reviewer receives raw builder reasoning (SDK transcript) as part of its input, and if so, classify the inclusion as unconditional, degraded-mode-only, or already-absent per the decision tree in `openspec/archive/2026-05-14-add-spec-acceptance-gate/design.md § 6`.
 
 ---
 
@@ -95,6 +95,6 @@ Existing reviewer unit tests (`packages/forge/src/__tests__/reviewer.test.ts`) p
 
 ## Related
 
-- Spec: `openspec/changes/add-spec-acceptance-gate/design.md § 6`
+- Spec: `openspec/archive/2026-05-14-add-spec-acceptance-gate/design.md § 6`
 - Issue: RAP-740 — Phase 2 context-isolation audit
 - Reviewer system prompt hardening: RAP-740 parent phase (Phase 1 complete before this audit)
