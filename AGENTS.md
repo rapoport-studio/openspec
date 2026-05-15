@@ -92,6 +92,24 @@ This was tracked in [RAP-18](https://linear.app/rapoport-studio-slr/issue/RAP-18
 
 ---
 
+## Schema bundle
+
+As of [RAP-889](https://linear.app/rapoport-studio-slr/issue/RAP-889) the prose convention is also declared machine-readably at [`openspec/schemas/rapoport-prose/`](schemas/rapoport-prose/) — a four-artifact schema (`proposal → design → tasks → verification`) auto-discovered by the OpenSpec CLI 1.3.x without an `openspec/config.yaml`.
+
+What the bundle gives us today (verified against CLI 1.3.1):
+
+- `npx -y @fission-ai/openspec@latest schemas` lists `rapoport-prose (project)` as the active schema with its full artifact chain.
+- `npx -y @fission-ai/openspec@latest list` shows tasks-completion counts parsed from each change's `tasks.md` per the bundle.
+- `npx -y @fission-ai/openspec@latest schema validate rapoport-prose` exits 0 (schema structure + template references are internally consistent).
+- The bundle is publishable to [`wearetechnative/awesome-openspec`](https://github.com/wearetechnative/awesome-openspec) — Phase 3 of the RAP-887 epic ([RAP-891](https://linear.app/rapoport-studio-slr/issue/RAP-891)).
+
+What the bundle does **not** yet do:
+
+- `npx -y @fission-ai/openspec@latest validate <change>` still emits the strict-deltas error. The validator hardcodes the spec-driven delta requirement regardless of which schema is project-active — this reproduces on `add-rapoport-prose-schema-bundle` and on existing prose changes like `wire-canvas-to-repo-binding-into`. The `schema` command tree is marked `[experimental]` in `openspec --help`; per-schema validation rules are not yet implemented upstream. **The workaround in the section above therefore stays in force.** Track [`Fission-AI/OpenSpec` releases](https://github.com/Fission-AI/OpenSpec/releases) for schema-aware validation.
+- `npx -y @fission-ai/openspec@latest show <change>` requires a `## Why` section header that our convention does not use. Cosmetic; address if/when an upstream PR lands schema-aware section validation.
+
+---
+
 ## Exemplar: the latest archived change
 
 When in doubt about the prose convention, **the most recent archived change is canonical**. There is intentionally no `TEMPLATE/` folder — a stale template would diverge from real practice and create the question "which version is current?". The living archive answers it instead.
