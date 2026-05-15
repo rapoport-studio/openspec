@@ -4,6 +4,7 @@
 > **Lead:** human:pavel
 > **Owner:** Pavel Rapoport <pavel@rapoport.studio> (founder, primary)
 > **Authors:** Pavel Rapoport <pavel@rapoport.studio> (primary); Claude Opus 4.7 (Anthropic) — desk research, synthesis (2026-05-13 parallel agent run)
+> **Author_ids:** human:pavel, agent:anthropic:claude-opus-4-7
 > **Opened:** 2026-05-13
 > **Capability_refs:** forge, inquiry
 > **Thesis:** A coverage × inverse-drift metric computed via SCIP-derived symbol→spec-line tuples achieves sub-500ms CI latency without LLM involvement on the hot path, making spec traceability a feasible CI gate at the Rapoport Studio scale.

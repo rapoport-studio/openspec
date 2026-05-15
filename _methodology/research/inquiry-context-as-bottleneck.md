@@ -4,6 +4,7 @@
 > **Lead:** human:pavel
 > **Owner:** Pavel Rapoport <pavel@rapoport.studio> (founder, primary)
 > **Authors:** Pavel Rapoport <pavel@rapoport.studio> (primary); Claude Opus 4.7 (Anthropic) — desk research, synthesis (2026-05-13 parallel agent run)
+> **Author_ids:** human:pavel, agent:anthropic:claude-opus-4-7
 > **Opened:** 2026-05-13
 > **Capability_refs:** forge, cli-core, inquiry
 > **Thesis:** LLM performance on multi-file engineering tasks is bounded by context engineering quality, not model scale; the 36-point scaffold advantage on SWE-bench Pro versus less than 1pt model-spread is the empirical load-bearing claim.

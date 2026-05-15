@@ -4,6 +4,8 @@
 > **Lead:** human:pavel
 > **Owner:** Pavel Rapoport <pavel@rapoport.studio> (founder, primary)
 > **Authors:** Pavel Rapoport <pavel@rapoport.studio> (primary); Claude Opus 4.7 (Anthropic) — desk research, synthesis (2026-05-13 parallel agent run)
+> **Author_ids:** human:pavel, agent:anthropic:claude-opus-4-7
+> **Kind:** public (candidate — not yet `published_to_world`; first cohort file tagged for §11 lifecycle test before Phase 3 ships — RAP-862 E-7)
 > **Opened:** 2026-05-13
 > **Capability_refs:** platform, inquiry
 > **Thesis:** Spec-driven development is not yet a recognized buyer category in EU/MD/RO/IL markets; competitors compete on craft and agility, making methodology transparency a differentiation wedge rather than a table-stake for 2026.

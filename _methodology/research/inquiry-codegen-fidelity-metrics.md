@@ -4,6 +4,7 @@
 > **Lead:** human:pavel
 > **Owner:** Pavel Rapoport <pavel@rapoport.studio> (founder, primary)
 > **Authors:** Pavel Rapoport <pavel@rapoport.studio> (primary); Claude Opus 4.7 (Anthropic) — desk research, synthesis (2026-05-13 parallel agent run)
+> **Author_ids:** human:pavel, agent:anthropic:claude-opus-4-7
 > **Opened:** 2026-05-13
 > **Capability_refs:** forge, inquiry
 > **Thesis:** Spec-driven generation fidelity is measurable as a compound score (spec-coverage × confidence-floor × non-revert rate) traceable to individual capability specs; current industry benchmarks measure task success but not spec lineage.
