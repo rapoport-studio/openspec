@@ -215,7 +215,7 @@ Six open questions extracted from § 4. Each becomes a Linear sub-issue or feeds
 | `openspec/_methodology/research/access-and-context-hierarchy-2026.md` | Prior art on RBAC vs CapBAC; confused-deputy and cache-poisoning incident catalogue |
 | `openspec/current/mirror.md` | CF-MR and CF-RG flow definitions |
 | `openspec/current/canvas.md` | CF-CM flow definition |
-| `openspec/changes/redesign-canvas-permission-model/` | Role hierarchy this threat model validates against |
+| `openspec/archive/2026-05-15-redesign-canvas-permission-model/` | Role hierarchy this threat model validates against (archived 2026-05-15) |
 | `openspec/archive/2026-05-13-add-document-zone-permissions/` | Consumes W4 audience-tagging recommendation |
 | `openspec/archive/2026-05-13-add-specialist-onboarding/` | CF-SA flow; external_collaborator trust boundary introduction |
 

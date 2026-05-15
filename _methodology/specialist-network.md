@@ -76,6 +76,8 @@ Off-boarding ─── (per-engagement or full-network exit)
 
 Every transition is auditable. The studio holds a per-specialist record across all stages; the per-engagement involvement (canvas access, NDA addendum, deliverables touched) is sub-recorded under the engagement.
 
+**Canvas role on engagement.** When a specialist is matched and confirmed for an active engagement (post-NDA addendum), they receive the `external_collaborator` project role in the canvas's project membership (per change `redesign-canvas-permission-model`, applied 2026-05-15). This role grants canvas read/write access and Mirror authoring rights while excluding the studio's internal OpenSpec (`openspec/current/**`) and methodology (`_methodology/**`) paths. Apprentice-level specialists (§ 4.3) may receive read-only canvas access for shadowing; the `external_collaborator` role is provisioned at Certified Reviewer or higher.
+
 ---
 
 ## 3. NDA model
@@ -186,7 +188,7 @@ Every certified specialist maintains a personal **prompt set** and **tool list**
 
 A specialist's profile may contain:
 
-- **Prompt augmentations** — system-prompt fragments that load when the specialist is `collaborator` on a canvas. Example: a clinical advisor's profile attaches a fragment that biases Muse to defer clinical claims and surface uncertainty rather than asserting.
+- **Prompt augmentations** — system-prompt fragments that load when the specialist is `external_collaborator` on a canvas. Example: a clinical advisor's profile attaches a fragment that biases Muse to defer clinical claims and surface uncertainty rather than asserting.
 - **Tool list** — a curated allowlist of tools (from the studio's master tool registry — `web_search`, `fetch_url`, `domain_research`, plus future additions) that the specialist's typical work needs. Muse loads this list per session.
 - **Reference packs** — pinned URLs / file-paths to research artifacts (`_research/competitors/yuna.md`, etc.) the specialist always wants in context.
 - **Refusal patterns** — the specialist's documented "won't do" list. The clinical advisor's refusal pattern includes "won't draft text that performs psychotherapy outside the agreed product surface."
@@ -290,8 +292,8 @@ What this network deliberately does **not** do, in any engagement:
 
 | ID | Priority | Question |
 |---|---|---|
-| `Q-NW-1` | P0 | What is the legal shape of the specialist relationship under MITP — contractor, employee, or hybrid? Determines payroll, NDA enforceability, IP-assignment clause. **Owner: i-avocat.md.** Open pending counsel review. |
-| `Q-NW-2` | P0 | What is the canonical base NDA template? Drafted by counsel before first non-Pavel specialist signs. Open pending i-avocat engagement. |
+| `Q-NW-1` | P0 | What is the legal shape of the specialist relationship under MITP — contractor, employee, or hybrid? Determines payroll, NDA enforceability, IP-assignment clause. **Owner: i-avocat.md.** Open pending counsel review. Note (2026-05-15): canvas access role is now defined as `external_collaborator` per change `redesign-canvas-permission-model` independent of this legal-shape resolution. |
+| `Q-NW-2` | P0 | What is the canonical base NDA template? Drafted by counsel before first non-Pavel specialist signs. Open pending i-avocat engagement. Note (2026-05-15): canvas access provisioning for hired specialists is now tied to the `external_collaborator` project role; NDA template question remains open for the legal instrument itself. |
 | ~~`Q-NW-3`~~ | ~~P1~~ | ~~Where does the specialist registry live in code?~~ **Closed 2026-05-13** — registry is the `specialists` Supabase table; prompt augmentations referenced via `prompt_augmentations_uri` column. See `openspec/current/db/entities.md § Specialist tables` and `§ 6.2 Storage` above. |
 | `Q-NW-4` | P1 | What is the matching layer's v1 implementation — pure rule-based filter, scored heuristic, or ML? v1 may be coarse; commit to coarse explicitly so it doesn't accrete complexity prematurely. |
 | `Q-NW-5` | **resolved 2026-05-12** | What is the threshold for "promotion to common library" of a specialist-contributed prompt? **Resolution:** for studio-internal use the existing § 6.3 threshold (3 independent engagements with positive quality signals) stands. For *marketplace context* — i.e. when a published canvas exposes a specialist-contributed prompt as part of its sale — promotion additionally requires 2 senior endorsements per § 13. Two thresholds, one mechanism, distinct triggers. Resolved by [`changes/define-canvas-studio-thesis`](../changes/define-canvas-studio-thesis/) per §§ 12–15 of this document. | <!-- openspec-refs: skip-line --> <!-- TODO RAP-682: surfaced at guard-tighten; resolve in followup -->
@@ -525,3 +527,4 @@ The escalation ladder is defined here so a future agent under pressure does not 
 
 - `2026-05-05` — initial draft v1, behind the engagement charter. Authored as part of the studio's specialist-network packaging discussion.
 - `2026-05-12` — added §§ 12–15 (commercial / marketplace surface) via change [`define-canvas-studio-thesis`](../changes/define-canvas-studio-thesis/). Closed `Q-NW-5` and `Q-NW-6` in § 11. Status of overall doc unchanged (still draft v1, behind engagement charter). The §§ 12–15 additions are themselves **hypothesis** until the validation experiment in [`validation-plan-q3-2026.md`](./validation-plan-q3-2026.md) graduates the canvas-studio thesis; until then they document the contract without triggering implementation. <!-- openspec-refs: skip-line --> <!-- TODO RAP-682: surfaced at guard-tighten; resolve in followup -->
+- `2026-05-15` — amended via change [`redesign-canvas-permission-model`](../archive/2026-05-15-redesign-canvas-permission-model/) (Phase 6 archive). Added canvas role note to § 2 lifecycle (hired specialists land as `external_collaborator`). Corrected role name in § 6.1 from `collaborator` to `external_collaborator`. Added 2026-05-15 notes to § 11 Q-NW-1 and Q-NW-2 clarifying that the canvas access role is now defined while the legal-shape and NDA-template questions remain open.
