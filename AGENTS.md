@@ -110,6 +110,40 @@ What the bundle does **not** yet do:
 
 ---
 
+## Skills registry
+
+The studio publishes two kinds of skills, each loaded by a different consumer:
+
+| Surface | Path | Audience | Lifecycle |
+|---|---|---|---|
+| **Claude Code skills** | `.claude/skills/<name>/SKILL.md` | Claude Code working in this repo. Files are loaded at session start; matched against task context via the frontmatter `description`. | Hand-authored. Committed to the repo. `.gitignore` only excludes `.claude/worktrees/` and `.claude/scratch/`. |
+| **Forge engine seed-skills** | `packages/forge/src/seed-skills/<name>/SKILL.md` | Forge build executor (consumes them while running `forge build`). | Hand-authored. Bundled into `@rapoport-studio/forge` at build time. |
+
+### Canonical SKILL.md shape
+
+Minimal frontmatter (`name` + `description`) + procedural markdown body. End the body with a `Memory anchors:` line citing the auto-memory keys the skill formalizes — preserves the audit trail from personal memory to shared skill.
+
+```markdown
+---
+name: <kebab-case-name>
+description: <one-sentence trigger condition; under ~30 words; specific enough that Claude Code recognizes the situation>
+---
+
+<Procedural markdown body. Numbered steps for procedures, fenced code blocks for commands, bullets for constraints. Cross-reference other skills by name.>
+
+Memory anchors: `<memory_key_1>`, `<memory_key_2>`.
+```
+
+We do **not** use the verbose `openspec init`–generated shape (extra `license`, `compatibility`, `metadata.{author,version,generatedBy}` fields). The minimal shape matches the in-repo Forge precedent at `packages/forge/src/seed-skills/`.
+
+### Promotion rule: memory → skill
+
+A procedural fact in auto-memory (`~/.claude/projects/.../memory/`) is a candidate for promotion to a shared skill when **the same fact applies to all agents in this repo, not just one Claude session**. Personal preferences (branch naming, parallel-vs-sequential, slack-vs-email) stay in memory. Operational procedures (archive workflow, migration reconcile, PR-body conventions) graduate to skills.
+
+Canonical examples (PR landing RAP-890): `.claude/skills/{archive-openspec-change,pr-body-no-closes-keyword,supabase-migration-reconcile}/SKILL.md`.
+
+---
+
 ## Exemplar: the latest archived change
 
 When in doubt about the prose convention, **the most recent archived change is canonical**. There is intentionally no `TEMPLATE/` folder — a stale template would diverge from real practice and create the question "which version is current?". The living archive answers it instead.
