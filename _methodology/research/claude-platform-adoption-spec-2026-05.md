@@ -135,6 +135,13 @@ OpenSpec change.
 
 ## 4. Phase B — NEXT (medium effort, clear owner)
 
+> **Implementation status (updated 2026-05-16):**
+> - **B1 — not started.** Folds into the existing `add-muse-research-mode` change; no separate issue.
+> - **B2 — ✅ shipped.** Linear RAP-930; archived at `openspec/archive/2026-05-16-forge-memory-tool-for-cross-build/`.
+> - **B3 — ✅ shipped.** Linear RAP-931; archived at `openspec/archive/2026-05-16-files-api-for-client-intake-canvas/`. Note: the `ai_files` Supabase migrations are in-repo but not yet applied to the live DB.
+> - **B4 — ✅ shipped.** Linear RAP-932; archived at `openspec/archive/2026-05-16-spec-citations-in-canvas-via-search/`.
+> - **B5 — ✅ shipped.** Linear RAP-933; archived at `openspec/archive/2026-05-16-server-side-compaction-for-long-forge/`. Compaction/context-editing flags ship **OFF**; production graduation is gated on the runbook promotion criteria.
+
 ### B1. Server-side web search + web fetch → Muse research mode
 Active change `add-muse-research-mode` needs grounded retrieval. Use the
 platform's server-side `web_search` / `web_fetch` tools instead of building a
