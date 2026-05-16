@@ -94,6 +94,12 @@ Verdict legend: **NOW** = Phase A · **NEXT** = Phase B · **LATER** = Phase C �
 These four require no new dependencies and no architectural change. Each is one
 OpenSpec change.
 
+> **Implementation status (updated 2026-05-16):**
+> - **A1 — ✅ shipped.** Linear RAP-926; change archived at `openspec/archive/2026-05-16-forge-effort-adaptive-thinking-control/`.
+> - **A2 — ✅ shipped.** Linear RAP-927; change archived at `openspec/archive/2026-05-16-adopt-structured-outputs-retire-json-retry/`.
+> - **A3 — ✅ shipped.** Linear RAP-952; change archived at `openspec/archive/2026-05-16-pin-openspec-bundle-to-1-hour/`.
+> - **A4 — ◑ in progress.** Linear RAP-928; Phase 1 (decision record) merged. Phase 2 (`inference_geo` wiring, RAP-951) is gated on legal sign-off of `openspec/changes/inference-data-residency-routing-decision/decision-record.md`.
+
 ### A1. Effort + Adaptive thinking in Forge inference
 
 - **Where:** `inference/index.ts`, `core/anthropic.ts` (`ROLE_DEFAULTS` neighbourhood), `inference/personas/*`.
