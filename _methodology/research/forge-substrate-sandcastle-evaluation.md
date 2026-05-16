@@ -202,9 +202,10 @@ Best risk/reward. Each lift is an independently-shippable OpenSpec change:
 
 **Priority order:**
 
-1. **`add-forge-docker-sandbox`** — Pattern: Sandcastle's `docker()` provider. Mitigates `agents-threat-model.md` AT-04 (RPN 15) and AT-05. Acceptance: Forge bash tool runs in a container with `.env`-scrubbed env, read-only host mount, writable worktree mount. Estimated 1-2 weeks.
-2. **`add-forge-provider-abstraction`** — Pattern: Sandcastle's `agent` factory shape. Closes roadmap C-4. Acceptance: `agent-model-mapping.md` rows can target a provider key (`anthropic` / `openai` / `bedrock`) per role; runner dispatches to the right adapter. Estimated 2-4 weeks.
-3. **`add-forge-branch-strategies`** — Optional. Lowest priority. Useful only after we have a Builder-mode use case that benefits from non-PR commit landing. Reassess later.
+~~1. **`add-forge-docker-sandbox`** — Pattern: Sandcastle's `docker()` provider. Mitigates `agents-threat-model.md` AT-04 (RPN 15) and AT-05. Estimated 1-2 weeks.~~ **Shipped 2026-05-16** — archived at [`openspec/archive/2026-05-16-add-forge-docker-sandbox/`](../../archive/2026-05-16-add-forge-docker-sandbox/). AT-04/AT-05 post-mitigation RPNs: 5/5 (down from 15/10).
+
+1. **`add-forge-provider-abstraction`** — Pattern: Sandcastle's `agent` factory shape. Closes roadmap C-4. Acceptance: `agent-model-mapping.md` rows can target a provider key (`anthropic` / `openai` / `bedrock`) per role; runner dispatches to the right adapter. Estimated 2-4 weeks.
+2. **`add-forge-branch-strategies`** — Optional. Lowest priority. Useful only after we have a Builder-mode use case that benefits from non-PR commit landing. Reassess later.
 
 **Explicitly not adopted:**
 
