@@ -589,3 +589,21 @@ Until D-POS-PRICE-N is ratified, Discovery (€5k fixed) is the only hard-priced
 ### Mode selection
 
 Engagement mode (deliverables-only / hybrid / full — § 4) is independent of the sprint model. The sprint model is the **billing and pacing structure**; mode determines what the studio touches in the client's repo. Both dimensions are locked in Appendix B at kickoff.
+
+---
+
+## § Engagement tracks (applied 2026-05-17 from change `add-migration-track-methodology`)
+
+> Names a third, orthogonal dimension by which an engagement is described.
+
+An engagement is described along three independent dimensions:
+
+- **Access mode** (§ 4) — `deliverables-only` / `hybrid` / `full`. What the studio touches in the client's repo.
+- **Billing structure** (§ Engagement model — Stage 1) — sprint-based pacing. How the work is priced and paced.
+- **Engagement track** — *this section* — the kind of work the engagement does, inside the frame the other two dimensions set.
+
+A **track** is a defined, repeatable process for one kind of engagement work. It runs after Discovery, within the engagement frame established by charter and kickoff. A track does not change access mode or billing structure — those are locked separately in Appendix B.
+
+**Migration Track** is the studio's defined process for engagements where a founder migrates an existing product. Other tracks (Feature, Audit) are not yet defined.
+
+The Migration Track methodology — its phases, gates, and care principles — is documented at `openspec/_methodology/migration-track/migration-track.md`. This charter governs how the studio enters and exits the engagement around a track; the methodology governs what happens between the track's first and last phase. They are different scopes.
