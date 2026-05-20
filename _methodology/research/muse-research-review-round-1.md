@@ -4,7 +4,7 @@
 **Opened:** 2026-05-15.
 **Status:** published.
 **Authors:** Claude Opus 4.7 (Anthropic) — AI-reviewer pass in devil's-advocate mode.
-**Method:** Adversarial pass over `openspec/changes/add-muse-research-mode/` (proposal.md + design.md + tasks.md) — [PR #1220](https://github.com/rapoport-studio/rapoport.studio/pull/1220). Rubric adapted from the workflow-gates Round 2 scoring (15 categories). Special focus: does the proposal correctly *apply* the workflow-gates discipline to itself, since it is the first non-trivial change to do so?
+**Method:** Adversarial pass over `openspec/archive/2026-05-21-add-muse-research-mode/` (proposal.md + design.md + tasks.md) — [PR #1220](https://github.com/rapoport-studio/rapoport.studio/pull/1220). Rubric adapted from the workflow-gates Round 2 scoring (15 categories). Special focus: does the proposal correctly *apply* the workflow-gates discipline to itself, since it is the first non-trivial change to do so?
 **Reusable for:** future Muse subcommand proposals (research / synthesise / review pattern); third concrete instance of §3.4 dogfooding (after RAP-840 round-2 and RAP-845 round-1) — calibrates the AI-reviewer mechanism on heterogeneous proposal shapes.
 
 > **Methodological disclosure (binding):** the same model class (Claude Opus 4.7) authored both the proposal and this review. Mitigations: adversarial prompting, priority on new gaps, honest scoring. Carry-forward N-3 from RAP-840 round-2 applies — Round 2+ of this artifact should rotate to a different model class. The proposal itself enforces this rule (§3.4.1 model rotation) for `kind = public` Inquiries; this review is `kind = internal` and not yet bound by it.

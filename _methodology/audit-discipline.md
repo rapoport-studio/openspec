@@ -70,4 +70,4 @@ silently dropped.
 ## Reference
 
 - Worked example: `openspec/_methodology/research/home-five-specialist-audit.md`
-- Origin: `openspec/changes/add-audit-discipline/`
+- Origin: `openspec/archive/2026-05-21-add-audit-discipline/`
