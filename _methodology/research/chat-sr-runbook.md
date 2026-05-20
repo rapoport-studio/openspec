@@ -28,7 +28,7 @@ changes (a new ComposerState, a new banner kind, a new ChatMessage
 `status`, a new ContentBlock kind). The automated matrix gates CI; this
 runbook gates spec amendment.
 
-**Authority:** D-A11Y-4 in `openspec/changes/add-chat-a11y-gate/design.md`
+**Authority:** D-A11Y-4 in `openspec/archive/2026-05-20-add-chat-a11y-gate/design.md`
 ratifies the runbook lives under `_methodology/research/` (not under
 `current/`) so quarterly re-runs do not block the change archive.
 
