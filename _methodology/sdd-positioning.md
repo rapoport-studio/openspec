@@ -8,7 +8,7 @@ upstream:
   - _methodology/positioning.md
   - AGENTS.md
 companion:
-  - changes/add-sdd-methodology-positioning/
+  - archive/2026-05-20-add-sdd-methodology-positioning/
   - notes/community-pointers.md
 ---
 
@@ -20,7 +20,7 @@ companion:
 > so that the studio neither overstates its differentiator nor mistakes
 > upstream methodology for its own invention.
 >
-> Companion: [`changes/add-sdd-methodology-positioning/`](../changes/add-sdd-methodology-positioning/) — the change that authored this file. Sister watchlist: [`notes/community-pointers.md`](../../notes/community-pointers.md).
+> Companion: [`archive/2026-05-20-add-sdd-methodology-positioning/`](../archive/2026-05-20-add-sdd-methodology-positioning/) — the change that authored this file. Sister watchlist: [`notes/community-pointers.md`](../../notes/community-pointers.md).
 >
 > Distinct from [`positioning.md`](./positioning.md) (the Canvas Studio *commercial* thesis). That file answers "what do we sell"; this file answers "where does our *method* sit in the field".
 
@@ -143,4 +143,4 @@ rejected. Naming them here prevents their quiet re-introduction.
 ## Change log
 
 - `2026-05-18` — initial draft, ratified status, authored as part of change
-  [`add-sdd-methodology-positioning`](../changes/add-sdd-methodology-positioning/) (RAP-1078). Ratifies decisions D-MTH-1 and D-MTH-2; seeds the community watchlist at `notes/community-pointers.md`.
+  [`add-sdd-methodology-positioning`](../archive/2026-05-20-add-sdd-methodology-positioning/) (RAP-1078). Ratifies decisions D-MTH-1 and D-MTH-2; seeds the community watchlist at `notes/community-pointers.md`.
