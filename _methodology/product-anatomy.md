@@ -10,7 +10,7 @@ tldr: The studio's product anatomy across three internal spheres (Spec, Brand, F
 
 > The studio's product is built from three internal spheres of work. This document records what each sphere covers, how they integrate into a Product per engagement, the lifecycle by which a Product is produced, and the conversational and folder conventions that follow.
 
-Authority: `openspec/changes/define-studio-product-model/design.md` ratifies decisions D-PM-1 through D-PM-7. This file is the methodology expression of those decisions.
+Authority: `openspec/archive/2026-05-21-define-studio-product-model/design.md` ratifies decisions D-PM-1 through D-PM-7. This file is the methodology expression of those decisions.
 
 ---
 
@@ -159,4 +159,4 @@ Each is a partial answer. The full question is registered as `Q-PM-1` in `opensp
 - `_internal/platform/ontology.md` — Idea → Spec → Product flow, Product = integration of three spheres, Brand → Mirrors.
 - `_root/glossary.md § Appendix 3` — locked vocabulary for `Spec`, `Brand`, `Forge`, `Product`, `Marketplace`, `Mirror`.
 - `brands/studio/identity.md § Values` — Rapoport Studio's four brand attributes (green, human-friendly, responsibility-bearing, democratic).
-- `openspec/changes/define-studio-product-model/` — the ratifying change with full D-PM-N decisions.
+- `openspec/archive/2026-05-21-define-studio-product-model/` — the ratifying change with full D-PM-N decisions.

@@ -14,4 +14,4 @@ The Marketplace is a horizontal peer-to-peer transaction layer where platform us
 
 Detail — folder shape, entity schema, listing flow, pricing model, fee structure, dispute handling, listing surfaces — is **scope-deferred**. This stub exists so the concept has a citable home for cross-references in other documents. Work on the Marketplace is gated on (a) the studio's Spec / Brand / Forge pillars reaching maturity, and (b) pilot evidence that real users want to transact, not just consume.
 
-This is D-PM-4 in `openspec/changes/define-studio-product-model/design.md`.
+This is D-PM-4 in `openspec/archive/2026-05-21-define-studio-product-model/design.md`.
