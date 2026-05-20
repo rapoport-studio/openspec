@@ -1,6 +1,6 @@
 # Right-sizing research-pass framework
 
-> Authored 2026-05-20 from `right-size-research-pass-framework` Phase 2 synthesis (Refs RAP-734).
+> Authored 2026-05-20 from `openspec/archive/2026-05-20-right-size-research-pass-framework/` Phase 2 synthesis (Refs RAP-734).
 > Default decision-tool for sizing OpenSpec change research-passes (0 / 1 / 3 / 5+ streams).
 > Override is always allowed; the tree's job is to make the override visible.
 
@@ -150,10 +150,10 @@ Both gaps are acknowledged; the methodology is shippable today and re-callibrata
 
 ## 8. References
 
-- Stream outputs (archive at end of RAP-734 Phase 3):
-  - `right-size-research-pass-framework/research/stream-1-lit-review.md`
-  - `right-size-research-pass-framework/research/stream-2-competitor-benchmark.md`
-  - `right-size-research-pass-framework/research/stream-3-archive-extraction.md`
-- Originating change: `right-size-research-pass-framework/` (to be archived as `openspec/archive/YYYY-MM-DD-right-size-research-pass-framework/` once this methodology doc + Pavel ratification land).
+- Stream outputs (archived):
+  - `openspec/archive/2026-05-20-right-size-research-pass-framework/research/stream-1-lit-review.md`
+  - `openspec/archive/2026-05-20-right-size-research-pass-framework/research/stream-2-competitor-benchmark.md`
+  - `openspec/archive/2026-05-20-right-size-research-pass-framework/research/stream-3-archive-extraction.md`
+- Originating change: `openspec/archive/2026-05-20-right-size-research-pass-framework/` (archived 2026-05-20 after Pavel ratified Outcome 2 in PR #1545).
 - Retroactive target: `openspec/changes/validate-marketing-surface-stage-1/` (RAP-661).
 - Linear: RAP-734 (this methodology); RAP-735/736/737 (the 3 streams, all Done).
