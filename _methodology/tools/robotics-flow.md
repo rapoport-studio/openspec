@@ -16,7 +16,7 @@
 
 Visual companion: [`../research/openspec-robot-stack-coverage.svg`](../research/openspec-robot-stack-coverage.svg).
 
-This flow becomes canonical only when promoted via an OpenSpec change (provisional scaffold: `openspec/changes/add-robot-operator-surface-platform/`). Until then it is a reviewed draft; enforcement is by review, not by lint.
+This flow becomes canonical only when promoted via an OpenSpec change (provisional scaffold: `openspec/archive/2026-05-21-add-robot-operator-surface-platform/`). Until then it is a reviewed draft; enforcement is by review, not by lint.
 
 ---
 
@@ -279,5 +279,5 @@ The defensible claim, and the only one this flow makes: *we give your twelve spe
 
 - Research: [`../research/robot-operator-interfaces.md`](../research/robot-operator-interfaces.md), [`../research/robot-developer-pain-points-and-openspec.md`](../research/robot-developer-pain-points-and-openspec.md), [`../research/robot-ecosystem-roles-and-vendors.md`](../research/robot-ecosystem-roles-and-vendors.md)
 - Diagram: [`../research/openspec-robot-stack-coverage.svg`](../research/openspec-robot-stack-coverage.svg)
-- Provisional change scaffold: `openspec/changes/add-robot-operator-surface-platform/`
+- Provisional change scaffold: `openspec/archive/2026-05-21-add-robot-operator-surface-platform/`
 - Sibling methodology docs: [`cli-standards.md`](./cli-standards.md), [`agent-model-mapping.md`](./agent-model-mapping.md)
