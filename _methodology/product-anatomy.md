@@ -139,7 +139,7 @@ These are D-PM-5 in `define-studio-product-model/design.md`.
 
 How a Spec is rendered to a reader splits into two distinct concerns.
 
-**In-document navigation.** Solvable surface work — TOC, anchor-links, sticky-header, breadcrumb, density variants matching the existing `<EntityCard>` `inline / row / card / detail` shape. Future capability: `add-spec-navigator` (deferred).
+**In-document navigation — closed.** Shipped via `add-spec-navigator` (archived `openspec/archive/2026-05-21-add-spec-navigator/`): `<SpecNavigator>` provides TOC, anchor-links, sticky-header, breadcrumb, and density variants matching the `<EntityCard>` `inline / row / card / detail` shape.
 
 **Multi-modal rendering.** Open research area. A Spec is one markdown source; the platform may render it as document, diagram, timeline, dependency graph, state machine, comparison/diff, or other shapes per the content's structure. Existing partial precedents in repo:
 
