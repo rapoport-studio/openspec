@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Архитектура спека-документа — Rapoport Studio</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #f6f7f9;
+    --bg-code: #f3f4f6;
+    --sidebar: #fbfbfc;
+    --text: #1f2328;
+    --text-soft: #57606a;
+    --text-faint: #818a96;
+    --border: #d9dee4;
+    --border-soft: #e8ebee;
+    --accent: #2f4a7e;
+    --accent-deep: #233a64;
+    --accent-soft: #eaeef5;
+    --ok-fg: #18794e; --ok-bg: #e7f4ed; --ok-bd: #b7dfc8;
+    --rec-fg: #2f4a7e; --rec-bg: #eaeef5; --rec-bd: #c2cee2;
+    --open-fg: #8a5d00; --open-bg: #fbf1d6; --open-bd: #ecd9a3;
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: var(--sans); font-size: 16px; line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---- layout ---- */
+  .layout { display: flex; align-items: flex-start; }
+  .sidebar {
+    width: 290px; flex-shrink: 0; position: sticky; top: 0;
+    height: 100vh; overflow-y: auto; background: var(--sidebar);
+    border-right: 1px solid var(--border); padding: 28px 22px;
+  }
+  .content { flex: 1; min-width: 0; max-width: 900px; margin: 0 auto;
+    padding: 0 56px 140px; }
+
+  /* ---- sidebar nav ---- */
+  .side-brand { font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--text-faint); font-weight: 700; margin-bottom: 4px; }
+  .side-title { font-size: 15px; font-weight: 700; color: var(--text);
+    margin-bottom: 22px; line-height: 1.35; }
+  .toc { list-style: none; margin: 0; padding: 0; }
+  .toc li { margin: 1px 0; }
+  .toc a {
+    display: block; text-decoration: none; color: var(--text-soft);
+    font-size: 13.5px; padding: 4px 10px; border-radius: 6px;
+    border-left: 2px solid transparent;
+  }
+  .toc a:hover { background: var(--accent-soft); color: var(--accent-deep); }
+  .toc a.active { background: var(--accent-soft); color: var(--accent-deep);
+    font-weight: 600; border-left-color: var(--accent); }
+  .toc .num { color: var(--text-faint); font-variant-numeric: tabular-nums;
+    margin-right: 7px; font-size: 12px; }
+
+  /* ---- header ---- */
+  header.doc {
+    background: linear-gradient(135deg, var(--accent-deep), var(--accent));
+    color: #fff; margin: 0 -56px 44px; padding: 52px 56px 40px;
+  }
+  header.doc .eyebrow { font-size: 12px; letter-spacing: .16em;
+    text-transform: uppercase; opacity: .8; font-weight: 600; }
+  header.doc h1 { font-size: 33px; line-height: 1.2; margin: 12px 0 10px;
+    font-weight: 750; letter-spacing: -.01em; }
+  header.doc .lede { font-size: 16px; opacity: .92; max-width: 620px; margin: 0; }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 10px 26px; margin-top: 26px;
+    padding-top: 22px; border-top: 1px solid rgba(255,255,255,.22); }
+  .meta-row div { font-size: 13px; }
+  .meta-row .k { opacity: .7; text-transform: uppercase; letter-spacing: .08em;
+    font-size: 10.5px; display: block; margin-bottom: 2px; }
+  .meta-row .v { font-weight: 600; }
+
+  /* ---- typography ---- */
+  h2.sec { font-size: 23px; font-weight: 700; letter-spacing: -.01em;
+    margin: 56px 0 6px; padding-top: 14px; scroll-margin-top: 12px; }
+  h2.sec .sn { color: var(--accent); font-variant-numeric: tabular-nums;
+    margin-right: 12px; }
+  h2.sec + .sub { color: var(--text-soft); margin: 0 0 22px; font-size: 15px; }
+  h3 { font-size: 17px; font-weight: 700; margin: 32px 0 8px;
+    scroll-margin-top: 12px; }
+  h4 { font-size: 14.5px; font-weight: 700; margin: 22px 0 6px;
+    color: var(--accent-deep); }
+  p { margin: 12px 0; }
+  a { color: var(--accent); }
+  strong { font-weight: 650; }
+  hr.div { border: 0; border-top: 1px solid var(--border-soft); margin: 48px 0; }
+  ul, ol { padding-left: 24px; }
+  li { margin: 5px 0; }
+
+  code {
+    font-family: var(--mono); font-size: 13px; background: var(--bg-code);
+    padding: 1.5px 6px; border-radius: 4px; color: var(--accent-deep);
+  }
+
+  /* ---- tables ---- */
+  table { border-collapse: collapse; width: 100%; margin: 18px 0;
+    font-size: 14px; }
+  th, td { text-align: left; padding: 9px 13px; border: 1px solid var(--border-soft);
+    vertical-align: top; }
+  th { background: var(--bg-soft); font-weight: 650; font-size: 12.5px;
+    text-transform: uppercase; letter-spacing: .04em; color: var(--text-soft); }
+  tr:nth-child(even) td { background: #fcfcfd; }
+  td code { font-size: 12.5px; }
+
+  /* ---- diagram pre ---- */
+  .diagram { margin: 20px 0; border: 1px solid var(--border); border-radius: 10px;
+    overflow: hidden; }
+  .diagram .cap { background: var(--bg-soft); border-bottom: 1px solid var(--border-soft);
+    padding: 7px 16px; font-size: 11.5px; font-weight: 700; letter-spacing: .07em;
+    text-transform: uppercase; color: var(--text-soft); }
+  .diagram pre { margin: 0; padding: 20px 18px; font-family: var(--mono);
+    font-size: 13px; line-height: 1.55; overflow-x: auto; color: var(--text);
+    background: #fcfcfd; }
+
+  /* ---- badges ---- */
+  .badge { display: inline-block; font-size: 11.5px; font-weight: 700;
+    padding: 1.5px 9px; border-radius: 20px; border: 1px solid;
+    white-space: nowrap; vertical-align: 1px; }
+  .b-ok { color: var(--ok-fg); background: var(--ok-bg); border-color: var(--ok-bd); }
+  .b-rec { color: var(--rec-fg); background: var(--rec-bg); border-color: var(--rec-bd); }
+  .b-open { color: var(--open-fg); background: var(--open-bg); border-color: var(--open-bd); }
+
+  /* ---- callouts ---- */
+  .callout { margin: 20px 0; padding: 14px 18px; border-radius: 8px;
+    border-left: 4px solid; font-size: 14.5px; }
+  .callout .ct { font-weight: 700; font-size: 12px; text-transform: uppercase;
+    letter-spacing: .07em; margin-bottom: 4px; }
+  .callout p { margin: 4px 0; }
+  .c-open { background: var(--open-bg); border-color: var(--open-fg); }
+  .c-open .ct { color: var(--open-fg); }
+  .c-rec { background: var(--rec-bg); border-color: var(--accent); }
+  .c-rec .ct { color: var(--rec-fg); }
+  .c-note { background: var(--bg-soft); border-color: var(--text-faint); }
+  .c-note .ct { color: var(--text-soft); }
+
+  /* ---- lifecycle pills ---- */
+  .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+    margin: 20px 0; }
+  .pill { font-family: var(--mono); font-size: 13px; font-weight: 600;
+    padding: 7px 14px; border-radius: 7px; background: var(--accent-soft);
+    color: var(--accent-deep); border: 1px solid var(--rec-bd); }
+  .pill.term { background: var(--ok-bg); border-color: var(--ok-bd); color: var(--ok-fg); }
+  .pill.dead { background: #f0f1f3; border-color: var(--border); color: var(--text-faint); }
+  .arrow { color: var(--text-faint); font-size: 15px; }
+  .flow-note { font-size: 13px; color: var(--text-soft); margin: 6px 0 0; }
+
+  /* ---- tldr box ---- */
+  .tldr { background: var(--accent-soft); border: 1px solid var(--rec-bd);
+    border-radius: 12px; padding: 22px 26px; margin: 6px 0 8px; }
+  .tldr h3 { margin-top: 0; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 13.5px;
+    margin: 14px 0; }
+
+  footer.doc { margin-top: 70px; padding-top: 24px;
+    border-top: 1px solid var(--border-soft); color: var(--text-faint);
+    font-size: 13px; }
+
+  @media (max-width: 1080px) {
+    .sidebar { display: none; }
+    .content { padding: 0 28px 100px; }
+    header.doc { margin: 0 -28px 36px; padding: 44px 28px 34px; }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <!-- ============ SIDEBAR ============ -->
+  <nav class="sidebar">
+    <div class="side-brand">Rapoport Studio</div>
+    <div class="side-title">Архитектура спека-документа</div>
+    <ul class="toc" id="toc">
+      <li><a href="#s1"><span class="num">1</span>О документе</a></li>
+      <li><a href="#s2"><span class="num">2</span>Резюме</a></li>
+      <li><a href="#s3"><span class="num">3</span>Словарь терминов</a></li>
+      <li><a href="#s4"><span class="num">4</span>Проблема текущей модели</a></li>
+      <li><a href="#s5"><span class="num">5</span>Целевая модель данных</a></li>
+      <li><a href="#s6"><span class="num">6</span>Сущности подробно</a></li>
+      <li><a href="#s7"><span class="num">7</span>Жизненный цикл идеи</a></li>
+      <li><a href="#s8"><span class="num">8</span>Жизненный цикл файла</a></li>
+      <li><a href="#s9"><span class="num">9</span>Чат как таймлайн</a></li>
+      <li><a href="#s10"><span class="num">10</span>Роль Muse</a></li>
+      <li><a href="#s11"><span class="num">11</span>Модель доступа</a></li>
+      <li><a href="#s12"><span class="num">12</span>Сквозной флоу</a></li>
+      <li><a href="#s13"><span class="num">13</span>Связь с OpenSpec и Git</a></li>
+      <li><a href="#s14"><span class="num">14</span>Стоимость и лимиты</a></li>
+      <li><a href="#s15"><span class="num">15</span>Изменения в схеме</a></li>
+      <li><a href="#s16"><span class="num">16</span>План миграции и риски</a></li>
+      <li><a href="#s17"><span class="num">17</span>Открытые решения</a></li>
+      <li><a href="#s18"><span class="num">18</span>Влияние на эпик Ideas</a></li>
+      <li><a href="#s19"><span class="num">19</span>Следующие шаги</a></li>
+      <li><a href="#s20"><span class="num">20</span>Приложение: схема</a></li>
+    </ul>
+  </nav>
+
+  <!-- ============ CONTENT ============ -->
+  <main class="content">
+
+    <header class="doc">
+      <div class="eyebrow">Техническая документация · DRAFT</div>
+      <h1>Архитектура спека-документа</h1>
+      <p class="lede">Как устроен чат, как живут идеи и что происходит со спеком
+        по дороге — от первой идеи на онбординге до записи в&nbsp;<code>current/</code>.</p>
+      <div class="meta-row">
+        <div><span class="k">Статус</span><span class="v">Draft / на обсуждении</span></div>
+        <div><span class="k">Владелец</span><span class="v">Pavel Rapoport</span></div>
+        <div><span class="k">Дата</span><span class="v">2026-05-22</span></div>
+        <div><span class="k">Аудитория</span><span class="v">Founder · Architect · AI</span></div>
+        <div><span class="k">Источник</span><span class="v">spec-document-architecture.ru.md</span></div>
+      </div>
+    </header>
+
+    <!-- ===== 1 ===== -->
+    <h2 class="sec" id="s1"><span class="sn">1</span>О документе</h2>
+    <p class="sub">Зачем он, что описывает и как его читать.</p>
+
+    <p>Ядро воркспейса студии сегодня — это «канвас»: таблица <code>canvas_sessions</code>
+    и маршрут <code>/spec/[id]</code>. Название историческое и не отражает того, чем
+    эта сущность является на самом деле. Документ фиксирует <strong>правильную</strong>
+    модель — данные, жизненные циклы и сквозной флоу — на которой строится вся
+    дальнейшая работа.</p>
+
+    <p>Документ описывает <strong>текущее состояние</strong> (как работает сейчас)
+    и <strong>целевую архитектуру</strong> (как должно работать). Это аналитический
+    артефакт — основа для будущего OpenSpec-change на ре-архитектуру; формальный
+    <code>design.md</code> будет дистиллирован из него.</p>
+
+    <h4>Легенда статусов решений</h4>
+    <div class="legend">
+      <span><span class="badge b-ok">✓ подтверждено</span> — решено в обсуждении</span>
+      <span><span class="badge b-rec">◆ рекомендация</span> — принимается по умолчанию, можно оспорить</span>
+      <span><span class="badge b-open">? открыто</span> — требует ответа до начала реализации</span>
+    </div>
+
+    <!-- ===== 2 ===== -->
+    <h2 class="sec" id="s2"><span class="sn">2</span>Резюме</h2>
+    <p class="sub">Главное за тридцать секунд.</p>
+
+    <div class="tldr">
+      <h3>Суть ре-архитектуры</h3>
+      <p>Плоская «канвас»-модель заменяется чёткой иерархией из четырёх уровней:</p>
+      <p style="font-family:var(--mono);font-size:14px;font-weight:600;color:var(--accent-deep)">
+        project&nbsp;→&nbsp;spec&nbsp;→&nbsp;idea&nbsp;→&nbsp;{ messages, files }</p>
+      <ul>
+        <li><strong>Project</strong> — engagement: клиент, репозиторий, команда.</li>
+        <li><strong>Spec</strong> — живая спецификация проекта, «что истинно сейчас».</li>
+        <li><strong>Idea</strong> — предложенное изменение спека. Одна идея = одно
+          изменение = одна ветка = один PR.</li>
+        <li><strong>Messages / Files</strong> — диалог по идее и её артефакты.</li>
+      </ul>
+      <p>Ключевое: <code>idea</code>, <code>change</code> и <code>epic</code> — это
+      <strong>одна сущность</strong> на разных стадиях, а не три таблицы. Доска
+      стикеров (<code>canvas_ideas</code>) удаляется. Все 12 таблиц
+      <code>canvas_*</code> переименовываются.</p>
+    </div>
+
+    <!-- ===== 3 ===== -->
+    <h2 class="sec" id="s3"><span class="sn">3</span>Словарь терминов</h2>
+    <p class="sub">Термины фиксируются здесь и дальше не плывут.</p>
+
+    <table>
+      <thead><tr><th>Термин</th><th>OpenSpec-эквивалент</th><th>Что это</th></tr></thead>
+      <tbody>
+        <tr><td><strong>project</strong></td><td>репозиторий / engagement</td>
+          <td>Контейнер: клиент, репозиторий, Linear-команда, участники. Один
+          клиент = один проект.</td></tr>
+        <tr><td><strong>spec</strong></td><td><code>openspec/current/</code></td>
+          <td>Живая спецификация проекта — «что истинно сейчас». Источник истины.
+          Основное дерево, у которого есть идеи.</td></tr>
+        <tr><td><strong>idea</strong></td><td>change (<code>changes/&lt;slug&gt;/</code>)</td>
+          <td>Предложенное изменение спека. Одна идея = одно изменение = одна
+          ветка = один PR.</td></tr>
+        <tr><td><strong>change</strong></td><td>—</td>
+          <td>Не отдельная сущность. Поздняя стадия идеи — когда у неё уже есть
+          файлы <code>proposal/design/tasks</code>.</td></tr>
+        <tr><td><strong>epic</strong></td><td>epic-change</td>
+          <td>Не отдельная сущность. Идея с дочерними идеями — большая идея,
+          которая порождает под-идеи.</td></tr>
+        <tr><td><strong>message</strong></td><td>—</td>
+          <td>Сообщение в диалоге по конкретной идее.</td></tr>
+        <tr><td><strong>file</strong></td><td>артефакт изменения</td>
+          <td>Файл, сгенерированный Muse для идеи: <code>proposal.md</code>,
+          <code>design.md</code>, <code>tasks.md</code> и&nbsp;др.</td></tr>
+        <tr><td><strong>timeline</strong></td><td>—</td>
+          <td>Лента идей спека по времени. Это и есть «чат» на уровне спека.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout c-note">
+      <div class="ct">Ключевая идея словаря</div>
+      <p><code>idea</code>, <code>change</code> и <code>epic</code> — это
+      <strong>одна сущность</strong> (<code>ideas</code>) в разных стадиях и
+      конфигурациях. «Change» — стадия зрелости. «Epic» — идея, у которой есть
+      дочерние идеи. Никаких параллельных таблиц.</p>
+    </div>
+
+    <!-- ===== 4 ===== -->
+    <h2 class="sec" id="s4"><span class="sn">4</span>Проблема текущей модели</h2>
+    <p class="sub">Что именно не так с тем, как устроено сейчас.</p>
+
+    <p>Сегодня в базе <strong>12 таблиц</strong> с префиксом <code>canvas_</code>,
+    с корнем в <code>canvas_sessions</code>. У модели три структурные проблемы.</p>
+
+    <h3>4.1 Неверные имена</h3>
+    <table>
+      <thead><tr><th>Сегодня</th><th>В чём ошибка</th><th>Должно быть</th></tr></thead>
+      <tbody>
+        <tr><td><code>canvas_*</code></td>
+          <td>«Холст» — слово ничего не описывает.</td>
+          <td><code>idea</code> / <code>spec</code></td></tr>
+        <tr><td><code>..._sessions</code></td>
+          <td>Не сессия. Сущность живёт неделями, копит стоимость, мержится PR-ом.</td>
+          <td><code>ideas</code></td></tr>
+        <tr><td><code>mode='project'</code></td>
+          <td>Перегружает слово — рядом есть таблица <code>projects</code>.</td>
+          <td><code>mode = draft | branched | …</code></td></tr>
+      </tbody>
+    </table>
+
+    <h3>4.2 Размытая иерархия</h3>
+    <p>Нет уровня «спек» как такового. «Канвас» одновременно притворяется и одним
+    изменением, и проектным воркспейсом. На деле один канвас = одна git-ветка
+    <code>canvas/&lt;slug&gt;</code> = один PR = одна папка
+    <code>openspec/changes/&lt;slug&gt;/</code> — то есть это уже <strong>одно
+    изменение</strong>, просто названное неправильно.</p>
+
+    <h3>4.3 Слово «идея» перегружено</h3>
+    <p>В схеме <code>canvas_ideas</code> — это стикеры на спатиальной доске
+    (<code>x</code>/<code>y</code>-сетка, цвет, без жизненного цикла). В целевой
+    модели «идея» — это единица изменения. Два разных понятия под одним словом;
+    одно из них должно уступить.</p>
+
+    <!-- ===== 5 ===== -->
+    <h2 class="sec" id="s5"><span class="sn">5</span>Целевая модель данных</h2>
+    <p class="sub">Иерархия сущностей и связи между ними.</p>
+
+    <div class="diagram">
+      <div class="cap">Дерево сущностей</div>
+<pre>project ──┐  engagement: клиент, репозиторий, Linear-команда, участники
+          │
+          └─ spec          живая спецификация — «что истинно сейчас»
+                │           ( = openspec/current/ )
+                │
+                ├─ idea ────┐  предложенное изменение спека
+                │           │
+                │           ├─ messages   диалог по этой идее
+                │           └─ files      proposal / design / tasks идеи
+                │
+                └─ idea (parent_id → idea)   epic = идея с дочерними идеями</pre>
+    </div>
+
+    <h4>Кардинальности</h4>
+    <table>
+      <thead><tr><th>Связь</th><th>Тип</th><th>Смысл</th></tr></thead>
+      <tbody>
+        <tr><td>project — spec</td><td>1 : 1</td><td>У проекта одна спецификация.</td></tr>
+        <tr><td>spec — idea</td><td>1 : N</td><td>Много предложенных изменений против спека.</td></tr>
+        <tr><td>idea — messages</td><td>1 : N</td><td>У идеи свой диалог.</td></tr>
+        <tr><td>idea — files</td><td>1 : N</td><td>У идеи свои артефакты.</td></tr>
+        <tr><td>idea — parent idea</td><td>0 : 1</td><td>Само-ссылка; заполнена у дочерних идей эпика.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="legend">
+      <span><span class="badge b-ok">✓</span> Дерево <code>project → spec → idea → {messages, files}</code> подтверждено.</span>
+      <span><span class="badge b-ok">✓</span> <code>messages</code> и <code>files</code> цепляются к идее (FK <code>idea_id</code>).</span>
+    </div>
+
+    <!-- ===== 6 ===== -->
+    <h2 class="sec" id="s6"><span class="sn">6</span>Сущности подробно</h2>
+    <p class="sub">Что каждая таблица хранит и за что отвечает.</p>
+
+    <h3>6.1 Project — engagement</h3>
+    <p>Контейнер верхнего уровня. Существует сегодня как таблица <code>projects</code>
+    и остаётся без структурных изменений. Несёт идентичность engagement-а:
+    название, slug, владелец, статус (<code>active</code> / <code>archived</code>).
+    Привязки к GitHub-репозиторию, Linear-команде и Mirror-слою — опциональные
+    «способности» проекта, а не предусловия.</p>
+
+    <h3>6.2 Spec — живая спецификация</h3>
+    <p>Корень содержательного дерева. Отвечает на вопрос «что истинно сейчас» и
+    физически соответствует <code>openspec/current/</code> — набору
+    capability-документов. У проекта ровно один спек. Идеи определяются
+    <em>относительно</em> спека: каждая идея — это дельта против него.</p>
+    <div class="callout c-open">
+      <div class="ct">? Открыто — см. раздел 17, вопрос 1</div>
+      <p>Уровень <code>spec</code> сегодня в БД отсутствует. Решение: завести
+      тонкую таблицу <code>specs</code> (строка-якорь) или оставить спек чисто
+      git-деревом. Рекомендация — тонкая таблица.</p>
+    </div>
+
+    <h3>6.3 Idea — единица изменения</h3>
+    <p>Центральная сущность. Соответствует сегодняшней <code>canvas_sessions</code>
+    после переименования. Одна идея = одно предложенное изменение спека. Несёт:</p>
+    <table>
+      <thead><tr><th>Поле</th><th>Назначение</th></tr></thead>
+      <tbody>
+        <tr><td><code>id</code>, <code>slug</code>, <code>title</code></td><td>Идентичность идеи.</td></tr>
+        <tr><td><code>spec_id</code></td><td>FK на спек, против которого идёт изменение.</td></tr>
+        <tr><td><code>parent_id</code></td><td>Само-ссылка; заполнена у дочерней идеи эпика.</td></tr>
+        <tr><td><code>status</code></td><td>Стадия жизненного цикла — см. раздел 7.</td></tr>
+        <tr><td><code>source</code></td><td>Происхождение: <code>brief</code> / <code>chat</code> / <code>agent</code> / <code>manual</code>.</td></tr>
+        <tr><td><code>stage</code>, <code>stage_percent</code></td><td>Конвейерная стадия и процент готовности (из текущей модели).</td></tr>
+        <tr><td>GitHub-поля</td><td><code>github_branch</code>, <code>github_repo</code> — появляются, когда идея материализуется в ветку.</td></tr>
+        <tr><td><code>cost_cents</code>, <code>cost_cap_cents</code></td><td>Накопленная стоимость и кэп — см. раздел 14.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>6.4 Message — реплика диалога</h3>
+    <p>Соответствует <code>canvas_messages</code>. Принадлежит идее (FK
+    <code>idea_id</code>). Несёт <code>role</code> (user / assistant / system),
+    <code>content</code>, монотонный <code>sequence</code> внутри идеи,
+    <code>author_id</code> и <code>kind</code>. Сообщение может ссылаться на
+    конкретный файл (поле <code>file_ref</code>) — так в диалоге обсуждаются
+    артефакты, отдельная таблица для этого не нужна.</p>
+
+    <h3>6.5 File — артефакт идеи</h3>
+    <p>Соответствует <code>canvas_files</code>. Принадлежит идее. Несёт
+    <code>path</code> (например <code>openspec/changes/&lt;slug&gt;/proposal.md</code>),
+    <code>content</code>, <code>status</code> (см. раздел 8) и git-якоря
+    (<code>base_sha</code>, <code>base_content</code>) для diff-а и обнаружения
+    конфликтов в режиме ветки.</p>
+
+    <!-- ===== 7 ===== -->
+    <h2 class="sec" id="s7"><span class="sn">7</span>Жизненный цикл идеи</h2>
+    <p class="sub">Одна строка <code>ideas</code> с полем <code>status</code>; стадии
+      ложатся на три папки OpenSpec.</p>
+
+    <div class="flow">
+      <span class="pill">captured</span><span class="arrow">→</span>
+      <span class="pill">discussing</span><span class="arrow">→</span>
+      <span class="pill">drafted</span><span class="arrow">→</span>
+      <span class="pill term">applied</span>
+    </div>
+    <p class="flow-note">Ветвление: из <code>drafted</code> идея уходит либо в
+      <span class="pill term" style="font-size:11px;padding:2px 8px">applied</span>
+      (в спек), либо в
+      <span class="pill term" style="font-size:11px;padding:2px 8px">epic</span>
+      (порождает дочерние идеи). Из <code>discussing</code> возможен выход в
+      <span class="pill dead" style="font-size:11px;padding:2px 8px">rejected</span>.</p>
+
+    <table>
+      <thead><tr><th>Стадия</th><th>Что происходит</th><th>Где живёт</th></tr></thead>
+      <tbody>
+        <tr><td><code>captured</code></td>
+          <td>Идея появилась на таймлайне спека, ещё не обсуждалась. Сюда попадает бриф с онбординга.</td>
+          <td>строка <code>ideas</code></td></tr>
+        <tr><td><code>discussing</code></td>
+          <td>Идёт диалог с Muse в чате идеи.</td>
+          <td><code>ideas</code> + <code>messages</code></td></tr>
+        <tr><td><code>drafted</code></td>
+          <td>У идеи есть файлы <code>proposal/design/tasks</code> — это уже формальный <strong>change</strong>, материализованный в <code>openspec/changes/&lt;slug&gt;/</code>.</td>
+          <td><code>ideas</code> + <code>files</code> + папка <code>changes/</code></td></tr>
+        <tr><td><code>applied</code></td>
+          <td>Транзакция влила файлы в спек (<code>openspec/current/</code>), идея ушла в <code>archive/</code>.</td>
+          <td><code>current/</code> + <code>archive/</code></td></tr>
+        <tr><td><code>epic</code></td>
+          <td>Идея слишком крупная — вместо применения порождает дочерние идеи.</td>
+          <td><code>ideas</code> + дочерние строки</td></tr>
+        <tr><td><code>rejected</code></td>
+          <td>Идея не пошла.</td>
+          <td>строка <code>ideas</code></td></tr>
+      </tbody>
+    </table>
+
+    <h4>Перевод стадий на язык разговора</h4>
+    <ul>
+      <li>«первая идея с онбординга» → <code>captured</code></li>
+      <li>«обрабатывается в чате» → <code>discussing</code></li>
+      <li>«у идеи появляются файлы, Muse предлагает» → <code>discussing → drafted</code></li>
+      <li>«транзакция добавляет файлы в <code>current</code>» → <code>drafted → applied</code></li>
+      <li>«или в epic» → <code>drafted → epic</code></li>
+    </ul>
+
+    <!-- ===== 8 ===== -->
+    <h2 class="sec" id="s8"><span class="sn">8</span>Жизненный цикл файла</h2>
+    <p class="sub">У файла свой мини-цикл — Muse не пишет файл молча, он предлагает.</p>
+
+    <div class="flow">
+      <span class="pill">proposed</span><span class="arrow">→</span>
+      <span class="pill">accepted</span><span class="arrow">→</span>
+      <span class="pill">обсуждается / правится</span><span class="arrow">→</span>
+      <span class="pill term">applied</span>
+    </div>
+
+    <table>
+      <thead><tr><th>Стадия</th><th>Что это</th></tr></thead>
+      <tbody>
+        <tr><td><code>proposed</code></td>
+          <td>Muse сгенерировал файл и предлагает добавить его к идее. Человек видит карточку Approve / Reject.</td></tr>
+        <tr><td><code>accepted</code></td>
+          <td>Человек принял — файл стал частью черновика идеи (сегодняшний аналог: <code>canvas_files.is_pending=true</code>).</td></tr>
+        <tr><td><code>applied</code></td>
+          <td>Транзакция применения идеи вписала файл в спек.</td></tr>
+        <tr><td><code>rejected</code></td>
+          <td>Предложение отклонено.</td></tr>
+      </tbody>
+    </table>
+
+    <p>Паттерн «агент предлагает — человек подтверждает» уже спроектирован в эпике
+    Ideas (<code>agent_proposals</code>, карточка <code>IdeaProposalCard</code> с
+    Approve/Reject) и переезжает в эту модель без изменений.</p>
+
+    <!-- ===== 9 ===== -->
+    <h2 class="sec" id="s9"><span class="sn">9</span>Чат как таймлайн спека</h2>
+    <p class="sub">Чат — это лента идей спека по времени.</p>
+
+    <div class="diagram">
+      <div class="cap">Таймлайн спека</div>
+<pre>СПЕК  (чат-поверхность)
+│
+├─ idea #1   бриф с онбординга      captured → discussing → drafted → applied
+├─ idea #2   «добавить страницу X»  discussing
+├─ idea #3   «переписать модель Y»  epic ──┬─ idea #3.1
+│                                          └─ idea #3.2
+└─ idea #4   …                      captured</pre>
+    </div>
+
+    <ul>
+      <li>На уровне <strong>спека</strong> «чат» — это упорядоченный по времени
+      список идей (<code>ideas ORDER BY created_at</code>). Первая идея — бриф
+      с онбординга.</li>
+      <li>Открываешь идею → внутри её собственный диалог (<code>messages</code>)
+      и её файлы (<code>files</code>).</li>
+      <li>Новые идеи добавляются на ту же ленту, обсуждаются, дозревают до changes.</li>
+    </ul>
+    <div class="callout c-note">
+      <div class="ct">Отклонённая альтернатива</div>
+      <p>Один сплошной поток сообщений на спек, а идеи — как «якоря» на нём.
+      Отклонено: такой подход размывает идею по диапазону сообщений. Сообщения
+      принадлежат идее.</p>
+    </div>
+
+    <!-- ===== 10 ===== -->
+    <h2 class="sec" id="s10"><span class="sn">10</span>Роль Muse</h2>
+    <p class="sub">Как AI-архитектор участвует в жизни идеи.</p>
+
+    <p>Muse — AI-субстрат студии. В контексте спека он работает как
+    <strong>Muse Architect</strong>: ведёт диалог, генерирует файлы, предлагает
+    идеи. Muse — участник, а не автомат: каждое его действие, меняющее состояние
+    (файл, идея), проходит через подтверждение человеком.</p>
+
+    <table>
+      <thead><tr><th>Действие Muse</th><th>Описание</th></tr></thead>
+      <tbody>
+        <tr><td>Онбординг-ход</td>
+          <td>Первый ход при открытии идеи-брифа: Muse переформулирует бриф и
+          задаёт уточняющий вопрос — на языке клиента.</td></tr>
+        <tr><td>Ход диалога</td>
+          <td>Сообщение пользователя → ответ Muse. Может сопровождаться
+          генерацией файлов и предложением идей.</td></tr>
+        <tr><td>Генерация файла</td>
+          <td>Muse эмитит файл со статусом <code>proposed</code>; человек
+          принимает или отклоняет.</td></tr>
+        <tr><td>Предложение идеи</td>
+          <td>Muse может предложить новую идею (<code>source=agent</code>) —
+          она появляется на таймлайне в состоянии ожидания решения человека.</td></tr>
+        <tr><td>Цитирование спека</td>
+          <td>Ответы про capability-спеки несут цитаты-ссылки в текущий спек.
+          Поисковый путь ограничен ZDR (без персистентности).</td></tr>
+      </tbody>
+    </table>
+    <p>Каждый ход и каждый вызов инструмента тарифицируется и списывается на идею
+    (см. раздел 14).</p>
+
+    <!-- ===== 11 ===== -->
+    <h2 class="sec" id="s11"><span class="sn">11</span>Модель доступа</h2>
+    <p class="sub">Кто что видит и кто что может менять.</p>
+
+    <p>Доступ строится по цепочке участников проекта. Роли:</p>
+    <table>
+      <thead><tr><th>Роль</th><th>Права</th></tr></thead>
+      <tbody>
+        <tr><td><strong>owner</strong></td><td>Платформ-владелец. Полный доступ ко всем спекам и идеям проекта.</td></tr>
+        <tr><td><strong>collaborator</strong></td><td>Внутренний участник. Читает и пишет идеи, ведёт диалог.</td></tr>
+        <tr><td><strong>external_collaborator</strong></td><td>Специалист, нанятый в engagement. Доступ с датой окончания.</td></tr>
+        <tr><td><strong>client</strong></td><td>Клиент. Ограниченный доступ — видит свой спек и диалог, но не служебные поверхности.</td></tr>
+      </tbody>
+    </table>
+    <p>У приглашённых также есть <em>персона</em> (architect / domain / tech /
+    business / ops) — она задаёт ракурс, в котором участник вовлечён.</p>
+    <div class="callout c-rec">
+      <div class="ct">◆ Рекомендация</div>
+      <p>Таблицы доступа (<code>canvas_invitees</code>,
+      <code>canvas_excluded_members</code>) переезжают на уровень <strong>спека</strong>,
+      не идеи: клиента приглашают в проект/спек целиком, а не в отдельную идею.
+      Точная привязка — под-дизайн ре-архитектуры.</p>
+    </div>
+
+    <!-- ===== 12 ===== -->
+    <h2 class="sec" id="s12"><span class="sn">12</span>Сквозной флоу</h2>
+    <p class="sub">Конкретный сценарий: от онбординга до записи в спек.</p>
+
+    <div class="diagram">
+      <div class="cap">Путь идеи</div>
+<pre>бриф        приём        первая идея     диалог        файлы         транзакция
+лида    ─▶  лида     ─▶  в спеке     ─▶  с Muse    ─▶  от Muse   ─▶  применения
+(inbox)     (project+    (captured)      (discussing)  (proposed→    (applied → current/
+             spec)                                     accepted,     либо epic)
+                                                        drafted)</pre>
+    </div>
+
+    <ol>
+      <li><strong>Лид оставляет бриф.</strong> Клиент пишет 50–2000 символов на
+      <code>/start-project</code>. Бриф попадает в <code>inbox</code>.</li>
+      <li><strong>Платформ-овнер принимает лида.</strong> Создаётся
+      <code>project</code> + его <code>spec</code>. В спек заводится
+      <strong>первая идея</strong> — бриф клиента, <code>status=captured</code>,
+      <code>source=brief</code>.</li>
+      <li><strong>Открывается чат.</strong> Лид заходит по magic-link, видит
+      таймлайн спека с одной идеей. Срабатывает первый ход Muse Architect. Идея
+      переходит в <code>discussing</code>.</li>
+      <li><strong>Идея обрабатывается в диалоге.</strong> Человек и Muse обсуждают
+      идею в её чате.</li>
+      <li><strong>Muse генерирует файлы.</strong> Когда идея созрела, Muse
+      генерирует <code>proposal/design/tasks</code> и предлагает их добавить.
+      Файлы: <code>proposed</code> → человек принимает → <code>accepted</code>.
+      Идея переходит в <code>drafted</code> — это уже формальный change.</li>
+      <li><strong>Файлы обсуждаются и правятся.</strong> Диалог продолжается,
+      файлы дорабатываются. Идея остаётся в <code>drafted</code>.</li>
+      <li><strong>Транзакция применения.</strong> Когда change готов:
+        <ul>
+          <li>либо файлы вписываются в спек (<code>openspec/current/</code>),
+          идея → <code>applied</code>, папка change → <code>archive/</code>;</li>
+          <li>либо, если идея крупная, она резолвится как <code>epic</code> и
+          порождает дочерние идеи.</li>
+        </ul>
+      </li>
+      <li><strong>Спек подрос.</strong> На тот же таймлайн добавляются новые идеи —
+      флоу повторяется. Так спек эволюционирует от первой идеи до зрелого
+      документа.</li>
+    </ol>
+
+    <!-- ===== 13 ===== -->
+    <h2 class="sec" id="s13"><span class="sn">13</span>Связь с OpenSpec и Git</h2>
+    <p class="sub">Как стадии идеи соответствуют трём папкам OpenSpec.</p>
+
+    <p>OpenSpec — это методология и git-дерево <code>openspec/</code>. Идея в БД и
+    папка в git — это <strong>два дома одной сущности</strong> на разных стадиях
+    зрелости.</p>
+
+    <table>
+      <thead><tr><th>Папка OpenSpec</th><th>Стадия идеи</th><th>Смысл</th></tr></thead>
+      <tbody>
+        <tr><td>—</td><td><code>captured</code> / <code>discussing</code></td>
+          <td>Идея существует только как строка в БД; файлов ещё нет либо они в черновике.</td></tr>
+        <tr><td><code>openspec/changes/&lt;slug&gt;/</code></td><td><code>drafted</code></td>
+          <td>Идея материализовалась в формальный change — папка с triplet-ом.</td></tr>
+        <tr><td><code>openspec/current/</code></td><td><code>applied</code></td>
+          <td>Change влит — записан в живой спек.</td></tr>
+        <tr><td><code>openspec/archive/</code></td><td><code>applied</code></td>
+          <td>Применённый change уходит в архив как историческая запись.</td></tr>
+      </tbody>
+    </table>
+    <p>Это и есть «транзакция, которая добавляет файлы в <code>current</code>» из
+    обсуждения — переход <code>drafted → applied</code>.</p>
+
+    <!-- ===== 14 ===== -->
+    <h2 class="sec" id="s14"><span class="sn">14</span>Стоимость и лимиты</h2>
+    <p class="sub">Как учитываются деньги, потраченные на идею.</p>
+
+    <p>Каждая идея несёт накопитель стоимости. Тарифицируется и токен-стоимость
+    ходов Muse, и стоимость вызовов инструментов.</p>
+    <table>
+      <thead><tr><th>Механизм</th><th>Описание</th></tr></thead>
+      <tbody>
+        <tr><td><code>cost_cents</code></td><td>Накопленная стоимость идеи: ходы + инструменты, одной колонкой.</td></tr>
+        <tr><td><code>cost_cap_cents</code></td><td>Кэп на идею. Текущее значение — $50 (5000¢).</td></tr>
+        <tr><td>дневной учёт</td><td>Отдельная агрегатная поверхность дневной стоимости (сегодня <code>canvas_daily_costs</code>).</td></tr>
+        <tr><td>продление кэпа</td><td>Кэп можно расширить явным действием — фиксируется отметкой времени.</td></tr>
+      </tbody>
+    </table>
+    <p>Механизм существует сегодня и переносится в новую модель как есть —
+    накопитель и кэп просто переезжают на сущность <code>idea</code>.</p>
+
+    <!-- ===== 15 ===== -->
+    <h2 class="sec" id="s15"><span class="sn">15</span>Изменения в схеме</h2>
+    <p class="sub">Карта переименования <code>canvas → idea / spec</code>.</p>
+
+    <table>
+      <thead><tr><th>Сегодня</th><th>Цель</th><th>Примечание</th></tr></thead>
+      <tbody>
+        <tr><td><code>canvas_sessions</code></td><td><code>ideas</code></td><td>Корневая единица изменения.</td></tr>
+        <tr><td><code>canvas_messages</code></td><td><code>messages</code></td><td>FK <code>canvas_id → idea_id</code>.</td></tr>
+        <tr><td><code>canvas_files</code></td><td><code>files</code></td><td>FK перецепляется; добавляется <code>status</code>.</td></tr>
+        <tr><td><code>canvas_ideas</code></td><td><strong>удаляется</strong></td><td>Доска стикеров уходит.</td></tr>
+        <tr><td>колонка <code>canvas_id</code></td><td><code>idea_id</code></td><td>~323 вхождения по схеме.</td></tr>
+        <tr><td>—</td><td><code>specs</code></td><td><strong>Новая</strong> тонкая таблица-якорь, одна строка на проект.</td></tr>
+        <tr><td>—</td><td><code>ideas.parent_id</code></td><td><strong>Новая</strong> само-ссылка для эпиков.</td></tr>
+        <tr><td><code>canvas_invitees</code>, <code>canvas_excluded_members</code></td><td>→ уровень <code>spec</code></td><td>Доступ привязан к спеку.</td></tr>
+        <tr><td><code>canvas_proposals</code>, <code>canvas_tool_uses</code>, <code>canvas_daily_costs</code>, <code>canvas_stage_events</code>, <code>canvas_attachments</code>, <code>canvas_project_instructions</code></td><td>переименовать, перецепить</td><td>Остаются дочерними; точная привязка — под-дизайн.</td></tr>
+        <tr><td>функции <code>has_canvas_role</code> и др. (5 шт.)</td><td><code>has_idea_role</code> / <code>has_spec_role</code></td><td>По смыслу.</td></tr>
+        <tr><td>енумы <code>canvas_role</code>, <code>canvas_invitee_role</code></td><td><code>idea_role</code> / <code>spec_role</code></td><td>По смыслу.</td></tr>
+      </tbody>
+    </table>
+
+    <!-- ===== 16 ===== -->
+    <h2 class="sec" id="s16"><span class="sn">16</span>План миграции и риски</h2>
+    <p class="sub">Как это безопасно выкатить.</p>
+
+    <h3>16.1 Масштаб</h3>
+    <p>~110+ файлов кода в <code>apps/</code> ссылаются на <code>canvas_*</code>,
+    плюс capability-спек <code>openspec/current/canvas.md</code>, плюс RLS-политики,
+    индексы, триггеры, 5 функций и 2 енума.</p>
+
+    <h3>16.2 Механика</h3>
+    <p>Это <strong>атомарная</strong> миграция: <code>ALTER TABLE … RENAME</code>
+    по таблицам и колонкам. Важная деталь — имена констрейнтов, индексов,
+    RLS-политик и триггеров не переименовываются автоматически (это строки), их
+    нужно переименовать явно, иначе схема останется с устаревшими именами.</p>
+
+    <h3>16.3 Риски</h3>
+    <table>
+      <thead><tr><th>Риск</th><th>Митигация</th></tr></thead>
+      <tbody>
+        <tr><td><code>RENAME</code> берёт блокировку <code>ACCESS EXCLUSIVE</code>.</td>
+          <td>Блокировка короткая; выполняется в окне низкой нагрузки.</td></tr>
+        <tr><td>Старый код мгновенно ломается о новые имена.</td>
+          <td>Деплой кода и миграции — одной транзакцией; rolling-деплой не применим.</td></tr>
+        <tr><td>Конфликт с in-flight изменениями.</td>
+          <td>Ре-архитектура идёт <strong>до</strong> старта реализации эпика Ideas — см. раздел 18.</td></tr>
+        <tr><td>Дрейф <code>schema_migrations</code>.</td>
+          <td>После применения миграции сверить <code>version</code> с именем файла.</td></tr>
+      </tbody>
+    </table>
+
+    <!-- ===== 17 ===== -->
+    <h2 class="sec" id="s17"><span class="sn">17</span>Открытые решения</h2>
+    <p class="sub">Что нужно закрыть до начала реализации.</p>
+
+    <table>
+      <thead><tr><th>#</th><th>Вопрос</th><th>Статус</th><th>Рекомендация</th></tr></thead>
+      <tbody>
+        <tr><td>1</td>
+          <td><code>spec</code> — тонкая таблица <code>specs</code> в БД или просто git-дерево <code>openspec/current/</code>?</td>
+          <td><span class="badge b-open">? открыто</span></td>
+          <td>Тонкая таблица-якорь: идеям нужен FK, а draft-проект без репозитория тоже обязан иметь спек. Сам спек в Postgres не дублируем.</td></tr>
+        <tr><td>2</td>
+          <td>«карант» из обсуждения — это <code>openspec/current/</code>?</td>
+          <td><span class="badge b-open">? открыто</span></td>
+          <td>Расшифровано как <code>current/</code>. Если имелась в виду «карантин»/staging — терминальный шаг флоу меняется.</td></tr>
+        <tr><td>3</td>
+          <td>Уровень <code>epic</code> — насколько глубоко моделировать рекурсию идей?</td>
+          <td><span class="badge b-open">frontier</span></td>
+          <td>Помечено как граница — не дора́щиваем сейчас, фиксируем позже.</td></tr>
+        <tr><td>4</td>
+          <td>Куда переезжают таблицы доступа?</td>
+          <td><span class="badge b-rec">◆ под-дизайн</span></td>
+          <td>На уровень <code>spec</code>.</td></tr>
+        <tr><td>5</td>
+          <td>Переименовать <code>mode='project'</code> в этом же заходе?</td>
+          <td><span class="badge b-rec">◆ рекомендация</span></td>
+          <td>Да — слово перегружено; <code>mode = draft | branched | …</code>.</td></tr>
+      </tbody>
+    </table>
+
+    <!-- ===== 18 ===== -->
+    <h2 class="sec" id="s18"><span class="sn">18</span>Влияние на эпик Ideas</h2>
+    <p class="sub">9 заскаффолженных changes нужно переоснова́ть.</p>
+
+    <p>В <code>openspec/changes/</code> сейчас лежат <strong>9 заскаффолженных
+    changes</strong> эпика Ideas (<code>add-ideas-rail-view</code> + 8 зависимых).
+    Все они построены на старом зерне: «идея = стикер, много на канвас, rail
+    внутри канваса». Целевая модель («идея = корневая единица изменения») этому
+    зерну противоречит.</p>
+    <p>Код эпика ещё не написан — только спек-скаффолд. Поэтому эпик Ideas нужно
+    <strong>переоснова́ть</strong> на новую модель, а не выбрасывать: жизненный
+    цикл (<code>status</code>), провенанс (<code>source</code>), коммиты, привязка
+    к спек-путям, agent-proposals — всё это переносится на корневую
+    <code>ideas</code>, а не на доску стикеров.</p>
+
+    <!-- ===== 19 ===== -->
+    <h2 class="sec" id="s19"><span class="sn">19</span>Следующие шаги</h2>
+    <p class="sub">Как этот документ становится реализацией.</p>
+
+    <ol>
+      <li>Закрыть открытые решения раздела 17 (минимум вопросы 1 и 2).</li>
+      <li>Завести Linear-issue на ре-архитектуру.</li>
+      <li><code>muse draft</code> → формальный OpenSpec-change:
+      <code>proposal.md</code> + <code>design.md</code> + <code>tasks.md</code>.
+      Этот документ — источник для <code>design.md</code>.</li>
+      <li>Change поглощает: переименование <code>canvas → idea/spec</code>, новую
+      таблицу <code>specs</code>, удаление доски стикеров, переоснову эпика Ideas.</li>
+    </ol>
+
+    <!-- ===== 20 ===== -->
+    <h2 class="sec" id="s20"><span class="sn">20</span>Приложение: соответствие схемы</h2>
+    <p class="sub">Полная карта 12 таблиц <code>canvas_*</code> → целевая модель.</p>
+
+    <div class="diagram">
+      <div class="cap">Старая схема → новая</div>
+<pre>canvas_sessions              →  ideas               корневая единица
+canvas_messages              →  messages            FK → idea_id
+canvas_files                 →  files               FK → idea_id, + status
+canvas_ideas                 →  ✗ удаляется         доска стикеров уходит
+canvas_invitees              →  spec-уровень        доступ
+canvas_excluded_members      →  spec-уровень        доступ
+canvas_project_instructions  →  idea-дочерняя       постоянный контекст
+canvas_tool_uses             →  idea-дочерняя       аудит инструментов
+canvas_proposals             →  idea-дочерняя       Telegram-поверхность
+canvas_attachments           →  idea-дочерняя       вложения
+canvas_daily_costs           →  idea-дочерняя       дневной учёт
+canvas_stage_events          →  idea-дочерняя       события стадий
+(нет)                        →  specs               НОВАЯ таблица-якорь
+(нет)                        →  ideas.parent_id     НОВАЯ само-ссылка</pre>
+    </div>
+
+    <footer class="doc">
+      <p>Rapoport Studio · Архитектура спека-документа · Draft 2026-05-22.<br>
+      Документ живёт здесь до тех пор, пока не превратится в формальный
+      OpenSpec-change; после — становится исторической справкой.<br>
+      Источник: <code>openspec/_methodology/spec-document-architecture.ru.md</code></p>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  // scroll-spy: подсветка активного раздела в оглавлении
+  (function () {
+    var links = Array.prototype.slice.call(document.querySelectorAll('#toc a'));
+    var map = {};
+    links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          links.forEach(function (l) { l.classList.remove('active'); });
+          var a = map[e.target.id];
+          if (a) a.classList.add('active');
+        }
+      });
+    }, { rootMargin: '0px 0px -78% 0px', threshold: 0 });
+    document.querySelectorAll('h2.sec').forEach(function (h) { obs.observe(h); });
+  })();
+</script>
+</body>
+</html>
