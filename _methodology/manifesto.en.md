@@ -2,6 +2,7 @@
 title: Manifesto
 locale: en
 translates: manifesto.ru.md
+source_status: placeholder
 translation_status: draft
 audience: studio-internal-and-public
 last_translated: 2026-05-13

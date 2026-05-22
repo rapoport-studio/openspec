@@ -31,9 +31,14 @@ tldr: Defines the 10 highest collision-risk terms in the Rapoport Studio vocabul
 
 ### Mirror
 
-**Mirror** was the previous name for the brand-intelligence feature inside the studio application — an agent that monitored brand signals and surfaced competitive intelligence. The name was retired in 2026 per the sdd-terminology-scorecard because it conflicts with Mirror.xyz (Web3 publishing), Mirror Protocol (Terra blockchain), and Apple AirPlay Mirror (screen sharing). Retaining the name imposed a disambiguation burden on every new reader.
+The word "Mirror" has two distinct lifecycles — a **retired capability** and a **re-scoped term** — and must not be conflated:
 
-**Canon:** **Mirror** is a retired Rapoport Studio term; use **Brand** for brand-intelligence features and the Brand capability spec for authoritative definitions.
+- **The Mirror *capability*** (the old perceptual-spec layer, `openspec/current/mirror.md`) is **retired**. It was a perceptual-spec layer parallel to OpenSpec — the client's view of their product — and its role is fully absorbed into **Brand**. The capability file is a frozen tombstone (retired 2026-05-20 by RAP-1125).
+- **The word "Mirror"** is now **re-scoped** — per `_root/glossary.md § Mirror` and `_methodology/product-anatomy.md § Brand Mirroring` — to mean a parent-anchored sub-brand produced by the Brand Mirroring operation: a country- or audience-localised derivative that inherits a parent Brand's identity DNA.
+
+The 2026 sdd-terminology-scorecard retired the *brand-intelligence feature* naming (which collided with Mirror.xyz, Mirror Protocol, and Apple AirPlay Mirror) — that brand-intelligence agent is now **Brand**.
+
+**Canon:** The Mirror **capability** is retired (perceptual-spec layer absorbed into Brand); the **term** `Mirror` means a Brand-Mirroring sub-brand — see `_root/glossary.md § Mirror`.
 
 ---
 
