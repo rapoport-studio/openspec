@@ -4,7 +4,7 @@
 > **Owner:** Pavel (founder).
 > **Opened:** 2026-05-13.
 > **Companion to:** [`legacy-track-audience-2026-05.md`](./legacy-track-audience-2026-05.md), [`legacy-track-naming-2026-05.md`](./legacy-track-naming-2026-05.md), [`legacy-track-competitor-2026-05.md`](./legacy-track-competitor-2026-05.md), [`legacy-track-ia-funnel-2026-05.md`](./legacy-track-ia-funnel-2026-05.md).
-> **Feeds into:** `openspec/changes/add-legacy-track/` (proposal + design + tasks), Linear issue (TBD `RAP-NNN`).
+> **Feeds into:** `openspec/archive/2026-05-22-add-legacy-track/` (proposal + design + tasks), Linear issue (TBD `RAP-NNN`).
 > **Decision cutoff:** D1-D7 below are the pre-ratification baseline. Q-1..Q-4 remain open for Pavel's call before the change is committed.
 
 ---
@@ -154,7 +154,7 @@ Change slug: **`add-legacy-track`** (bare slug while active per [`feedback_opens
 Triplet:
 
 ```
-openspec/changes/add-legacy-track/
+openspec/archive/2026-05-22-add-legacy-track/
 ├── proposal.md
 ├── design.md
 └── tasks.md

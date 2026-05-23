@@ -256,7 +256,7 @@ Each archetype sits somewhere on each of seven motivation spectra. The matrix is
 | # | Spectrum | Left pole | Right pole | What it means in practice |
 |---|---|---|---|---|
 | 1 | **Purpose** | Service to others | Self-realization | I build for someone else's benefit / I build to become who I want to be |
-| 2 | **Time** | Now (impact) | Long (legacy) | I want to see results tomorrow / I build for the long arc |
+| 2 | **Time** | Now (impact) | Long (legacy) | I want to see results tomorrow / I build for the long arc — operationalised as a third audience track on the marketing surface; see `openspec/archive/2026-05-22-add-legacy-track/` (Legacy Track: `<ForLegacy />` block + `/legacy` route + cross-geo funnel matrix). |
 | 3 | **Sphere** | Within self (mastery) | Outside self (discovery) | I deepen what I know / I find what I do not yet know |
 | 4 | **Fabric** | Alone (independence) | With others (belonging) | I do this to be free / to be connected |
 | 5 | **Aesthetic** | Beauty | Truth | I make the elegant / the accurate |

@@ -4,7 +4,7 @@
 > **Owner:** Pavel (founder).
 > **Opened:** 2026-05-13.
 > **Companion to:** [`legacy-track-audience-2026-05.md`](./legacy-track-audience-2026-05.md), [`legacy-track-naming-2026-05.md`](./legacy-track-naming-2026-05.md), [`legacy-track-competitor-2026-05.md`](./legacy-track-competitor-2026-05.md), [`legacy-track-synthesis-2026-05.md`](./legacy-track-synthesis-2026-05.md).
-> **Feeds into:** `openspec/changes/add-legacy-track/design.md` § IA + § Funnel integration.
+> **Feeds into:** `openspec/archive/2026-05-22-add-legacy-track/design.md` § IA + § Funnel integration.
 > **Method:** web research, all non-trivial claims cite a URL inline. Research-agent dispatch 2026-05-13.
 
 ---
