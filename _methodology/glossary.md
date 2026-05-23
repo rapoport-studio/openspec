@@ -31,14 +31,11 @@ tldr: Defines the 10 highest collision-risk terms in the Rapoport Studio vocabul
 
 ### Mirror
 
-The word "Mirror" has two distinct lifecycles — a **retired capability** and a **re-scoped term** — and must not be conflated:
+**Mirror** is a Tier-1 Brand-sphere entity (Atlas D-ATLAS-6 ratification, 2026-05-22): a parent-anchored sub-brand produced by the Brand Mirroring operation — a country- or audience-localised derivative that inherits a parent Brand's identity DNA. See `_root/glossary.md § Mirror` for the live definition, `openspec/brands/studio/entities/mirror.md` for the entity portrait, and `_methodology/product-anatomy.md § Brand Mirroring` for the operation.
 
-- **The Mirror *capability*** (the old perceptual-spec layer, `openspec/current/mirror.md`) is **retired**. It was a perceptual-spec layer parallel to OpenSpec — the client's view of their product — and its role is fully absorbed into **Brand**. The capability file is a frozen tombstone (retired 2026-05-20 by RAP-1125).
-- **The word "Mirror"** is now **re-scoped** — per `_root/glossary.md § Mirror` and `_methodology/product-anatomy.md § Brand Mirroring` — to mean a parent-anchored sub-brand produced by the Brand Mirroring operation: a country- or audience-localised derivative that inherits a parent Brand's identity DNA.
+The 2026 sdd-terminology-scorecard retired the *brand-intelligence feature* naming (which collided with Mirror.xyz, Mirror Protocol, and Apple AirPlay Mirror) — that brand-intelligence agent is now **Brand**. The old perceptual-spec-layer capability was retired 2026-05-20 by RAP-1125 and fully absorbed into Brand; per Atlas D-ATLAS-10 there is no longer a tombstone file at `openspec/current/mirror.md`.
 
-The 2026 sdd-terminology-scorecard retired the *brand-intelligence feature* naming (which collided with Mirror.xyz, Mirror Protocol, and Apple AirPlay Mirror) — that brand-intelligence agent is now **Brand**.
-
-**Canon:** The Mirror **capability** is retired (perceptual-spec layer absorbed into Brand); the **term** `Mirror` means a Brand-Mirroring sub-brand — see `_root/glossary.md § Mirror`.
+**Canon:** `Mirror` is the live Tier-1 Brand-sphere entity for a parent-anchored sub-brand — see `_root/glossary.md § Mirror`.
 
 ---
 
