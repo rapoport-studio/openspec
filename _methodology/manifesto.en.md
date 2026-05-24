@@ -12,6 +12,7 @@ last_translated: 2026-05-13
 
 # Manifesto
 
+<!-- principles-start -->
 ## I. Commitment to craft
 
 We work on things that matter — not because we were asked, but because it matters. Craft is not a skill. It is a commitment: to do something well enough that the work speaks for itself. Every specification, every line of code, every design decision — all of it is an expression of who we are.
@@ -35,6 +36,7 @@ This choice is not a privilege — it is a responsibility. The studio is fully a
 Everything we build is a transmission. Of knowledge, of systems, of principles. The studio exists not to accumulate — but to pass forward.
 
 Every tool, every methodology, every process is what remains after us. This is why we build on rules, not exceptions. This is why we document what we do. This is why we remain open to what we will learn from those who come after.
+<!-- principles-end -->
 
 ## Cast (internal layer)
 
