@@ -2,13 +2,14 @@
 title: Manifesto
 locale: ro
 translates: manifesto.ru.md
+translation_basis: structural-skeleton-only-source-pending
 source_status: placeholder
 translation_status: draft
 audience: studio-internal-and-public
 last_translated: 2026-05-13
 ---
 
-> **Notă de traducere:** Acesta este un fișier de traducere în română al `manifesto.ru.md`. Sursa rusă este în prezent un substituent structural, în așteptarea redactării cu vocea lui Pavel (Faza 2 / RAP-179, blocată de operator). Această traducere va trebui actualizată după ce corpul canonical rus va fi scris. `translation_status: draft` reflectă atât starea traducerii, cât și starea sursei.
+> **Notă de traducere — citește înainte de a trata corpul ca traducere.** Sursa rusă de la `manifesto.ru.md` este un **substituent structural**, nu un manifest scris: conține doar titluri de secțiuni și schelet (`manifesto.ru.md:9-12`). Corpul român de mai jos a fost redactat pe acest schelet, nu tradus dintr-un text rus terminat. Câmpul `translates: manifesto.ru.md` din frontmatter declară **destinația** grafului de traducere — adică acest fișier TREBUIE reîmprospătat când redactarea rusă în vocea lui Pavel va fi finalizată (Faza 2 / RAP-179, blocată de operator) — nu sursa lui actuală. `translation_basis: structural-skeleton-only-source-pending` face această poziție lizibilă pentru orice unealtă care urmărește graful de traducere.
 
 # Manifest
 

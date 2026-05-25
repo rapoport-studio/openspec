@@ -2,13 +2,14 @@
 title: Manifesto
 locale: en
 translates: manifesto.ru.md
+translation_basis: structural-skeleton-only-source-pending
 source_status: placeholder
 translation_status: draft
 audience: studio-internal-and-public
 last_translated: 2026-05-13
 ---
 
-> **Translation note:** This is an English translation of `manifesto.ru.md`. The Russian source is currently a structural placeholder pending Pavel-voice authorship (Phase 2 / RAP-179, operator-blocked). This translation will need to be refreshed once the canonical Russian body is written. `translation_status: draft` reflects both the translation and the source state.
+> **Translation note — read this before treating the body as a translation.** The Russian source at `manifesto.ru.md` is a **structural placeholder**, not a written manifesto: it carries section headings and scaffold only (`manifesto.ru.md:9-12`). The English body below was authored against that skeleton, not translated from a finished Russian text. The `translates: manifesto.ru.md` frontmatter declares the **target** of the translation graph — i.e. this file MUST be refreshed when Pavel-voice Russian authorship lands (Phase 2 / RAP-179, operator-blocked) — not its current source. `translation_basis: structural-skeleton-only-source-pending` makes that posture machine-readable for any tool that follows the translation graph.
 
 # Manifesto
 
