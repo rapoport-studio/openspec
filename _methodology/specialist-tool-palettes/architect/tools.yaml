@@ -1,0 +1,64 @@
+# Platform-default tool palette for the architect archetype.
+#
+# Authored against the schema in
+# `packages/muse/src/runtime/palette-schema.ts`. Loaded by
+# `packages/muse/src/runtime/specialist-tools.ts` per D-STC-2 (brand
+# override > platform default; first-match-wins). The turn-route gate
+# (D-STC-3) consumes the resolved palette to filter the tool list the
+# LLM ever sees.
+#
+# This file seeds the architect archetype with the foundation tools
+# already exposed by `ARCHITECT_EMIT_TOOLS` + the read-only foundation
+# tools registered by `registerFoundationTools`. Adding/removing a tool
+# is one YAML line; reviewable in a normal PR.
+archetype: architect
+tools:
+  - id: read_openspec
+    description: Read OpenSpec capability docs + change folders.
+    scope: read
+  - id: read_archive
+    description: Read archived OpenSpec changes for precedent.
+    scope: read
+  - id: read_file
+    description: Read a file from the repo sandbox.
+    scope: read
+  - id: list_directory
+    description: List a directory in the repo sandbox.
+    scope: read
+  - id: web_search
+    description: General web search.
+    scope: read
+  - id: fetch_url
+    description: Fetch a URL's textual content.
+    scope: read
+  - id: domain_research
+    description: Domain primer research for a target market.
+    scope: read
+  - id: competitor_research
+    description: Structured competitor scan.
+    scope: read
+  - id: update_proposal
+    description: Author or amend proposal.md for a change.
+    scope: write
+  - id: update_design
+    description: Author or amend design.md for a change.
+    scope: write
+  - id: update_tasks
+    description: Author or amend tasks.md for a change.
+    scope: write
+  - id: update_verification
+    description: Author or amend verification.md for a change.
+    scope: write
+  - id: write_mirror_field
+    description: Write a field of a brand's mirror document.
+    scope: write
+skills:
+  - id: spec_authoring
+    bundled_from: '@rapoport-studio/muse/modes/architect'
+research_agents:
+  - id: domain_primer
+    description: Scope a domain primer for a target market.
+    bundled_from: '@rapoport-studio/muse/tools/domain_research'
+  - id: competitor_scan
+    description: Structured competitor scan.
+    bundled_from: '@rapoport-studio/muse/tools/competitor_research'
