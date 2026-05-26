@@ -106,7 +106,7 @@ This is the slowest-moving pattern because it needs **humans**, not engineering 
 
 ## §E — Designed-the-test-then-cancelled-the-run: unchanged
 
-The Business & Positioning panel's cross-cutting observation about the Van Westendorp PSM, the Dunford canvas, the channel calendar, and the events/KPI schema being designed-but-cancelled is unchanged in the window. [`validate-marketing-surface-stage-1`](../../changes/validate-marketing-surface-stage-1/) and [`expand-marketing-surface-stage-1`](../../archive/2026-05-24-expand-marketing-surface-stage-1-superseded/) (superseded 2026-05-24 via PR #1694; four successor scaffolds in PR #1695) remain in the same shape — successors not yet started.
+The Business & Positioning panel's cross-cutting observation about the Van Westendorp PSM, the Dunford canvas, the channel calendar, and the events/KPI schema being designed-but-cancelled is unchanged in the window. [`validate-marketing-surface-stage-1`](../../archive/2026-05-26-validate-marketing-surface-stage-1-cancelled/) (cancelled 2026-05-26) and [`expand-marketing-surface-stage-1`](../../archive/2026-05-24-expand-marketing-surface-stage-1-superseded/) (superseded 2026-05-24 via PR #1694; four successor scaffolds in PR #1695) remain in the same shape — successors not yet started.
 
 No score on the Business & Positioning panel should move in this delta.
 
