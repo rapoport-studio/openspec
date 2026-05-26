@@ -3,10 +3,10 @@
 > Public mirror of the studio's methodology corpus. Read-only — commits made
 > directly to this repo are overwritten on the next sync from the source repo.
 
-[![Last synced](https://img.shields.io/badge/last_synced-9e803e7-blue)](https://github.com/rapoport-studio/rapoport.studio/commit/9e803e7fe6afb33d8e4b013c3dc5b6221475d9b0)
+[![Last synced](https://img.shields.io/badge/last_synced-8232b62-blue)](https://github.com/rapoport-studio/rapoport.studio/commit/8232b62dd1ebe67cf808174ee5c3c020d10cb0ec)
 [![Studio profile](https://img.shields.io/badge/studio-rapoport--studio-black)](https://github.com/rapoport-studio)
 
-Last sync: `9e803e7` at `2026-05-25T20:44:43Z`.
+Last sync: `8232b62` at `2026-05-26T03:10:52Z`.
 
 ## What this is
 
