@@ -19,6 +19,44 @@ openspec/changes/<slug>/
 
 There is **no `specs/` directory**, no per-capability delta files, no `Requirement` blocks. Capability specs live in `openspec/current/*.md` and are amended in place at archive time — not delta-restructured during a proposal.
 
+### `proposal.md` canonical shape
+
+The proposal opens with a single H1 title followed by a leading Rapoport-Prose blockquote declaring scope. Then the four canonical sections in order:
+
+```markdown
+# <Change title in sentence case>
+
+> **Affects capability spec:** `openspec/current/<path>.md`, `openspec/current/<other>.md`
+
+## Why
+<Problem statement. What gap or friction does this address? Why now?>
+
+## What Changes
+<Bullet list of capability deltas. Each maps to a design.md section.>
+
+## Impact
+<Spec files touched, packages affected, downstream surfaces.>
+
+## Out of scope
+<Explicit exclusions to prevent scope creep.>
+```
+
+**Parser contract.** The studio's `parseProposalHeader` ([apps/studio/src/app/(auth-walled)/(spec)/spec/[id]/loaders/spec-preview.ts](../apps/studio/src/app/%28auth-walled%29/%28spec%29/spec/%5Bid%5D/loaders/spec-preview.ts)) captures the H1 as `changeTitle` and reads inline-code-literals from the `**Affects capability spec:**` blockquote line as capability paths. The `openspec/current/` prefix is stripped during resolution. See [`openspec/current/spec-preview.md § Affected scope detection`](current/spec-preview.md) for the full algorithm.
+
+**Frontmatter handling.** A leading YAML frontmatter block (`---…---`) is skipped if and only if `---` is the file's first non-blank line, with the closing `---` on its own line. Mid-body `---` lines are Markdown thematic breaks (`<hr>`) and remain content — the parser does not eat them.
+
+**Singular vs plural.** Both `**Affects capability spec:**` and `**Affects capability specs:**` parse identically, with or without an `(at archive)` annotation. Use whichever reads better; plural with `(at archive)` is the dominant convention in archived proposals.
+
+**The `none directly` sentinel.** For a change that deliberately touches no `openspec/current/*.md` file (process / methodology / copy / packaging), write:
+
+```
+> **Affects capability spec:** none directly — <one-clause reason>
+```
+
+The reason after the em-dash is recommended for human readers but not parser-required. The literal `none directly` MUST NOT be wrapped in backticks — backticks make the parser treat it as a path and try to resolve it. The parser classifies this as `affectsDeclaration: 'none-directly'` and renders an info-tone `affects-declared-as-none` banner (semantic: "deliberate, no action needed"), distinct from the attention-tone `affects-undeclared` banner ("author forgot, action needed").
+
+`design.md` and `tasks.md` have no equivalent canonical-shape subsection here — they have no parser contract; their shape is conventional and captured in the Architect / Storyteller prompt templates only.
+
 ### `verification.md` canonical shape
 
 Four sections, in this order:
