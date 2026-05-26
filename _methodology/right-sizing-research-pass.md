@@ -66,7 +66,7 @@ The tree is the **default**; these conditions justify an explicit override. Over
 
 **Recommendation: Outcome 2 — right-size 5 → 2 streams + carve-outs.**
 
-Per `validate-marketing-surface-stage-1/design.md § 3`, the original 5 streams are:
+Per `archive/2026-05-26-validate-marketing-surface-stage-1-cancelled/design.md § 3` (target was cancelled 2026-05-26 per its `CANCELLED.md` — three of four successor changes of the parent umbrella shipped before any stream dispatched), the original 5 streams are:
 
 | # | Stream | Decision unlocked | Domain | Reversibility |
 |---|---|---|---|---|
@@ -100,7 +100,7 @@ Applying the tree to each stream's lead question:
 | **Recommended (Outcome 2, this synthesis)** | **2** | **1.5–2** | **€500–1500** (concentrated on pricing) |
 | Savings | 3 streams (60%) | 1.5–2 Pavel-days | €0 (cost stays in pricing where it pays back) |
 
-Pavel's call to ratify or override; recommendation is published per D-RS-4. If ratified, the next action is a successor PR against `validate-marketing-surface-stage-1/proposal.md` that:
+Pavel's call to ratify or override; recommendation is published per D-RS-4. If ratified, the next action is a successor PR against `validate-marketing-surface-stage-1/proposal.md` (now `archive/2026-05-26-validate-marketing-surface-stage-1-cancelled/proposal.md`) that:
 
 - Strikes Streams #3, #4, #5 from § 3 The five streams.
 - Adds § "Right-sizing recommendation accepted (2026-05-20)" citing this methodology doc.
@@ -155,5 +155,5 @@ Both gaps are acknowledged; the methodology is shippable today and re-callibrata
   - `openspec/archive/2026-05-20-right-size-research-pass-framework/research/stream-2-competitor-benchmark.md`
   - `openspec/archive/2026-05-20-right-size-research-pass-framework/research/stream-3-archive-extraction.md`
 - Originating change: `openspec/archive/2026-05-20-right-size-research-pass-framework/` (archived 2026-05-20 after Pavel ratified Outcome 2 in PR #1545).
-- Retroactive target: `openspec/changes/validate-marketing-surface-stage-1/` (RAP-661).
+- Retroactive target: `openspec/archive/2026-05-26-validate-marketing-surface-stage-1-cancelled/` (RAP-661 — cancelled 2026-05-26; see folder's `CANCELLED.md`).
 - Linear: RAP-734 (this methodology); RAP-735/736/737 (the 3 streams, all Done).
