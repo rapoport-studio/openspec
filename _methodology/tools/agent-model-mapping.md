@@ -46,15 +46,15 @@ Main table. Includes Phase A (Maestro) and Phase B candidates (Muse modes, Atlas
 
 | Agent / mode | Default model | Fallback chain | Reasoning |
 |---|---|---|---|
-| **Maestro** | `claude-opus-4-8` | `claude-sonnet-4-7` | Coordinator quality compounds across the orchestra (bottleneck cascade per [`agents/maestro.md § Risk matrix`](../../current/agents/maestro.md)). The highest-tier model is required. Sonnet fallback only on availability degradation (Anthropic API rate-limit / quota exhaustion), not cost-conscious downgrade. |
-| **Muse — Architect** | `claude-opus-4-8` | `claude-sonnet-4-7` | Spec authoring requires structured-output reliability; the v1 active mode generating `proposal.md` / `design.md` / `tasks.md` triplets in `apps/studio` canvas (per [`muse.md § Architect mode (v1)`](../../current/muse.md)). Sonnet fallback only on availability degradation. |
-| **Muse — Builder** | `claude-sonnet-4-7` | `claude-opus-4-8` | 98% Opus quality at fraction of cost (per RAP-150 issue body); cost-conscious by default for routine plan execution via `forge build`. Opus escalation when Sonnet plan output is rejected at a checkpoint review (per [`forge/entities.md § Builder mode`](../../current/forge/entities.md)). |
-| **Muse — Scout** | `claude-sonnet-4-7` | `claude-opus-4-8` | Codebase research mode (deferred to v1.3 per [`muse.md § Why other modes are deferred`](../../current/muse.md)); cost-conscious by default — research work is high-volume by nature. Opus escalation for synthesis tasks that require deeper reasoning. |
-| **Muse — Canvas** | `claude-opus-4-8` | `claude-sonnet-4-7` | Public-facing client conversations (deferred to v2). Voice quality matters at the public surface; Opus default. Sonnet fallback only on availability degradation. |
+| **Maestro** | `claude-opus-4-8` | `claude-sonnet-4-6` | Coordinator quality compounds across the orchestra (bottleneck cascade per [`agents/maestro.md § Risk matrix`](../../current/agents/maestro.md)). The highest-tier model is required. Sonnet fallback only on availability degradation (Anthropic API rate-limit / quota exhaustion), not cost-conscious downgrade. |
+| **Muse — Architect** | `claude-opus-4-8` | `claude-sonnet-4-6` | Spec authoring requires structured-output reliability; the v1 active mode generating `proposal.md` / `design.md` / `tasks.md` triplets in `apps/studio` canvas (per [`muse.md § Architect mode (v1)`](../../current/muse.md)). Sonnet fallback only on availability degradation. |
+| **Muse — Builder** | `claude-sonnet-4-6` | `claude-opus-4-8` | 98% Opus quality at fraction of cost (per RAP-150 issue body); cost-conscious by default for routine plan execution via `forge build`. Opus escalation when Sonnet plan output is rejected at a checkpoint review (per [`forge/entities.md § Builder mode`](../../current/forge/entities.md)). |
+| **Muse — Scout** | `claude-sonnet-4-6` | `claude-opus-4-8` | Codebase research mode (deferred to v1.3 per [`muse.md § Why other modes are deferred`](../../current/muse.md)); cost-conscious by default — research work is high-volume by nature. Opus escalation for synthesis tasks that require deeper reasoning. |
+| **Muse — Canvas** | `claude-opus-4-8` | `claude-sonnet-4-6` | Public-facing client conversations (deferred to v2). Voice quality matters at the public surface; Opus default. Sonnet fallback only on availability degradation. |
 | **Maestro mode (Muse-internal)** | (same as Maestro row above) | (same) | Maestro's runtime is implemented as the fifth Muse mode at `packages/muse/src/modes/maestro/` per [`muse.md § Maestro added as fifth mode`](../../current/muse.md). The binding is shared with the agent identity — one row, two reader contexts (the agent spec + the Muse-mode entry). |
 | **Atlas — discovery** | Perplexity API | (none) | Continuous-research surveys against the open web; Perplexity is the canonical discovery substrate (web-aware, citation-grounded). No Anthropic fallback because Claude does not have native continuous web access. |
-| **Atlas — synthesis** | `claude-opus-4-8` | `claude-sonnet-4-7` | Synthesis of Perplexity discovery findings into orchestra-readable artifacts (`_research/world/<beat>/<date>.md`). Quality matters because synthesis output is what other agents consume; Opus default. |
-| **Echo** | `claude-opus-4-8` | `claude-sonnet-4-7` | Brand voice quality on every draft. Pavel-review is hard gate per [`agents-overview.md § Roster`](../../current/agents-overview.md) — voice fidelity must be Opus-grade or rejection rate erodes the cost savings of Sonnet. Sonnet fallback only on availability degradation. |
+| **Atlas — synthesis** | `claude-opus-4-8` | `claude-sonnet-4-6` | Synthesis of Perplexity discovery findings into orchestra-readable artifacts (`_research/world/<beat>/<date>.md`). Quality matters because synthesis output is what other agents consume; Opus default. |
+| **Echo** | `claude-opus-4-8` | `claude-sonnet-4-6` | Brand voice quality on every draft. Pavel-review is hard gate per [`agents-overview.md § Roster`](../../current/agents-overview.md) — voice fidelity must be Opus-grade or rejection rate erodes the cost savings of Sonnet. Sonnet fallback only on availability degradation. |
 | **Pulse** | `gpt-5.5-pro` | `claude-opus-4-8` | Math reasoning leader (FrontierMath benchmark per RAP-150 issue body). Anthropic's Claude family does not lead this domain. Claude Opus fallback only on OpenAI availability degradation — Pulse degrades gracefully but never silently (a fallback to Claude is recorded as a degradation event in the orchestra journal once Layer 2 ships). |
 | **Forge** | `claude-opus-4-8` | (none) | Coding leader, agent reliability. **No fallback** because cost savings of Sonnet do not justify reliability loss in code execution. The existing default is `MODELS.opus` per [`forge/entities.md § Anthropic API integration`](../../current/forge/entities.md). Sonnet escalation in either direction is a separate decision (e.g. some sub-pipelines like SEO audit could use Sonnet) and lands as a per-pipeline override in `forge.config.{mjs,js,json}`, not as a Forge-default fallback. |
 
@@ -66,18 +66,18 @@ The Forge agent table above declares Forge core's default as `claude-opus-4-8` w
 
 | Audit agent | Default model | Weight | Reasoning |
 |---|---|:-:|---|
-| `security` | `claude-sonnet-4-7` | 2.0 | False negative = production security hole; reasoning over diff context |
-| `risk` | `claude-sonnet-4-7` | 2.0 | High cost of miss on operational risk; reasoning |
-| `architect` | `claude-sonnet-4-7` | 1.5 | Architectural reasoning; long-context judgment |
-| `tech-lead` | `claude-sonnet-4-7` | 1.5 | Velocity vs correctness tradeoff judgment |
-| `performance` | `claude-sonnet-4-7` | 1.5 | Runtime reasoning, not pattern matching |
-| `component-api` | `claude-sonnet-4-7` | 1.5 | API contract analysis; reasoning |
-| `qa` | `claude-sonnet-4-7` | 1.0 | Test-coverage reasoning |
+| `security` | `claude-sonnet-4-6` | 2.0 | False negative = production security hole; reasoning over diff context |
+| `risk` | `claude-sonnet-4-6` | 2.0 | High cost of miss on operational risk; reasoning |
+| `architect` | `claude-sonnet-4-6` | 1.5 | Architectural reasoning; long-context judgment |
+| `tech-lead` | `claude-sonnet-4-6` | 1.5 | Velocity vs correctness tradeoff judgment |
+| `performance` | `claude-sonnet-4-6` | 1.5 | Runtime reasoning, not pattern matching |
+| `component-api` | `claude-sonnet-4-6` | 1.5 | API contract analysis; reasoning |
+| `qa` | `claude-sonnet-4-6` | 1.0 | Test-coverage reasoning |
 | `seo` | `claude-haiku-4-5` | 1.5 | Pattern matching: readability, keywords (D-9) |
 | `growth` | `claude-haiku-4-5` | 1.0 | Analytics pattern checks (D-9) |
 | `pm` | `claude-haiku-4-5` | 1.0 | Product lens; heuristic classification (D-9) |
 | `ui-designer` | `claude-haiku-4-5` | 1.0 | Visual pattern checks (D-9) |
-| `a11y` | `claude-sonnet-4-7` (staged Haiku candidate) | 1.5 | WCAG rule-checking; promoted to Haiku after one studio audit cycle confirms no regression. C-2 in `improve-forge-throughput` keeps a11y on Sonnet for v1 (D-9, staged) |
+| `a11y` | `claude-sonnet-4-6` (staged Haiku candidate) | 1.5 | WCAG rule-checking; promoted to Haiku after one studio audit cycle confirms no regression. C-2 in `improve-forge-throughput` keeps a11y on Sonnet for v1 (D-9, staged) |
 
 Per-pipeline override at consumer site: `ForgeConfig.models.auditAgents?: Partial<Record<AgentName, ModelAlias>>` takes precedence over module-registry defaults. Forge core (Builder, plan generation) is unaffected — D-7 unchanged.
 
@@ -90,7 +90,7 @@ Maps the row labels in [§ Per-agent default + fallback](#per-agent-default--fal
 | Row label | Provider | Provider ID | Pricing source |
 |---|---|---|---|
 | `claude-opus-4-8` | Anthropic | TBD per Anthropic identifier registry (currently the `MODELS.opus` constant in `packages/forge/src/core/anthropic.ts`) | [`MODEL_PRICING`](../../../packages/forge/src/core/anthropic.ts) in `packages/forge/src/core/anthropic.ts § initModelPricing` (extensible per RAP-166 / [`forge/verifier.md § Known gaps #6`](../../current/forge/verifier.md)) |
-| `claude-sonnet-4-7` | Anthropic | TBD per Anthropic identifier registry (currently the `MODELS.sonnet` constant in `packages/forge/src/core/anthropic.ts`) | same |
+| `claude-sonnet-4-6` | Anthropic | TBD per Anthropic identifier registry (currently the `MODELS.sonnet` constant in `packages/forge/src/core/anthropic.ts`) | same |
 | `claude-haiku-4-5` | Anthropic | `claude-haiku-4-5-20251001` (the `MODELS.haiku` constant in `packages/forge/src/core/anthropic.ts`) | [`MODEL_PRICING`](../../../packages/forge/src/core/anthropic.ts) in `packages/forge/src/core/anthropic.ts § initModelPricing` — entry `'claude-haiku-4-5-20251001': { input: 0.5, output: 2.5 }` |
 | `gpt-5.5-pro` | OpenAI | TBD per OpenAI identifier registry | TBD when provider abstraction (`add-provider-abstraction` Layer 1.5) ships an OpenAI client |
 | Perplexity API | Perplexity | TBD (Perplexity Sonar or equivalent for continuous-research mode) | TBD when Atlas runtime ships and the Perplexity client is wired |
