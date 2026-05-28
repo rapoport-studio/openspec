@@ -175,6 +175,27 @@ Post-fix A/B: `high` produces an equivalent 8-step plan for ~24 % fewer output
 tokens (2 764 vs 3 628) and ~4.6 % lower cost ($1.33 vs $1.40). Conclusion:
 `high` is a viable, slightly cheaper planner effort — *with the unwrap fix*.
 
+## Findings
+
+> Structured index added 2026-05-28 as part of
+> [`inquiry-drift-coverage-retrieval-spike`](./inquiry-drift-coverage-retrieval-spike.md)
+> Phase 2 substitute experiment. Grade vocabulary per `add-inquiry-entity` design.md §3
+> `InquirySource.credibility` enum.
+
+| # | Claim | Grade | Falsifier |
+|---|---|---|---|
+| F-1 | `openspec/_root/INDEX.md` lists 3 of 50 capability specs (94% invisibility). Root cause: `tools/build-openspec-index.mjs` includes only files with `title` YAML frontmatter; 47 of 50 have none and are silently skipped. | engineering_claim | Adding frontmatter to one of the 47 unindexed specs causes it to appear in the next INDEX regen. |
+| F-2 | `tools/lint-frontmatter.mjs` is warn-only (`exit 0`, "Phase A mode") despite its own header noting "Phase C flips to exit 1" — the flip never happened, so the gap accumulated unchecked. | engineering_claim | Flipping the lint to `exit 1` produces a non-zero exit on the 47 unindexed specs in CI. |
+| F-3 | `INDEX.md` and `apps/web/public/llms-full.txt` are committed-but-generated, and `postinstall` regenerates only the bundle + search index, not these two — they only refresh on manual `pnpm openspec:regen` and have drifted stale. | engineering_claim | A spec edit followed by `pnpm install` does NOT update INDEX.md or llms-full.txt (current behavior); adding them to postinstall would. |
+| F-4 | Refs guard (`tools/check-openspec-refs.mjs`) scans `openspec/current/` and `openspec/_methodology/` but NOT `CLAUDE.md` — the single most-read agent file. CLAUDE.md's broken `platform-foundation` reference accumulated unnoticed. | engineering_claim | Extending refs guard to CLAUDE.md flags the broken ref in next CI run. |
+| F-5 | Claude Platform doc-coverage is good: all 7 Phase A/B features are in code, archived, and documented in correct capability specs. Only minor gap: Files API spec update for `studio-workspace/narrative.md` (intake-ingest pipeline) did not land. | engineering_claim | Reading `studio-workspace/narrative.md` shows no Files-API-wrapper / `file_id` references; landing the missed update would close this. |
+| F-6 | Cloudflare infra is healthy: KV + R2 + Workers-AI bound; no D1/Vectorize provisioned because the studio's "search index" is a build-time `tools/openspec-index.json` artifact, not a Cloudflare-side index. | engineering_claim | A future need for runtime vector search would require D1/Vectorize and falsify the "healthy without them" claim. |
+| F-7 | Postgres has 22 foreign-key constraints without covering indexes on referencing columns. Hygiene-grade today (tables are small), but slows joins / cascades as they grow. | engineering_claim | A migration adding the 22 covering indexes runs cleanly and removes the gap from `pg_index` inventory. |
+| F-8 | `forge/commands.md` flag table is stale (missing `--wait-lock`, `--force`, `--auto-approve-plan`, `--use-stale-plan`, `--effort`); `--sandbox` is documented space-separated but parser only accepts `--sandbox=docker`; documented form silently ignored. | engineering_claim | Running `forge build --sandbox docker` (space form) succeeds; current behavior shows it does not. |
+| F-9 | `forge epic` subcommands `--status`, `--validate`, `--watch` and bare conductor are undocumented; only `--close` is. Operators have no reference for the other modes. | engineering_claim | Documentation regen surfaces the missing subcommands; current docs grep does not find them. |
+| F-10 | `forge dispatch` / `forge tail` referenced in `spec.md` MCP-tool list and `README.md` routing table do not exist in the CLI command whitelist — broken documentation surface. | engineering_claim | `forge dispatch --help` returns non-zero / "command not found"; current state confirms. |
+| F-11 | Effort A/B experiment: `--effort=high` produces equivalent 8-step plans for ~24% fewer output tokens (2 764 vs 3 628) and ~4.6% lower cost ($1.33 vs $1.40) — *only after* the `unwrapPlaceholderPayload` fix in PR #1375. Prior to fix, `high` deterministically wrapped plans in stray `$PARAMETER_NAME` tool-input placeholder. | engineering_claim | A `--effort=high` plan on a different epic produces non-equivalent step count or higher token cost, refuting generality. |
+
 ## Prioritized fix plan
 
 | # | Fix | Area | Effort |

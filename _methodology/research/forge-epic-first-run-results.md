@@ -262,3 +262,22 @@ These are bundled into one PR so the post-mortem, the spec amendment, and the tr
 The conductor and the underlying build pipeline are **production-ready** for OpenSpec-backed sub-issues with correct labelling and a primary worktree on main. Three operator pitfalls (F-NEW-1, F-NEW-2, F-NEW-5/6) and one real Forge defect (F-NEW-3, now fixed) were surfaced. The Builder's behaviour as a spec-quality gate (F-NEW-7) is a stronger signal than expected — operators should treat Builder deviation notes as ground truth and amend specs accordingly, not vice versa.
 
 The audit batch's remaining six sub-issues (RAP-747..752) can now dispatch via the conductor once each is promoted to Todo + `auto-build`, with the F-NEW-1 + F-NEW-2 operator checklist applied pre-dispatch. The two Q-blocked sub-issues (RAP-750 HTN, RAP-751 CCP) still wait on Pavel's open-question resolution.
+
+---
+
+## Findings
+
+> Structured index added 2026-05-28 as part of
+> [`inquiry-drift-coverage-retrieval-spike`](./inquiry-drift-coverage-retrieval-spike.md)
+> Phase 2 substitute experiment. Grade vocabulary per `add-inquiry-entity` design.md §3
+> `InquirySource.credibility` enum. Findings condensed from F-NEW-1..7 above.
+
+| # | Claim | Grade | Falsifier |
+|---|---|---|---|
+| F-1 | `SANDBOX_LABELS = ['tech-debt', 'audit', 'bug']` auto-enables `--sandbox` mode for OpenSpec-backed sub-issues when spec-folder detection fails — bypassing the proposal/design/tasks artifact chain silently. | engineering_claim | Forge ships logic where the sandbox heuristic ANDs with "no spec-source reference in issue body"; an OpenSpec-backed issue with `audit` label dispatches through the spec-backed path. |
+| F-2 | `forge.config.mjs` resolves `repoRoot` to the primary worktree; if the primary is behind `origin/main`, `findSpecFolder()` returns null and amplifies F-1's sandbox-trigger trap. | engineering_claim | Forge resolves `repoRoot` against the worktree containing the dispatched change folder rather than the primary, or pre-dispatch check refuses to proceed when primary is behind main. |
+| F-3 | Plan-prompt construction on `claude-opus-4-7` produced a one-character user message (single space) → Anthropic API HTTP 400. Root cause in cache-breakpoint message builder. | engineering_claim | The defect was fixed in PR #1040 (post-fix Run 4 succeeded end-to-end). Regression: any future plan request with non-empty content failing the same 400. |
+| F-4 | `forge build`'s stale-plan freshness check refuses plans generated against an older Linear-issue mtime, but the `--auto-plan` flag — marked `(deprecated)` — does NOT auto-regenerate stale plans. Operators see contradictory guidance. | engineering_claim | Either `--auto-plan` regenerates stale plans (matching error-message recommendation), or `forge epic --close` skip-and-replans sub-issues with stale plans. |
+| F-5 | Builder caught spec drift autonomously and corrected `next/font/local` config mismatch (spec author modelled local-font on google-font API). Builder operated as a quality gate, not just a code executor. **Positive finding.** | engineering_claim | A future pilot where Builder accepts an invalid spec API silently and ships incorrect code. |
+| F-6 | Conductor topo-sort + status filtering + label filtering produced deterministic, machine-parseable skip-reason strings across all 3 retries; no leaked state on early-failure path. | engineering_claim | A retry produces a different topo order or leaks state into `~/.forge/states/`. |
+| F-7 | Validator catches body-format drift before dispatch (25 warnings, 0 errors on RAP-744 sub-issues; flagged missing `## Scope` / `## Wave` / `## Spec source` sections). Useful pre-dispatch gate. | engineering_claim | A future sub-issue with missing canonical sections passes `forge epic --validate` without warning. |

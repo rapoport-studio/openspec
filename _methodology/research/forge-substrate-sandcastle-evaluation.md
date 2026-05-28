@@ -196,6 +196,23 @@ These are not all root-caused. The substrate decision interacts with the fix pat
 
 ---
 
+## Findings
+
+> Structured index added 2026-05-28 as part of
+> [`inquiry-drift-coverage-retrieval-spike`](./inquiry-drift-coverage-retrieval-spike.md)
+> Phase 2 substitute experiment. Grade vocabulary per `add-inquiry-entity` design.md §3
+> `InquirySource.credibility` enum.
+
+| # | Claim | Grade | Falsifier |
+|---|---|---|---|
+| F-1 | Sandcastle is single-loop (`sandcastle.run()` until `completionSignal`); Forge's plan/build/verify/push/PR pipeline has no native analogue. Re-expressing Forge's split as a sequence of Sandcastle runs is not impossible but is non-trivial. | engineering_claim | A working multi-phase pipeline expressed via Sandcastle primitives within ≤2 weeks would falsify the cost estimate. |
+| F-2 | Sandcastle lacks an OpenSpec equivalent, Linear/issue-tracker integration, PR creation, cost instrumentation, and verifier. All Forge primitives in these layers would survive migration as wrappers, not be replaced. | engineering_claim | A Sandcastle release adding any of these primitives would partially falsify the wrapper-survival claim. |
+| F-3 | Outcome A (full migration) costs 2-4 months of solo work + ~$2k-$5k Anthropic re-validation spend. Cost dominates unless current Forge substrate is fundamentally broken — it isn't per the audit list. | discourse | An honest re-estimate that lands below 4 weeks total, OR Forge's HIGH-severity bug count growing past 8 (decision criterion below), would re-open Outcome A. |
+| F-4 | Outcome B (lift patterns) is best risk/reward. Three independently shippable lifts: Docker sandbox (high — security gating from `agents-threat-model.md` AT-04/AT-05), provider abstraction (medium — roadmap C-4), branch strategies (low — nice-to-have). | engineering_claim | A pattern lift that fails in implementation (e.g., Docker sandbox unworkable on Apple Silicon) would partially falsify. **Partially confirmed:** Docker sandbox shipped 2026-05-16 (post-mitigation RPN 5/5, down from 15/10). |
+| F-5 | Outcome C (reject) defensible only if Forge's architecture is incompatible with Sandcastle's primitives — but worktree-per-build is identical in both. Reject is "lazy answer, not right answer." | discourse | A demonstration that Sandcastle's worktree-per-build cannot interoperate with Forge's per-issue branch model would justify Outcome C. |
+| F-6 | Forge's HIGH-severity bug surface (memory `forge_audit_2026_05_10.md`) is fixable in-place. The substrate decision is uncorrelated with most of these bugs — they exist in Forge's orchestration logic, not in the worktree primitive. | engineering_claim | A HIGH-severity bug traced to the worktree primitive (not the orchestration code) would tip the substrate decision toward Outcome A. |
+| F-7 | Pattern lift = read sandcastle code, adapt design, ship our own. Avoid runtime dependency on Sandcastle. Respects the muse→forge/core boundary discipline. | engineering_claim | A future Sandcastle pattern (e.g., session-history tree primitive) that's complex enough to be impractical to re-implement would justify runtime-dependency. |
+
 ## Recommendation — Outcome B (Lift patterns)
 
 Best risk/reward. Each lift is an independently-shippable OpenSpec change:

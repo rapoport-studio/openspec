@@ -131,6 +131,25 @@ Convention adoption rate for new Forge research, post-convention-shipping: **0 /
 | F-3 | New Forge research (4 files, post-2026-05-10) is being authored 100% outside the inquiry-* convention. The convention's adoption rate for the capability that most needs structured retrieval is zero. | high | A single new Forge research file authored under `inquiry-forge-<topic>.md` naming with full frontmatter, by any contributor, would falsify this. Authoring counts ≥3 over the next 30 days would change the trajectory assessment. | engineering_claim |
 | F-4 | Trigger #2 (RAG-shape doctrine) cannot be measured until Trigger #1's preconditions are satisfied. Until findings exist under *some* queryable convention, `search_inquiry()` cannot be benchmarked against full-markdown reads, because the comparison has no left-hand side. | medium | Phase 3a (build `search_inquiry()` over the current JSON index, no DB) would let Trigger #2 be measured without committing to the entity. | engineering_claim |
 | F-5 | The proposal's Phase 3 schema (Inquiry + Contribution + Source + Finding + AgentGrant + Relationship + VisibilityKind) is sized for a 200-file structured corpus that does not exist and is not on a trajectory to exist by 2026-07-10. The scoping mismatch is ~2 orders of magnitude. | medium | Cohort growing to ≥20 inquiries under convention by 2026-07-10 would falsify; current rate (0 net adds in 15 days) does not. | engineering_claim |
+| F-6 | **Phase 2 substitute experiment outcome (2026-05-28).** Applying `\|#\|Claim\|Grade\|Falsifier\|` table convention to 5 Group-B files (`forge-runtime-audit-2026-05-18`, `forge-epic-first-run-results`, `forge-openspec-index-audit-2026-05`, `forge-substrate-sandcastle-evaluation`, `upgrade-forge-ai-stack-audit`) raises section-scoped grep precision to **100% (5/5)** at recall **≈ 56% (5/9 of finding-bearing universe)**. Drastic improvement vs entity-today (0%/0%) and vs bare grep (50%/100%). The convention works structurally. | high | If recall stays below 80% even after marking the remaining 4 finding-bearing files, the convention has a deeper limitation than text-discoverability. | engineering_claim |
+| F-7 | The section-scoped grep misses `forge-reviewer-isolation-2026-05.md` despite the file having pre-existing `## Findings` AND being about Forge — because the Findings section uses code-path language (`reviewer.ts`, `orchestrator.ts`) rather than the literal capability name "Forge". This identifies a known failure mode of the marker convention: capability inference within prose is unreliable. Fix: require a per-section or per-finding `Capability:` tag (similar to `Capability_refs:` in cohort frontmatter), not just topical text mention. | high | Adding a `Capability: forge` line to forge-reviewer-isolation's Findings section AND extending the test to filter on that tag should raise recall to ≥80%. | engineering_claim |
+
+---
+
+## 5.1 What F-6 + F-7 mean for the entity decision
+
+Precision-recall numbers for "findings about Forge" by method, against the 11-file ground-truth sample (Groups B + finding-bearing Group C):
+
+| Method | Precision | Recall |
+|---|---|---|
+| Entity-style (`Capability_refs: forge` in cohort) | 0% | 0% |
+| Bare `grep -l -i 'forge'` | ≈50% | 100% |
+| **Section-scoped grep (`## Findings` ∩ `forge` in section content)** | **100%** | **≈56%** |
+| Projected: section-scoped + per-section `Capability:` tag (F-7 fix) | ≥95% | ≥80% |
+
+The third row already beats every realistic Phase 3a/3b configuration on precision. The fourth row (achievable by extending the marker convention with one more field) is a strict superset of what the entity offers for drift-coverage retrieval — at the cost of one additional convention field and zero DB schema.
+
+**Implication:** Phase 3a (`search_inquiry()` over JSON) may still be worth building *for the credibility-filter use case* (RAG-shape doctrine, Trigger #2), because credibility-tier filtering inside a Findings table would require an LLM pass per row at query time. But Phase 3b (DB lift for capability_ref filtering alone) is now strongly contested by F-6 + F-7 — convention does the job.
 
 ---
 

@@ -170,6 +170,26 @@ duplicate, already-done, and prose-typed work, and reports a cheerful
 `success` either way. The fix is a pre-dispatch validation layer (D-10) plus
 honest outcome classification (D-3, D-9), not engine surgery.
 
+## Findings
+
+> Structured index of the defects above, added 2026-05-28 as part of
+> [`inquiry-drift-coverage-retrieval-spike`](./inquiry-drift-coverage-retrieval-spike.md)
+> Phase 2 substitute experiment. Grade vocabulary per `add-inquiry-entity` design.md §3
+> `InquirySource.credibility` enum: `experimental` | `engineering_claim` | `marketing` | `discourse`.
+
+| # | Claim | Grade | Falsifier |
+|---|---|---|---|
+| F-1 | Sonnet planner path (`models.architect: 'sonnet'` → `claude-sonnet-4-6`) returns API-level error immediately; Opus plans reliably. | engineering_claim | A Sonnet plan against an unchanged prompt-construction code path succeeds on a single fresh dispatch. |
+| F-2 | Docker sandbox provider stalls indefinitely on GitHub Actions runners (container starts, agent never exec'd); 90-min timeout cancels the job. `--sandbox host` works because the runner VM itself is the isolation boundary. | engineering_claim | A `--sandbox docker` dispatch on a fresh GH Actions runner completes without timeout. |
+| F-3 | `aborted-no-changes` is an ambiguous terminal outcome conflating ≥3 distinct causes (work already in main / builder declined / builder-commit race). Operators cannot disambiguate without full log dig. | engineering_claim | Forge ships a finer-grained outcome taxonomy (`shipped-real-work` / `no-op-already-done` / `no-op-builder-declined` / etc.) and runs without the ambiguous terminal state appearing. |
+| F-4 | Stale-change error misattributes cause: planner says "no `openspec/changes/<slug>/` reference in issue body" when the real cause is the folder being archived. | engineering_claim | Planner runs against an archived slug and the error message names the archive path. |
+| F-5 | Spec-acceptance gate hardcodes the originating issue key in `tasks.md` "Done when" assertions; dispatching under a different issue key fails purely on key mismatch. | engineering_claim | Gate resolves assertions against the *current* run's issue key/branch and the cross-key dispatch passes acceptance. |
+| F-6 | `SANDBOX_LABELS = ['tech-debt', 'audit', 'bug']` heuristic silently switches OpenSpec-backed issues to sandbox planning when spec-folder detection fails. Silent mode-switch on label is a footgun. | engineering_claim | Label-AND-no-spec-folder logic gates the auto-switch; an OpenSpec-backed issue with `audit` label and visible spec folder does NOT switch to sandbox. |
+| F-7 | No-op builds open PRs whose entire diff is regenerated generated files (`llms-full.txt`, `INDEX.md`); pure regen churn wastes PR + CI + review attention. | engineering_claim | A build whose only diff is generated artifacts reports `aborted-no-changes` and opens no PR. |
+| F-8 | Forge has no pre-dispatch validation against archived slugs / duplicate issues / already-completed work; burns full 10-20-min builds to discover there was nothing to do. ~76% of 2026-05-18's terminal runs produced no shippable work. | engineering_claim | A pre-flight check ships and the post-deploy wasted-run rate drops below 20% over a comparable 19-run window. |
+| F-9 | Outcome vocabulary does not separate "shipped" from "tests-only" from "did nothing"; `completed-with-pr` reports the same way for full implementation and tests-only PR. | engineering_claim | Forge emits distinct outcomes for delivered scope vs. PR-existence; operator dashboard surfaces the distinction. |
+| F-10 | Forge cannot perform prose/copy-authoring tasks (RAP-999 returned `aborted-no-changes` twice on a "Phase 2 — Copy authoring" sub-issue). This is a capability boundary, not a code bug. | engineering_claim | Forge ships an explicit capability filter that refuses prose-typed tasks before dispatch (or auto-build label excludes prose phases). |
+
 ## Recommended actions
 
 1. **D-10 pre-dispatch validation** — fold into `add-github-actions-control-plane`

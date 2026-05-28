@@ -186,6 +186,26 @@ not building from scratch.
 
 ---
 
+## Findings
+
+> Structured index added 2026-05-28 as part of
+> [`inquiry-drift-coverage-retrieval-spike`](./inquiry-drift-coverage-retrieval-spike.md)
+> Phase 2 substitute experiment. Grade vocabulary per `add-inquiry-entity` design.md §3
+> `InquirySource.credibility` enum.
+
+| # | Claim | Grade | Falsifier |
+|---|---|---|---|
+| F-1 | The design.md's premise — "Forge calls `@anthropic-ai/sdk` in the way library consumers typically do (`client.messages.create()`)" — is false. The main inference layer (`packages/forge/src/core/anthropic.ts`) calls the Anthropic REST endpoint via native `fetch()`, implementing SSE streaming and retry from scratch. | engineering_claim | A grep of `core/anthropic.ts` showing `import Anthropic from '@anthropic-ai/sdk'` would refute. Current audit confirms no such import. |
+| F-2 | `@anthropic-ai/sdk` has exactly 1 call site in Forge: `commands/audit/batch.ts`, used solely for the async Message Batches API (50% cost discount stacking on prompt caching). | engineering_claim | A second call site in Forge would refute the "1 call site" claim. |
+| F-3 | Vercel AI SDK v4 (`ai@4.3.19`) does not expose the Anthropic Message Batches API. Migrating `audit/batch.ts` to Vercel AI SDK loses functionality or requires shimming via raw fetch. **The design.md does not address this — it is a Phase 5 scope gap.** | engineering_claim | A Vercel AI SDK release shipping native Batches support would falsify. |
+| F-4 | `@anthropic-ai/claude-agent-sdk` is the Claude Code Agent SDK (used in `subprocess.ts` + `mcp-tools.ts`), architecturally independent of the inference layer. Vercel AI SDK has no equivalent to `query()`. This component must NOT be migrated in Phase 1. | engineering_claim | A Vercel-AI-SDK shipping a subprocess-agent-loop primitive comparable to `query()` would partially falsify the "do not migrate" recommendation. |
+| F-5 | All four "Phase 0 — Install dependencies" packages (`ai`, `@ai-sdk/anthropic`, `@ai-sdk/mcp`, `@modelcontextprotocol/sdk`) are already in `packages/forge/package.json`. The Phase 0 install task is already complete. | engineering_claim | A `pnpm install` run showing the packages absent would refute (current state confirms presence). |
+| F-6 | Custom `callClaude` has 10 direct call sites + 4 indirect via `callClaudeWithJsonRetry`. Migration order should be lowest-risk first (estimator, plan-builder, spec/fix, render) then JSON-retry callers, then `build/reviewer.ts` last (highest coverage; Haiku + Sonnet escalation path is subtle). | engineering_claim | A migration attempt in a different order producing fewer regressions would partially falsify the ordering recommendation. |
+| F-7 | Existing 905 tests across 75 test files pass on baseline (no code changes). Phase 1 migration risk: regression on the 905-test suite is the primary gate. | engineering_claim | Phase 1 migration that lands without a 905→905 test pass would falsify the "regression is the gate" framing. |
+| F-8 | Removing `@anthropic-ai/sdk` from Forge is Phase 5 — blocked until Muse and Studio separately migrate. Cross-package dependency surface. | engineering_claim | An audit showing Muse/Studio use Vercel AI SDK already (no `@anthropic-ai/sdk` import) would unblock Phase 5 immediately. |
+
+---
+
 ## 7. Phase 1 — Recommended safe approach (for the next executor)
 
 The main inference layer is a custom `fetch`-based client, not `new Anthropic()`. A
