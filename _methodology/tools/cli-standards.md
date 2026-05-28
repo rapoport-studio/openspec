@@ -295,7 +295,7 @@ JSON-lines: one JSON object per line, `\n`-terminated. No leading whitespace, no
 | `run_id` | string | Per-invocation UUID (uniquely identifies one CLI run). |
 | `cost_usd` | number | Cumulative cost so far this run. |
 | `tokens_in` / `tokens_out` | number | Anthropic token counters. |
-| `model` | string | Anthropic model id (e.g., `claude-opus-4-7`). |
+| `model` | string | Anthropic model id (e.g., `claude-opus-4-8`). |
 | `tool` | string | Tool name when emitting a tool-use log. |
 | `err` | object | Structured error with `{ code, message, stack? }`. Stack only at `debug` level. |
 
