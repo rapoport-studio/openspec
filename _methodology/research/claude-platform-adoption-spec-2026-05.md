@@ -94,11 +94,11 @@ Verdict legend: **NOW** = Phase A · **NEXT** = Phase B · **LATER** = Phase C �
 These four require no new dependencies and no architectural change. Each is one
 OpenSpec change.
 
-> **Implementation status (updated 2026-05-16):**
+> **Implementation status (updated 2026-05-28):**
 > - **A1 — ✅ shipped.** Linear RAP-926; change archived at `openspec/archive/2026-05-16-forge-effort-adaptive-thinking-control/`.
 > - **A2 — ✅ shipped.** Linear RAP-927; change archived at `openspec/archive/2026-05-16-adopt-structured-outputs-retire-json-retry/`.
 > - **A3 — ✅ shipped.** Linear RAP-952; change archived at `openspec/archive/2026-05-16-pin-openspec-bundle-to-1-hour/`.
-> - **A4 — ◑ in progress.** Linear RAP-928; Phase 1 (decision record) merged. Phase 2 (`inference_geo` wiring, RAP-951) is gated on legal sign-off of `openspec/changes/inference-data-residency-routing-decision/decision-record.md`.
+> - **A4 — ✅ shipped (engineering); decision-record pending legal sign-off.** Linear RAP-928 closed; Phase 1 (decision record, RAP-950) merged via #1311; Phase 2 (`inference_geo` wiring at every call site, RAP-951) merged via #1756. Change archived at `openspec/archive/2026-05-28-inference-data-residency-routing-decision/`. Decision-record status remains `pending-legal-review` per design.md § 5 (code can ship safer-than-default `"us"` posture while legal closes the record); flip to `accepted` happens in-place in the archived `decision-record.md` after sign-off, no follow-up change needed.
 
 ### A1. Effort + Adaptive thinking in Forge inference
 
