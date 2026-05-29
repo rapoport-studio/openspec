@@ -202,6 +202,8 @@ These are not all root-caused. The substrate decision interacts with the fix pat
 > [`inquiry-drift-coverage-retrieval-spike`](./inquiry-drift-coverage-retrieval-spike.md)
 > Phase 2 substitute experiment. Grade vocabulary per `add-inquiry-entity` design.md §3
 > `InquirySource.credibility` enum.
+>
+> **Capability:** forge
 
 | # | Claim | Grade | Falsifier |
 |---|---|---|---|

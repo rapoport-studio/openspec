@@ -176,6 +176,8 @@ honest outcome classification (D-3, D-9), not engine surgery.
 > [`inquiry-drift-coverage-retrieval-spike`](./inquiry-drift-coverage-retrieval-spike.md)
 > Phase 2 substitute experiment. Grade vocabulary per `add-inquiry-entity` design.md §3
 > `InquirySource.credibility` enum: `experimental` | `engineering_claim` | `marketing` | `discourse`.
+>
+> **Capability:** forge
 
 | # | Claim | Grade | Falsifier |
 |---|---|---|---|

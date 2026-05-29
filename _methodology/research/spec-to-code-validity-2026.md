@@ -68,6 +68,28 @@ The thesis "manage specs, not code" is **half marketing, half working** — spli
 | Concurrent / orchestrator | **30–50%** | Hillel Wayne: AI suggests "race conditions are okay". Memory documents this in `forge_builder_orchestrator_commit_race` |
 | Crypto / payment | <50% | Hard red line |
 
+## Findings
+
+> Structured index added 2026-05-29 as part of
+> [`inquiry-drift-coverage-retrieval-spike`](./inquiry-drift-coverage-retrieval-spike.md)
+> F-7 fix extension. Grade vocabulary per `add-inquiry-entity` design.md §3
+> `InquirySource.credibility` enum.
+>
+> **Capability:** forge
+
+| # | Claim | Grade | Falsifier |
+|---|---|---|---|
+| F-1 | Claude Opus 4.5 scores 80.9% on SWE-bench Verified but only 45.9% on SWE-bench Pro — production complexity collapses claimed performance by ~44%. 59.4% of hardest Verified problems had flawed test cases reproduced verbatim from training data (OpenAI Verified audit). | experimental | A re-run on a newly-curated SWE-bench Pro variant (no training-data overlap) producing >75% on Opus 4.5 would falsify the production-degradation claim. |
+| F-2 | AI-generated PRs ship 1.7× more defects than human PRs (10.83 vs 6.45 issues per PR), with +75% logic errors, 2.74× security issues, and 8× excessive I/O (CodeRabbit State of AI Code 2025). | experimental | An independent study showing AI PR defect rate ≤ human PR defect rate on comparable workload sizes would falsify. |
+| F-3 | 45% of AI-generated code samples fail OWASP tests; gap does not close with model size. Java 72% fail, XSS defense 14%, log injection defense 12% (Veracode GenAI 2025). | experimental | A larger-model evaluation (e.g., next-gen frontier) showing OWASP pass rate >75% would falsify. |
+| F-4 | LLMs write specs worse than code: o3 produced 72.6% correct code but only 52.3% sound specs and 4.9% valid proofs (Verina, arxiv 2505.23135). **Direct hit on "specs first" thesis.** | experimental | A reproduction on next-gen models showing spec soundness > code correctness would falsify. |
+| F-5 | Spec-Driven Development is 10× slower than iterative prompting on 1000-LOC features (Spec Kit 4h vs iterative 32 min, Scott Logic Nov 2025). SDD has a "bug paradox": trivial bugs don't warrant rerunning the SDD pipeline yet must respect spec-clarification-first philosophy. | engineering_claim | A controlled study on a different 1000-LOC feature showing SDD ≤ iterative wall-clock would falsify. |
+| F-6 | 93% line coverage from AI-generated tests yields only 3.4% mutation kill rate — AI writes tests that don't verify what they claim. | engineering_claim | A mutation-test run on AI-generated tests for a new codebase showing kill rate ≥ coverage-rate × 0.5 would falsify. |
+| F-7 | Spec compliance is category-dependent, not uniform. CRUD/scaffold: 85-95%. Multi-file refactor (4+): 40-55% (SWE-bench Pro zone). RLS/auth: <55%. Concurrent/orchestrator: 30-50%. Crypto/payment: <50%. Forge's actual operating envelope is the high-compliance categories. | engineering_claim | RAP-362..368 phases (CRUD/scaffold) shipping at <70% spec compliance would refute; the trust-gradient row for that category. |
+| F-8 | Hillel Wayne's formal-methods perspective: LLMs lie to spec to save code — when faced with a spec violation, AI proposes changing the spec rather than the code. AI-generated TLA+ properties are "trivial, uninteresting, or too coupled to implementation details." | discourse | A controlled experiment where LLMs preserve spec invariants under conflict (modify code, not spec) at >70% rate would falsify. |
+| F-9 | Property-based testing (Hypothesis): Anthropic Red achieved 86% validity / 81% reportability for top-ranked findings — strongest current verification technique for AI-generated code. | engineering_claim | A reproduction on a different framework showing <50% validity would falsify the "strongest current technique" claim. |
+| F-10 | Reformulated thesis for Rapoport Studio (vs Tessl marketing): "Manage specs **and** code. Spec drives generation; code drives trust." This is spec-anchored mode (Thoughtworks/Fowler), not spec-as-source. Risk score for "forget code, manage specs": 7/10, manageable with 7 hard red lines + verification layer. | discourse | A successful spec-as-source production deployment in the studio yielding lower defect rate than spec-anchored would falsify the reformulation. |
+
 ## Synthesis for Rapoport Studio
 
 **Reformulate the thesis (drop marketing):**

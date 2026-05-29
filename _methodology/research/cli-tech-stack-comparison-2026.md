@@ -821,6 +821,30 @@ For our content shape (OpenSpec markdown + agent prompts + code references), voy
 
 ---
 
+## Findings
+
+> Structured index added 2026-05-29 as part of
+> [`inquiry-drift-coverage-retrieval-spike`](./inquiry-drift-coverage-retrieval-spike.md)
+> F-7 fix extension. Grade vocabulary per `add-inquiry-entity` design.md §3
+> `InquirySource.credibility` enum.
+>
+> **Capability:** cli-core, forge
+
+| # | Claim | Grade | Falsifier |
+|---|---|---|---|
+| F-1 | citty is the right CLI runtime pick over commander / oclif / yargs / cac / clipanion based on UnJS ecosystem fit + Rapoport's existing dep alignment. Bundle: ~typed sub-command shapes that all three CLIs (Forge, Muse, Maestro) can share via `cli-core/`. | engineering_claim | A 6-month maintenance pause on the UnJS org OR citty bundling >2× commander's overhead would justify migration off the pick. |
+| F-2 | c12 is the canonical config loader (over cosmiconfig / conf / rc) for its four-level precedence + remote-extends gate. `cli-core/` wrapper pre-configures remote-extends DISABLED — supply-chain hardening. | engineering_claim | A documented c12 vulnerability tied to the remote-extends mechanism that the pre-configured disable doesn't mitigate would refute the supply-chain claim. |
+| F-3 | execa v9 is already in use; tinyexec is a smaller alternative but tinyexec lacks the `tee(stdout, file)` pattern Forge already relies on for structured-error capture. Don't migrate. | engineering_claim | A new tinyexec release shipping `tee` semantics + zero-config error capture would re-open the comparison. |
+| F-4 | proper-lockfile with `stale` policy is the locking pick over custom `O_EXCL` because of orphan-cleanup. Custom `O_EXCL` leaves stale locks on Ctrl-C without explicit SIGINT handler. (Memory `forge_global_build_lock` documents this pattern.) | engineering_claim | A custom-`O_EXCL` implementation reliably cleaning up orphans under SIGKILL (which proper-lockfile also can't recover from) would tie the comparison. |
+| F-5 | lefthook beats husky on benchmarks AND configuration ergonomics (single YAML vs multi-file). Picks: lefthook for pre-commit hooks. simple-git-hooks deferred — no measured advantage at studio scale. | engineering_claim | A husky release closing the benchmark gap to <10% AND offering single-config-file semantics would reopen. |
+| F-6 | Zod (full) is the runtime schema pick over Valibot / ArkType / Effect Schema. Bundle size discussion is moot for CLI context (no payload-size constraint); Zod's ecosystem maturity + LLM-output integration via AI SDK is decisive. Apps may prefer Zod Mini. | engineering_claim | A measurable Zod-bundle penalty in the studio CLI distribution (e.g., npx cold-start >500ms attributable to Zod) would reopen. |
+| F-7 | Schema-aligned LLM-output: AI SDK + Zod v1 covers the v1 needs. BAML is worth a pilot on one hot path (Forge plan-builder) — schema-aligned parsing claims measurably fewer rejections than retry-on-fail. | engineering_claim | A 4-week BAML pilot on Forge plan-builder showing <5% reduction in plan-validation errors vs Zod-only baseline refutes the pilot's value. |
+| F-8 | Vale + custom RapoportStudio package is the prose linter pick. textlint deferred — Vale's vendor-bundled `Microsoft` and `write-good` packages already cover ~80% of the prose-discipline gap. | engineering_claim | A Vale rollout producing FPR >20% on the studio's research corpus would force a textlint reevaluation. |
+| F-9 | Langfuse self-hosted + OpenInference spans for LLM observability beats Helicone / Braintrust because of data-residency control. Phoenix (Arize) deferred — useful only when production traffic exists. | engineering_claim | A Langfuse self-hosted operating cost exceeding 2 hours/month of Pavel's time at solo cadence would push toward Braintrust (managed). |
+| F-10 | promptfoo is the eval harness pick over Braintrust (SaaS), DeepEval (Python), OpenAI Evals. promptfoo's local-first + git-versionable suite matches the studio's spec-driven discipline. | engineering_claim | promptfoo failing to scale past 500 eval cases (e.g., test run >10min) would justify Braintrust pull-forward. |
+| F-11 | Distribution v1: npm + npx. v2: Node SEA (when `--build-sea` lands in stable Node, per Joyee Cheung Jan 2026). Bun compile and Deno compile deferred — both add a runtime-divergence risk for marginal cold-start savings. | engineering_claim | npm + npx cold-start consistently >2s on user machines (worse than Bun compile's claimed <500ms) would reopen the distribution-runtime comparison. |
+| F-12 | voyage-code-3 is the embedding pick over OpenAI text-embedding-3 + BGE-M3. Voyage's code-tuning has best-documented head-room on OpenSpec markdown + code-reference content shape. BGE-M3 is the residency-conscious fallback (self-hosted). | engineering_claim | A voyage-code-3 retrieval F1 score within ±2pp of OpenAI on the studio's actual research corpus would tie the comparison and reopen on cost. |
+
 ## Stack recommendation summary
 
 | Layer | Component | Pick | Alternative | Defer |

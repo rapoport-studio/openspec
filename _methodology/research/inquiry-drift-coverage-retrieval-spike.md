@@ -151,6 +151,27 @@ The third row already beats every realistic Phase 3a/3b configuration on precisi
 
 **Implication:** Phase 3a (`search_inquiry()` over JSON) may still be worth building *for the credibility-filter use case* (RAG-shape doctrine, Trigger #2), because credibility-tier filtering inside a Findings table would require an LLM pass per row at query time. But Phase 3b (DB lift for capability_ref filtering alone) is now strongly contested by F-6 + F-7 — convention does the job.
 
+| # | Claim | Grade | Falsifier |
+|---|---|---|---|
+| F-8 | **F-7 fix experiment outcome (2026-05-29).** Applying per-section `Capability: forge` blockquote tag to 5 originally-marked files + extending `## Findings` discipline to 4 more finding-bearing files (cli-tech-stack-comparison, orchestra-component-stack, spec-to-code-validity, forge-reviewer-isolation) raises section-scoped grep + Capability-tag retrieval to **100% precision / 90% recall (9/10)** — strictly better than every alternative measured. Convention discipline alone now beats every realistic Phase 3a/3b configuration for the drift-coverage capability_ref query. | high | If a new finding-bearing file about Forge ships under the convention AND is missed by section-scoped + Capability-tag retrieval, recall has a deeper limitation than measured. |
+| F-9 | **Per-section Capability tag has a known granularity limit.** `sdd-terminology-scorecard.md` contains 1 finding about Forge (KEEP verdict, 1 of 30 scoring rows) mixed with 29 findings about other terms. Section-level tag `Capability: platform` correctly excludes it from `Capability: forge` queries — precision-preserving — but the file's Forge finding is also unreachable through capability-scoped retrieval. Resolution: per-row Capability tag (column in Findings table) would close the gap; deferred until a downstream consumer actually requests row-level retrieval. | high | A real consumer (Forge tool, Studio view) requesting "all findings touching Forge anywhere, including 1-of-N mixed files" would activate the per-row design. Until then, the file-primary-capability assumption holds. |
+
+---
+
+## 5.2 Updated retrieval scorecard (post-F-7 fix, 2026-05-29)
+
+| Method | Precision | Recall |
+|---|---|---|
+| Entity-style (`Capability_refs: forge` in cohort) | 0% | 0% |
+| Bare `grep -l -i 'forge'` | ≈50% | 100% |
+| Section-scoped grep (`## Findings` ∩ `forge` in section content) | 100% | ~56% (pre-F-7-fix) → 90% (post-extension) |
+| **Section-scoped + Capability tag (this experiment)** | **100%** | **90% (9/10)** |
+| Per-row Capability tag (F-9 design extension) | projected 100% | projected 100% (would capture sdd-* mixed-content file) |
+
+**Conclusion strengthened.** The marker convention now achieves what the entity proposal's Phase 3b promised for the drift-coverage `capability_ref` filter, at **zero database cost** and **zero migration risk**. Phase 3b (DB lift for capability_ref filtering alone) should be **re-deferred** unless and until Phase 3a's RAG-shape measurement demonstrates an irreducible benefit that JSON-over-markdown cannot match.
+
+Phase 3a (`search_inquiry()` over JSON) is still worth building for the **credibility filter** use case from RAG-shape doctrine (Trigger #2) — credibility tier is per-finding row metadata, and queries like "give me only `engineering_claim`+ findings about Forge" require structured access that section-scoped grep cannot provide cheaply. That measurement remains open.
+
 ---
 
 ## 6. Classification appendix (full sample)

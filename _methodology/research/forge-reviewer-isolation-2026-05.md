@@ -23,6 +23,13 @@ Determine whether the Forge reviewer receives raw builder reasoning (SDK transcr
 
 ## Findings
 
+> Capability tag added 2026-05-29 as part of
+> [`inquiry-drift-coverage-retrieval-spike`](./inquiry-drift-coverage-retrieval-spike.md)
+> F-7 fix experiment. Existing prose sections are the findings; tag enables
+> entity-style retrieval per spike §5.1.
+>
+> **Capability:** forge
+
 ### Orchestrator call site (`orchestrator.ts:1502-1519`)
 
 `runReviewerAndMetricsSafe` resolves the transcript path via `transcriptPathOrNull()` (`:1560-1565`) and passes it directly to `runReviewer()` as `inputs.transcriptPath`. The path is `null` only when the transcript file is missing or empty (dead-subprocess signal).

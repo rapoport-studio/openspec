@@ -271,6 +271,8 @@ The audit batch's remaining six sub-issues (RAP-747..752) can now dispatch via t
 > [`inquiry-drift-coverage-retrieval-spike`](./inquiry-drift-coverage-retrieval-spike.md)
 > Phase 2 substitute experiment. Grade vocabulary per `add-inquiry-entity` design.md §3
 > `InquirySource.credibility` enum. Findings condensed from F-NEW-1..7 above.
+>
+> **Capability:** forge
 
 | # | Claim | Grade | Falsifier |
 |---|---|---|---|

@@ -329,6 +329,27 @@ The matrix is read **bottom-up for engineering** (fix L5 first) and **top-down f
 
 ---
 
+## Findings
+
+> Structured index added 2026-05-29 as part of
+> [`inquiry-drift-coverage-retrieval-spike`](./inquiry-drift-coverage-retrieval-spike.md)
+> F-7 fix extension. Grade vocabulary per `add-inquiry-entity` design.md §3
+> `InquirySource.credibility` enum.
+>
+> **Capability:** forge, muse, maestro, cli-core
+
+| # | Claim | Grade | Falsifier |
+|---|---|---|---|
+| F-1 | Per-agent Infisical paths are the structural fix for confused-deputy attacks (Meta Sev-1 March 2026, Vercel OAuth April 2026, Comment-and-Control attacks on Claude Code via GitHub Issues). One token scoped to the union of any agent's needs = blast radius of worst agent. Per-path tokens = blast radius of one agent. | engineering_claim | A confused-deputy incident occurring after per-path tokens deploy would falsify the structural-fix claim. |
+| F-2 | Forge's L5 implementation has documented race: `aborted-no-changes` outcome despite real PR (builder/orchestrator commit race in existing Forge memory). Mitigation: cross-check `gh pr view`, refactor outcome source. | engineering_claim | A clean run sequence where outcome source is `state.json` AND matches `gh pr view` for ≥10 consecutive builds would falsify the persistence of the race. |
+| F-3 | Stack picks at L5 are bus-factor-risky: citty + c12 + consola cluster on the UnJS org. Wrap in `cli-core/` so call sites see Rapoport API, not direct UnJS imports — insulates against UnJS maintainer disappearance. | engineering_claim | A measurable shift away from UnJS maintenance velocity (e.g., 0 commits over 90 days across the cluster) would activate the falsifier and force migration off the picks. |
+| F-4 | Vector store (pgvector on Supabase) is correctly deferred until corpus > 200K tokens. Current corpus (~80 research files + openspec bundle) sits well below; embedded fallback (LanceDB) would be overkill. | engineering_claim | Corpus growing past 200K tokens AND grep-based retrieval producing >50% false-positive rate on capability-scoped queries would force the vector-store pull-forward. |
+| F-5 | Judge sycophancy / preference leakage: same-family judge (e.g., Claude-judges-Claude) inflates author scores by 5-15pp (SycEval, ICLR-2026). Mitigation: cross-family judge (e.g., Gemini judges Claude output). | experimental | A controlled run where same-family judging produces scores within ±2pp of cross-family judging across ≥50 evaluations would falsify the sycophancy magnitude. |
+| F-6 | Vale prose linter is the right L4 pick but **mandatory enforcement creates reviewer friction without first measuring false-positive rate**. Advisory mode (warn, don't fail) for first month, then enforcing only if FPR <10%. | engineering_claim | A Vale-mandatory rollout with FPR ≥20% would be the evidence that pre-measurement advisory mode was the correct staging. |
+| F-7 | LLM-output schema constraint: BAML pilot makes sense for one hot path (e.g., Forge plan-builder) before broader adoption. Zod alone covers v1; BAML's schema-aligned parsing is a measurable upgrade only when the cost of schema-rejection is high. | engineering_claim | BAML pilot on Forge plan-builder yielding ≥10% reduction in plan-validation errors vs Zod-only baseline would justify broader adoption. Sub-10% would refute. |
+| F-8 | Local-only `lineage/` (under `~/.rapoport/lineage/`) is correct until a second contributor appears. Central sync (e.g., Supabase) adds attack surface without clear use case at solo-cadence. | engineering_claim | A second contributor onboarding within 90 days AND reporting difficulty querying their counterpart's lineage would trigger pull-forward. |
+| F-9 | A2A protocol adoption deferred until a concrete inter-vendor scenario exists (e.g., Devin/Factory/Conductor integration). MCP is the proven distribution channel; A2A's ecosystem is thin in 2026. | engineering_claim | A vendor-adoption event making A2A the primary protocol for Anthropic / Google / OpenAI compatibility within 6 months would falsify the deferral. |
+
 ## Consolidated stack recommendation
 
 | Layer | Component | Pick | Alternative if pick fails | Defer until |

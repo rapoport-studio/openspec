@@ -181,6 +181,8 @@ tokens (2 764 vs 3 628) and ~4.6 % lower cost ($1.33 vs $1.40). Conclusion:
 > [`inquiry-drift-coverage-retrieval-spike`](./inquiry-drift-coverage-retrieval-spike.md)
 > Phase 2 substitute experiment. Grade vocabulary per `add-inquiry-entity` design.md §3
 > `InquirySource.credibility` enum.
+>
+> **Capability:** forge
 
 | # | Claim | Grade | Falsifier |
 |---|---|---|---|
