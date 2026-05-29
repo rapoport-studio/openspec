@@ -172,6 +172,67 @@ The third row already beats every realistic Phase 3a/3b configuration on precisi
 
 Phase 3a (`search_inquiry()` over JSON) is still worth building for the **credibility filter** use case from RAG-shape doctrine (Trigger #2) — credibility tier is per-finding row metadata, and queries like "give me only `engineering_claim`+ findings about Forge" require structured access that section-scoped grep cannot provide cheaply. That measurement remains open.
 
+| # | Claim | Grade | Falsifier |
+|---|---|---|---|
+| F-10 | **Credibility-filter measurement outcome (2026-05-29).** The query "findings about Forge with credibility ≥ engineering_claim" is answerable via section-scoped + Capability-tag + table-column grep at **95% recall (70/74) and structurally 100% precision** (every returned row literally carries the grade tag in the Grade column). Distribution across 9 Capability:forge files: 65 engineering_claim + 5 experimental + 4 discourse + 0 marketing. **The credibility filter that Trigger #2 (RAG-shape doctrine) was meant to justify is now achievable through convention discipline alone.** | high | A consumer (Forge tool / Studio view) requesting credibility-filtered findings AND finding that the grep-over-table approach miscategorizes >10% would falsify the structural precision claim. |
+| F-11 | **Known shape constraint of the marker convention.** `forge-reviewer-isolation-2026-05.md` has the Capability:forge tag but **0 table rows** — its `## Findings` section uses heading-style subsections (`### Orchestrator call site`) rather than a `\|#\|Claim\|Grade\|Falsifier\|` table. Grade-filter retrieval cannot operate on heading-style sections without an additional per-heading Grade annotation. **Two valid convention shapes; one queryable by grade.** Resolution: either standardize on tabular shape (cheap), or define per-heading Grade annotation parallel to per-row Grade column. | high | Adding a per-heading `Grade:` line beneath each `###` heading in forge-reviewer-isolation, then re-running the grade-filter test and showing recall recover to 100%, would validate the fix path. |
+
+---
+
+## 5.3 Final retrieval scorecard (2026-05-29) — empirical loop closed
+
+Combined precision/recall for the two load-bearing drift-coverage queries against the 9-file Capability:forge corpus + 1 mixed-content borderline file:
+
+### Query 1: "all findings about Forge" (no credibility filter)
+
+| Method | Precision | Recall |
+|---|---|---|
+| Entity-style (`Capability_refs: forge` in cohort, status=any) | 0% | 0% |
+| Bare `grep -l -i 'forge'` | ≈50% | 100% |
+| Section-scoped grep (post-#1885) | 100% | 56% |
+| Section-scoped + Capability tag (#1904) | **100%** | **90%** |
+| Per-row Capability tag (F-9, projected) | projected 100% | projected 100% |
+
+### Query 2: "findings about Forge with credibility ≥ engineering_claim" (RAG-shape doctrine)
+
+| Method | Precision | Recall |
+|---|---|---|
+| Entity-style (`status=published` AND `min_credibility=engineering_claim`) | 0% | 0% (no findings promoted) |
+| Bare `grep` (file-level only) | ≈50% | requires LLM pass per file for grade filter |
+| Phase 3a `search_inquiry({min_credibility})` over JSON | projected 100% | projected 100% if JSON includes Findings rows |
+| **Section-scoped + Capability + Grade-column grep (THIS measurement)** | **100% (70/70)** | **~95% (70/74)** |
+| Phase 3b DB query | projected 100% | projected 100% (assuming honest migration) |
+
+The marker convention now meets or near-matches every realistic entity-backed query on the corpus that exists today. **Convention has structurally beaten Phase 3a + Phase 3b on the original Triggers #1 (drift-coverage) and #2 (RAG-shape doctrine)** at zero database cost.
+
+### What this leaves on the table for an entity (if it ever ships)
+
+The two empirical advantages the entity could still claim are operational, not retrieval-shaped:
+
+1. **Real-time mutations during a Forge build.** Markdown discipline requires file edits + git commits to add a finding; the entity supports `INSERT INTO inquiry_findings`. Concrete need: only if Forge audit roles produce findings *during* a build that downstream Forge phases must immediately retrieve — currently no such workflow exists.
+2. **Studio UI workflows.** Triage controls, contribution-thread visualization, lineage rendering. Concrete need: only if a non-author human operates on inquiries through the Studio interface — currently Pavel-as-sole-author with file-edit workflow.
+
+Neither is a Trigger from the original proposal. Both are speculative until exercised.
+
+### Recommendation: explicit re-defer of `add-inquiry-entity`
+
+The 4-PR empirical arc (#1884 → #1885 → #1903 → #1904) plus this measurement has shown that:
+
+- Trigger #1 (drift-coverage) is fully addressable by convention (F-6, F-8, scorecard Query 1).
+- Trigger #2 (RAG-shape doctrine) is fully addressable by convention (F-10, scorecard Query 2).
+- Trigger #3 (live forward-cohort) was always a "makes Phase 2 cheap" trigger, not an entity-justification trigger — it remains true but not load-bearing.
+
+With all three triggers addressed by convention discipline, **`add-inquiry-entity` should re-defer to idea-stage** per the predecessor's "captured-idea memory" pattern. The convention discipline established through this arc (`## Findings` section + `Capability:` tag + 4-tier `Grade` column + falsifier) is the actual deliverable that ships the value the entity was scoped for.
+
+**Concrete revisit triggers (when entity becomes worth reconsidering):**
+
+1. **Forge audit roles emit findings during a build** that subsequent Forge phases must read in the same build → real-time mutation requirement → entity needed.
+2. **A second human operates on inquiries** via Studio UI (triage, promotion, lineage navigation) → UI-driven workflow → entity needed.
+3. **Corpus grows past ~200 inquiries** AND grep-based retrieval shows >50% false-positive rate on common queries → vector-search-or-DB threshold → entity OR pgvector needed (intersects with `add-knowledge-vector-store` RAP-1020 scope).
+4. **Phase 3a measurement on real Forge build tokens** demonstrates that `search_inquiry()` over JSON irreducibly beats convention-based grep for ≥80% of build queries → DB-backed retrieval pays off → Phase 3b worth pursuing.
+
+Until one of these triggers fires, the convention is the source of truth, and `add-inquiry-entity/` should be marked **re-deferred 2026-05-29** with this scorecard cited as the empirical justification.
+
 ---
 
 ## 6. Classification appendix (full sample)
