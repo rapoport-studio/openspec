@@ -11,7 +11,7 @@
 > **Method:** Single-pass desk research — synthesis of SCIP tooling documentation, semantic code indexing literature, and CI performance benchmarks. Adjacent evidence from SWE-bench Pro scaffold-spread datapoint (arxiv 2509.16941). ~15 sources evaluated May 2026.
 > **Reusable for:** Forge audit-function design; drift-coverage pipeline proposal; future `search_inquiry()` tool specification. Authorship: open.
 > **Companion to:** [`inquiry-context-as-bottleneck.md`](./inquiry-context-as-bottleneck.md), [`inquiry-codegen-fidelity-metrics.md`](./inquiry-codegen-fidelity-metrics.md), [`spec-to-code-validity-2026.md`](./spec-to-code-validity-2026.md)
-> **Feeds into:** `openspec/changes/add-inquiry-entity/` (drift-coverage dependency §5); Forge `search_inquiry()` tool (Phase 3)
+> **Feeds into:** `openspec/archive/2026-05-29-add-inquiry-entity/` (drift-coverage dependency §5); Forge `search_inquiry()` tool (Phase 3)
 
 ---
 

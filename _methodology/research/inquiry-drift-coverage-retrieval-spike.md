@@ -8,16 +8,16 @@
 > **Kind:** internal
 > **Opened:** 2026-05-28
 > **Capability_refs:** inquiry, forge
-> **Thesis:** The `Inquiry` entity proposed in [`openspec/changes/add-inquiry-entity/`](../../changes/add-inquiry-entity/) is justified by Trigger #1 (drift-coverage tracker requires queryable findings) only if (a) findings actually exist in queryable form somewhere, and (b) entity-style retrieval beats `grep` on F1 for a concrete drift-coverage query against the current corpus.
+> **Thesis:** The `Inquiry` entity proposed in [`openspec/archive/2026-05-29-add-inquiry-entity/`](../../archive/2026-05-29-add-inquiry-entity/) is justified by Trigger #1 (drift-coverage tracker requires queryable findings) only if (a) findings actually exist in queryable form somewhere, and (b) entity-style retrieval beats `grep` on F1 for a concrete drift-coverage query against the current corpus.
 > **Method:** Manual classification of all `grep -l -i 'forge' openspec/_methodology/research/*.md` matches (54 files) against an entity-style retrieval that filters cohort files by `Capability_refs: forge`. Ground-truth label per file: does it contain a *finding* (falsifiable claim, audit defect, evaluation outcome) about Forge, or only an incidental mention? Sample composition: 3 entity-hits, 9 `forge-*`-prefixed legacy files (full enumeration), 10 sampled from the remaining 42 grep matches.
-> **Reusable for:** [`add-inquiry-entity` Phase 1 ratification](../../changes/add-inquiry-entity/); [`add-inquiry-workflow-gates`](../../changes/add-inquiry-workflow-gates/); future drift-coverage-tracker design.
+> **Reusable for:** [`add-inquiry-entity` Phase 1 ratification](../../archive/2026-05-29-add-inquiry-entity/); [`add-inquiry-workflow-gates`](../../archive/2026-05-29-add-inquiry-workflow-gates/); future drift-coverage-tracker design.
 > **Feeds into:** Phase 2 vesting gate evaluation; Phase 3 scope decision.
 
 ---
 
 ## 1. Question
 
-The [`add-inquiry-entity` proposal](../../changes/add-inquiry-entity/) rests on three triggers (design.md §2). Trigger #1 — *drift-coverage dependency* — claims:
+The [`add-inquiry-entity` proposal](../../archive/2026-05-29-add-inquiry-entity/) rests on three triggers (design.md §2). Trigger #1 — *drift-coverage dependency* — claims:
 
 > "The metric cannot be computed without structured tuples of the form `(capability_ref, finding_id, evidence_snippet, confidence)`. Markdown+grep can extract `capability_ref` (`grep '^Capability:'`); it cannot extract `confidence` or `credibility_tier` without an LLM pass that re-parses every file every run — operationally infeasible at the 24-file corpus today, prohibitive at 200+."
 

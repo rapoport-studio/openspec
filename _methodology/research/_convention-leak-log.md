@@ -1,7 +1,7 @@
 # Convention leak log — research frontmatter ambiguity ledger
 
 > **Purpose.** Replace the endogenous "convention churn count" gate in
-> [`add-inquiry-entity` design.md §6](../../changes/add-inquiry-entity/design.md)
+> [`add-inquiry-entity` design.md §6](../../archive/2026-05-29-add-inquiry-entity/design.md)
 > with a **use-induced** signal: every time someone (human, agent, Forge) has
 > to read prose to answer a question that the structured `> **Field:** value`
 > frontmatter convention was *supposed* to answer, log one line here.

@@ -12,7 +12,7 @@
 > **Method:** Single-pass desk research — web synthesis of SDD tool ecosystem, competitive positioning, and buyer vocabulary across public sources (product sites, blog posts, conference talks, GitHub). No first-party interviews. ~30 sources evaluated May 2026.
 > **Reusable for:** platform positioning copy; Lab MDX article on SDD landscape; future competitive-strategy decisions. Authorship: open.
 > **Companion to:** [`competitor-landscape-synthesis.md`](./competitor-landscape-synthesis.md), [`competitive-positioning-sdd-frameworks.md`](./competitive-positioning-sdd-frameworks.md), [`sdd-terminology-scorecard.md`](./sdd-terminology-scorecard.md)
-> **Feeds into:** `openspec/changes/add-inquiry-entity/` (forward-cohort vesting evidence); platform home page positioning
+> **Feeds into:** `openspec/archive/2026-05-29-add-inquiry-entity/` (forward-cohort vesting evidence); platform home page positioning
 
 ---
 

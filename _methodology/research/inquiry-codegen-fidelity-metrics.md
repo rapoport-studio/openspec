@@ -11,7 +11,7 @@
 > **Method:** Single-pass desk research — synthesis of SWE-bench Pro, HumanEval, MBPP, and emerging spec-traceability literature. Examined how existing benchmarks define "correct" and where they fail to capture spec-alignment. ~12 sources evaluated May 2026.
 > **Reusable for:** Forge audit-function design; drift-coverage pipeline specification; future capability-quality reporting. Authorship: open.
 > **Companion to:** [`inquiry-spec-code-traceability.md`](./inquiry-spec-code-traceability.md), [`inquiry-context-as-bottleneck.md`](./inquiry-context-as-bottleneck.md), [`forge-epic-first-run-results.md`](./forge-epic-first-run-results.md)
-> **Feeds into:** `openspec/changes/add-inquiry-entity/` (drift-coverage pipeline §5); Forge `search_inquiry()` tool (Phase 3); capability audit tooling
+> **Feeds into:** `openspec/archive/2026-05-29-add-inquiry-entity/` (drift-coverage pipeline §5); Forge `search_inquiry()` tool (Phase 3); capability audit tooling
 
 ---
 

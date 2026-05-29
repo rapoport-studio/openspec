@@ -11,7 +11,7 @@
 > **Method:** Single-pass desk research — synthesis of Chroma Research "context rot" benchmark (18 frontier models), Anthropic "Effective context engineering for AI agents" (Sep 2025), SWE-bench Pro scaffold-spread datapoint (arxiv 2509.16941), Answer.AI Devin reproduction (36 min vs 6h20m). ~20 sources evaluated May 2026.
 > **Reusable for:** Forge context-engineering design; cli-core LLM-wrapping decisions; Muse prompt architecture; any agent scaffolding proposal. Authorship: open.
 > **Companion to:** [`inquiry-spec-code-traceability.md`](./inquiry-spec-code-traceability.md), [`inquiry-codegen-fidelity-metrics.md`](./inquiry-codegen-fidelity-metrics.md), [`upgrade-forge-ai-stack-audit.md`](./upgrade-forge-ai-stack-audit.md), [`upgrade-forge-baseline-2026-05-13.md`](./upgrade-forge-baseline-2026-05-13.md)
-> **Feeds into:** `openspec/changes/add-inquiry-entity/` (RAG-shape rationale §2.2); Forge `search_inquiry()` tool design; cli-core context-engineering primitives
+> **Feeds into:** `openspec/archive/2026-05-29-add-inquiry-entity/` (RAG-shape rationale §2.2); Forge `search_inquiry()` tool design; cli-core context-engineering primitives
 
 ---
 
