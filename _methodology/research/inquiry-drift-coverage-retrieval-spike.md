@@ -235,6 +235,64 @@ Until one of these triggers fires, the convention is the source of truth, and `a
 
 ---
 
+## 5.4 F-12 — Convention-adoption test (2026-05-29)
+
+The F-3 finding (post-shipping convention adoption rate = 0/4 = 0% for new Forge research) raised the structural question: **does the inquiry-* convention's frontmatter schema actually fit audit-shape artifacts?** §8 question 2 flagged a retroactive rename as the cheapest test. Executed 2026-05-29.
+
+### Method
+
+1. `git mv openspec/_methodology/research/forge-runtime-audit-2026-05-18.md openspec/_methodology/research/inquiry-forge-runtime-audit-2026-05-18.md`.
+2. Prepended a 12-line blockquote frontmatter block above the existing H1 title, matching the schema enforced by `tools/lib/parse-inquiry-frontmatter.ts`:
+   - Required fields (`Status`, `Lead`, `Opened`, `Capability_refs`, `Thesis`) — all filled from audit context.
+   - `Status: published` — audit is complete-snapshot, no further work pending.
+   - `Thesis:` — a falsifiable claim extracted from the audit's headline ("76% wasted-run rate is input-quality + outcome-honesty, not engine surgery").
+   - `Method:` — methodology section of the existing file lifted into one sentence.
+   - `Kind: internal` — first-party operational audit, not public-track.
+3. Ran `pnpm research:index` (= `tsx tools/index-inquiries.ts`).
+4. Ran `node tools/check-openspec-refs.mjs` to verify refs guard.
+
+### Result
+
+| | |
+|---|---|
+| `tools/index-inquiries.ts` parser | ✅ accepted without errors |
+| Required-field check | ✅ all 5 present |
+| Kind-field check | ✅ valid (`internal`) |
+| Cohort indexed pre/post | 5 → 6 |
+| openspec refs guard | ✅ 0 broken |
+| Existing prose references to old filename | Left as historical record; one forward-looking question in §8 + design.md §8 q6 updated to "resolved" |
+
+**Schema fits audit-shape artifacts cleanly.** No new convention fields needed. No parser changes needed. The empirical question raised by F-3 ("does the convention even fit audits?") is structurally answered: **yes**.
+
+### What this does NOT prove
+
+- **Convention adoption velocity remains an open question.** F-3's empirical signal was 0/4 = 0% for NEW research authored after convention shipping. This rename is a *retroactive* adoption; it does not change the prospective trajectory.
+- **Convention authoring friction remains untested.** Adding frontmatter to one file by automation isn't the same as a human reaching for inquiry-* naming on first save. The convention-leak log (`_convention-leak-log.md`, started #1884) is still the right instrument for that signal.
+- **Forge audit roles haven't emitted findings during a build.** Real-time-mutation revisit trigger #1 from `add-inquiry-entity/proposal.md` remains unactivated.
+
+### Findings from this experiment
+
+| # | Claim | Grade | Falsifier |
+|---|---|---|---|
+| F-12 | The inquiry-* convention's frontmatter schema fits audit-shape artifacts (status=published, Method = audit methodology, Thesis = headline falsifiable claim, Capability_refs = audited capability slug) without parser modification, field additions, or content rewriting. Confirmed by `pnpm research:index` accepting `inquiry-forge-runtime-audit-2026-05-18.md` after a 12-line frontmatter prepend. Convention is structurally usable for retroactive adoption of legacy research artifacts. | engineering_claim | A second audit file failing `pnpm research:index` after the same retroactive treatment would falsify the schema-fit claim. (F-3 0/4 adoption was about *prospective* authoring; this is a separate hypothesis about *retroactive* schema applicability.) |
+| F-13 | Convention adoption decomposes into two independent variables: **schema applicability** (does the frontmatter schema fit the artifact shape?) and **author reach-for-rate** (do authors choose inquiry-* naming on first save?). F-12 settles the first variable for audit-shape; F-3 measured the second variable as 0/4. Future convention work should target each variable separately — schema fixes won't move the reach-for-rate, and naming nudges won't validate schema fit. | engineering_claim | A single intervention (e.g., a CLI scaffold like `muse research init`) that simultaneously fixes both variables would compress them back into one — falsifying the decomposition's necessity. |
+
+### Closes empirical arc
+
+With F-12 + F-13, every empirical question this spike opened has been answered:
+
+- **Trigger #1 (drift-coverage capability_ref filter)** → convention via F-6, F-8 (100% / 90%)
+- **Trigger #2 (RAG-shape credibility filter)** → convention via F-10 (100% / 95%)
+- **F-3 (convention adoption — retroactive schema-fit)** → F-12 (yes, fits)
+- **F-3 (convention adoption — prospective author reach-for-rate)** → still 0/4, decomposed in F-13 as a separate concern
+- **F-7 (capability-inference failure in prose)** → fixed by per-section `Capability:` tag (#1904)
+- **F-9 (per-row Capability tag for mixed-content files)** → projected design; not built; deferred until a real consumer needs row-level retrieval
+- **F-11 (heading-style vs tabular Findings shape)** → known constraint, fix path documented
+
+The 5-PR + this PR (= 6-PR) arc has closed every loose thread. From this point on, inquiry-related work is convention-adoption (independent of base entity) and revisit-trigger monitoring (per `add-inquiry-entity/proposal.md` re-defer banner).
+
+---
+
 ## 6. Classification appendix (full sample)
 
 ### Group A — entity-style hits
@@ -292,5 +350,5 @@ These are spike-author recommendations, not binding. The Phase 1 reviewer should
 ## 8. Open questions
 
 1. **Is the cohort's slow growth a convention problem or a workload problem?** Cohort has 4 effective inquiries from 2026-05-13. None since. Is this because the convention is awkward, or because nobody opened new investigations during a heavy ship-phase? Convention-leak log (started 2026-05-28) is the place to capture future signal.
-2. **Should `forge-runtime-audit-2026-05-18.md` be retroactively renamed?** It is a substantive Forge research artifact. Renaming would (a) validate the convention's applicability to audits, (b) raise effective cohort count, (c) test whether the entity's frontmatter schema actually fits the audit shape. Cost: ~30 minutes including frontmatter authoring.
+2. **Should `forge-runtime-audit-2026-05-18.md` be retroactively renamed?** ~~Cost: ~30 minutes including frontmatter authoring.~~ **Resolved 2026-05-29:** yes — renamed to `inquiry-forge-runtime-audit-2026-05-18.md`. Schema fit clean (zero parser errors), `index-inquiries.ts` accepted it without modification, indexed cohort raised 5 → 6. Full measurement in §5.4 (F-12). Peers not renamed — schema-fit question is structurally answered; further renames are convention-adoption work, deferred until a downstream consumer requests them.
 3. **What's the right unit for drift-coverage stage 2: a file, a `## Findings` row, or an entity row?** This spike assumes file-level retrieval. The proposal's design.md §5 implies row-level. If row-level is the target, the marker convention upstream of the entity becomes even more important.

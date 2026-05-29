@@ -1,4 +1,20 @@
-# Forge runtime audit — 2026-05-18
+# Inquiry — Forge runtime audit, 2026-05-18
+
+> **Status:** published
+> **Lead:** human:pavel
+> **Owner:** Pavel Rapoport <pavel@rapoport.studio> (founder, primary)
+> **Authors:** Pavel Rapoport <pavel@rapoport.studio> (primary, audit author)
+> **Author_ids:** human:pavel
+> **Kind:** internal
+> **Opened:** 2026-05-18
+> **Capability_refs:** forge
+> **Thesis:** Forge's 2026-05-18 wasted-run rate (76% of 17 terminal runs producing no shippable work) is dominated by input-quality and outcome-honesty defects, not engine surgery requirements.
+> **Method:** Behavioural runtime audit of 19 `forge-build.yml` CI runs dispatched 2026-05-18, reconstructed from `~/.forge/state/*.json`, plan files, `logs/**`, events `*.jsonl`, and `forge-output.json` artifacts. Each run classified by reported outcome vs real outcome; defects extracted one per failure signature with severity, evidence (run id + log line), and `file:line` cause.
+> **Reusable for:** `add-github-actions-control-plane` Phase 2b pre-flight design; future Forge outcome-taxonomy work; operator runbooks.
+> **Companion to:** [`inquiry-drift-coverage-retrieval-spike.md`](./inquiry-drift-coverage-retrieval-spike.md) (this file is the F-12 convention-adoption test target).
+> **Renaming note (2026-05-29):** previously `forge-runtime-audit-2026-05-18.md` — renamed under inquiry-* convention as the F-12 / F-3-fix test in [`inquiry-drift-coverage-retrieval-spike.md § 5.4`](./inquiry-drift-coverage-retrieval-spike.md). Content below unchanged from the legacy version; only frontmatter prepended.
+
+---
 
 A behavioural (not static) audit of the Forge build engine, reconstructed from
 the **19 `forge-build.yml` CI runs dispatched on 2026-05-18**. This is the
