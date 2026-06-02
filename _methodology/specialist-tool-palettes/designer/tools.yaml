@@ -1,0 +1,51 @@
+# Platform-default tool palette for the designer archetype.
+#
+# Authored against the schema in
+# `packages/muse/src/runtime/palette-schema.ts`. Loaded by
+# `packages/muse/src/runtime/specialist-tools.ts` per D-STC-2 (brand
+# override > platform default; first-match-wins).
+#
+# Every `tools[].id` below must exist in the Muse tool registry
+# (`packages/muse/src/tools/` + the architect emit tools); the
+# `tools/check-palette-tool-ids.mjs` CI gate enforces this. Domain
+# tools envisioned in the proposal (e.g. a Figma/asset inspector) are
+# omitted until the registry ships them — adding an unknown id here
+# fails CI rather than silently lying about the surface.
+#
+# The designer surface is research + contribute: it reads the spec,
+# scans competitors and references for visual precedent, and can amend
+# the design.md artifact. It does not own proposal/tasks/verification
+# emission (the architect does) and has no GitHub/Linear execute scope.
+archetype: designer
+tools:
+  - id: read_openspec
+    description: Read OpenSpec capability docs + change folders.
+    scope: read
+  - id: read_archive
+    description: Read archived OpenSpec changes for precedent.
+    scope: read
+  - id: read_file
+    description: Read a file from the repo sandbox.
+    scope: read
+  - id: list_directory
+    description: List a directory in the repo sandbox.
+    scope: read
+  - id: web_search
+    description: General web search for visual / interaction precedent.
+    scope: read
+  - id: fetch_url
+    description: Fetch a URL's textual content.
+    scope: read
+  - id: competitor_research
+    description: Structured competitor scan for design benchmarking.
+    scope: read
+  - id: update_design
+    description: Author or amend design.md for a change.
+    scope: write
+skills:
+  - id: design_review
+    bundled_from: '@rapoport-studio/muse/modes/architect'
+research_agents:
+  - id: competitor_scan
+    description: Structured competitor scan for design benchmarking.
+    bundled_from: '@rapoport-studio/muse/tools/competitor_research'

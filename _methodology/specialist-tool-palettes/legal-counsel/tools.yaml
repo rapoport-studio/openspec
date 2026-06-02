@@ -1,0 +1,42 @@
+# Platform-default tool palette for the legal-counsel archetype.
+#
+# Authored against the schema in
+# `packages/muse/src/runtime/palette-schema.ts`. Loaded by
+# `packages/muse/src/runtime/specialist-tools.ts` per D-STC-2 (brand
+# override > platform default; first-match-wins).
+#
+# Every `tools[].id` below must exist in the Muse tool registry
+# (`packages/muse/src/tools/` + the architect emit tools); the
+# `tools/check-palette-tool-ids.mjs` CI gate enforces this. Domain
+# tools the proposal imagined (e.g. a case-law lookup) are omitted
+# until the registry ships them — listing an unknown id fails CI.
+#
+# Legal counsel is a deliberately narrow, read-only / advisory surface:
+# it reads the spec and jurisdiction primers, searches the web for
+# statutes and precedent, but emits no artifacts and holds no write or
+# execute scope. This contrasts sharply with the architect palette and
+# is the intended demonstration of per-archetype scoping (D-STC-1).
+archetype: legal-counsel
+tools:
+  - id: read_openspec
+    description: Read OpenSpec capability docs + change folders.
+    scope: read
+  - id: read_archive
+    description: Read archived OpenSpec changes for precedent.
+    scope: read
+  - id: read_file
+    description: Read a file from the repo sandbox.
+    scope: read
+  - id: web_search
+    description: Search statutes, regulations, and case precedent.
+    scope: read
+  - id: fetch_url
+    description: Fetch a URL's textual content (e.g. a statute page).
+    scope: read
+  - id: domain_research
+    description: Jurisdiction / regulatory primer for a target market.
+    scope: read
+research_agents:
+  - id: jurisdiction_primer
+    description: Scope a regulatory primer for a target jurisdiction.
+    bundled_from: '@rapoport-studio/muse/tools/domain_research'
